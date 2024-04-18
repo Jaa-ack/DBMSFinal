@@ -45,7 +45,7 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	public void Register(Connection conn, String account, String password)  throws SQLException{
+	public void Register(Connection conn, String account, String password, String mail)  throws SQLException{
 		// 準備 SQL 語句
 		String sql = "SELECT account FROM User WHERE username = ?";
 						            
@@ -62,7 +62,7 @@ public class Main {
 			if (rs.next()) {
 				System.out.println("帳號重複");
 			} else {
-				sql = "INSERT INTO User (account, password) VALUES (account, password);";
+				sql = "INSERT INTO User (account, password, mail) VALUES (account, password, mail);";
 				Statement stmt = conn.createStatement();
 								            
 				// 執行 INSERT 語句並獲取受影響的記錄數量
@@ -70,9 +70,9 @@ public class Main {
 
 	            // 檢查操作是否成功
 	            if (rowsAffected > 0) {
-	                System.out.println("Insert operation successful.");
+	                System.out.println("註冊成功");
 	            } else {
-	                System.out.println("Insert operation failed.");
+	                System.out.println("Operation Failed.");
 	            }
 			}
 			// 關閉資源
@@ -84,7 +84,50 @@ public class Main {
 		}
 	}
 	
-	public void Forget() {
-		
+	public void Forget(Connection conn, String mail) {
+		// 準備 SQL 語句
+		String sql = "SELECT mail FROM User WHERE mail = ?";
+				            
+		try {
+			// 創建 PreparedStatement 對象
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			// 設置參數值
+			pstmt.setString(1, mail);
+					            
+			// 執行 SQL 語句
+			ResultSet rs = pstmt.executeQuery();
+					            
+			// 處理查詢結果
+			if (rs.next()) {
+                System.out.println("請重新設定密碼");
+                String password = "";
+                String passwordCheck = "";
+                if (password.equals(passwordCheck)) {
+                	sql = "UPDATE user SET password = ? WHERE mail = ?";
+                	pstmt = conn.prepareStatement(sql);
+                	pstmt.setString(1, password);
+                	pstmt.setString(2, mail);
+                	rs = pstmt. executeQuery();
+                	int rowsAffected = pstmt.executeUpdate(sql);
+                	if (rowsAffected > 0) {
+    	                System.out.println("密碼更改成功，請重新登入");
+    	            } else {
+    	                System.out.println("Operation Failed");
+    	            }
+                }else {
+                	System.out.println("密碼不一致");
+                }
+            } else {
+                System.out.println("查無此帳戶");
+            }
+					            
+			// 關閉資源
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
