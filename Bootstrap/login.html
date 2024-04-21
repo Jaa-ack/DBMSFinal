@@ -39,17 +39,19 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">你今天運動了嗎!</h1>
                                     </div>
+
+                                    <!-- 登入資料 -->
                                     <form class="user">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="InputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="InputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -58,9 +60,25 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                                        <!-- 登入功能 -->
+                                        <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
+                                        <script>
+                                            document.querySelector('.user').addEventListener('submit', function(event) {
+                                                // 防止表單提交默認行為
+                                                event.preventDefault();
+                                                // // 獲取用戶名和密碼
+                                                var userEmail = document.getElementById('InputEmail').value;
+                                                var password = document.getElementById('InputPassword').value;
+
+                                                // if (){
+                                                //     // 登入成功，導向到目標頁面
+                                                //     window.location.href = 'index.html';
+                                                // }else {
+                                                //     alert('這是一個彈出視窗提醒！');
+                                                // }
+                                            });
+                                        </script>
+
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
@@ -70,9 +88,13 @@
                                         </a>
                                     </form>
                                     <hr>
+
+                                    <!-- 忘記密碼 -->
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
+
+                                    <!-- 註冊帳號 -->
                                     <div class="text-center">
                                         <a class="small" href="register.html">Create an Account!</a>
                                     </div>
