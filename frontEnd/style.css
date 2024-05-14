@@ -1,12 +1,12 @@
 .page-background {
-    width: vw;
-    height: vh;
+    width: 100vw;
+    height: 100vh;
     position: relative;
     background: #DDEAED;
 }
 
 .content-background {
-    width: 1440px;
+    width: 100vw;
     height: 911px;
     position: absolute;
     top: 113px;
@@ -94,10 +94,7 @@
     border-radius: 3px;
     box-sizing: border-box; /* Includes padding and border in width */
 }
-.forgot-password {
-    left: 772px;
-    top: 718px;
-}
+
 
 .hello-text {
     left: 232px;
@@ -123,7 +120,7 @@
 
 .login-button {
     left: 1174px;
-    top: 708px;
+    top: 720px;
     width: 126px;
     height: 32px;
 }
@@ -133,5 +130,13 @@
     top: 720px;
     width: 144px;
     height: 32px;
+}
+
+.forgetpassword-button{
+    left: 772px;
+    top: 718px;
+    border: none;
+    color: #A5A5A5;
+    background: none;
 }
 
