@@ -114,9 +114,10 @@
 }
 
 .password-field {
-    left: 772px; /* Example, adjust based on your layout needs */
-    top: 555px; /* Adjust the top so it doesn't overlap the ID field */
+    left: 772px;
+    top: 555px; 
 }
+
 
 .login-button {
     left: 1174px;
@@ -140,3 +141,22 @@
     background: none;
 }
 
+.forget-password-text{
+    left: 170px;
+    top: 480px;
+    height: 56px;
+}
+
+.no-worries-text{
+    left: 170px;
+    top: 541px;
+    width: 575px;
+    height: 71px;
+}
+
+.reset-button{
+    right: 345px;
+    top: 680px;
+    width: 126px;
+    height: 32px;
+}
