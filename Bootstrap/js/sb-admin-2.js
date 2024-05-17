@@ -53,4 +53,34 @@
     e.preventDefault();
   });
 
+//Today's Date
+window.onload = function() {
+    var today = new Date();
+    var date = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('current-date').textContent = date;
+};
+
+window.onload = function() {
+  var today = new Date();
+  var displayDate = document.getElementById('current-date');
+
+  function updateDisplay(date) {
+      displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  updateDisplay(today);
+
+  document.getElementById('prev-day').addEventListener('click', function() {
+      today.setDate(today.getDate() - 1);
+      updateDisplay(today);
+  });
+
+  document.getElementById('next-day').addEventListener('click', function() {
+      today.setDate(today.getDate() + 1);
+      updateDisplay(today);
+  });
+};
+
+
+
 })(jQuery); // End of use strict
