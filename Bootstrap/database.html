@@ -118,46 +118,12 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                        
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -316,11 +282,334 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Date -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <button class="btn btn-primary btn-circle" type="button" id="prev-day">&lt;</button>
+                        <script>
+                        window.onload = function() {
+                                var today = new Date();
+                                var displayDate = document.getElementById('current-date');
+                            
+                                function updateDisplay(date) {
+                                    displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                                }
+                            
+                                updateDisplay(today);
+                            
+                                document.getElementById('prev-day').addEventListener('click', function() {
+                                    today.setDate(today.getDate() - 1);
+                                    updateDisplay(today);
+                                });
+                            
+                                document.getElementById('next-day').addEventListener('click', function() {
+                                    today.setDate(today.getDate() + 1);
+                                    updateDisplay(today);
+                                });
+                            };
+                        </script>
+                        <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
+                        <script>
+                        window.onload = function() {
+                            var today = new Date();
+                            var date = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                            document.getElementById('current-date').textContent = date;
+                        };
+                        </script>
+                        
+                        <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
+                        <script>
+                            window.onload = function() {
+                                var today = new Date();
+                                var displayDate = document.getElementById('current-date');
+                            
+                                function updateDisplay(date) {
+                                    displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                                }
+                            
+                                updateDisplay(today);
+                            
+                                document.getElementById('prev-day').addEventListener('click', function() {
+                                    today.setDate(today.getDate() - 1);
+                                    updateDisplay(today);
+                                });
+                            
+                                document.getElementById('next-day').addEventListener('click', function() {
+                                    today.setDate(today.getDate() + 1);
+                                    updateDisplay(today);
+                                });
+                            };
+                            </script>
+                        
+                        
+                    
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                        <!-- Area Chart -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary"></h6>
+                                    <!-- Topbar Search -->
+                                    <form
+                                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                                aria-label="Search" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!-- Topbar Navbar -->
+                                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                                        <li class="nav-item dropdown no-arrow d-sm-none">
+                                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-search fa-fw"></i>
+                                            </a>
+                                            <!-- Dropdown - Messages -->
+                                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                                aria-labelledby="searchDropdown">
+                                                <form class="form-inline mr-auto w-100 navbar-search">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control bg-light border-0 small"
+                                                            placeholder="Search for..." aria-label="Search"
+                                                            aria-describedby="basic-addon2">
+                                                            <div class="input-group-append">
+                                                            <button class="btn btn-primary" type="button">
+                                                                <i class="fas fa-search fa-sm"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </li>
+
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Portion</th>
+                                                    <th>Calories</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <!--DATA FROM DATABASE-->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- ADJUST PORTION AND ADD TO DIARY -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">food data</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <!--Serving size-->
+                                    <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                                        <a class="navbar-brand" href="#">Serving Size</a>
+                                        <ul class="navbar-nav ml-auto">
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Choose
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right animated--fade-in"
+                                                    aria-labelledby="navbarDropdown">
+                                                    <a class="dropdown-item" href="#">gram(s)</a>
+                                                    <a class="dropdown-item" href="#">1 Portion</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <!--numbers-->
+                                    <div class="form-group">
+                                        <!--label for="number"></label-->
+                                        <input type="text" class="form-control" id="number" placeholder="Number of Serving">
+                                        
+                                    </div>
+                                    <!--choose which meal-->
+                                    <div class="form-group">
+                                        <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                                            <a class="navbar-brand" href="#">Meal</a>
+                                            <ul class="navbar-nav ml-auto">
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                                        role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        Choose
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right animated--fade-in"
+                                                        aria-labelledby="navbarDropdown">
+                                                        <a class="dropdown-item" href="#">Breakfast</a>
+                                                        <a class="dropdown-item" href="#">Lunch</a>
+                                                        <a class="dropdown-item" href="#">Dinner</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                                                       
+                                    </div>
+                                    <!--macros-->
+                                    <div class="card-body">
+                                        <div class="chart-pie pt-4 pb-2">
+                                            <canvas id="myPieChart"></canvas>
+                                        </div>
+                                        <div class="mt-4 text-center small">
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-primary"></i> Carbs
+                                            </span>
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-success"></i> Protein
+                                            </span>
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-info"></i> Fat
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--add-btn-->
+                                    <div class="d-flex justify-content-end">
+                                       <a class="btn btn-primary" href="#">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                
+
+
+                    <!-- Content Row -->
+                        <div class="row">
+
+                            <!-- Area Chart -->
+                            <div class="col-xl-8 col-lg-7">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"></h6>
+                                        <!-- Topbar Search -->
+                                        <form
+                                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                                    aria-label="Search" aria-describedby="basic-addon2">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="button">
+                                                        <i class="fas fa-search fa-sm"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!-- Topbar Navbar -->
+                                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-search fa-fw"></i>
+                                                </a>
+                                                <!-- Dropdown - Messages -->
+                                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                                    aria-labelledby="searchDropdown">
+                                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control bg-light border-0 small"
+                                                                placeholder="Search for..." aria-label="Search"
+                                                                aria-describedby="basic-addon2">
+                                                                <div class="input-group-append">
+                                                                <button class="btn btn-primary" type="button">
+                                                                    <i class="fas fa-search fa-sm"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </li>
+
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Type</th>
+                                                        <th>Time</th>
+                                                        <th>Calories</th>
+                                                    </tr>
+                                                </thead>
+                                                
+                                                <tbody>
+                                                    <!--DATA FROM DATABASE-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <!-- ADD TO DIARY -->
+                            <div class="col-xl-4 col-lg-5">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Exercise data</h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        
+                                        <div class="form-group">
+                                            <!--label for="number"></label-->
+                                            <input type="text" class="form-control" id="number" placeholder="Minutes Performed"> 
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label for="">Calories Burned</label>
+                                        <input type="text" class="form-control" id="number" placeholder="">
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                        <a class="btn btn-primary" href="#">Add</a>
+                                        </div>                               
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        
+                    
+
+                    </div>
 
                 </div>
+
+                </div>
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -376,6 +665,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
