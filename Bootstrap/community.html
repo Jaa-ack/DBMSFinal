@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Rank</title>
+    <title>Community</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -52,6 +52,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Goals Overview:</h6>
                 <a class="collapse-item" href="foodandexercise.html">Food & Exercise</a>
+                <a class="collapse-item" href="database.html">Database</a>
                 <a class="collapse-item" href="cards.html">Feedback</a>
                 <a class="collapse-item" href="utilities-other.html">Progress</a>
             </div>
@@ -90,6 +91,14 @@
         </a>
     </li>
 
+    <!-- Nav Item - Goals Setting -->
+    <li class="nav-item">
+        <a class="nav-link" href="goalsetting.html">
+            <i class="fas fa-solid fa-user-circle"></i>
+            <span>Goals Setting</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 </ul>
@@ -109,46 +118,12 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                        
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -306,13 +281,36 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                    <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                        <!-- Add Post Button at the top -->
+                        <div class="text-center mb-4">
+                            <button class="btn btn-primary btn-circle btn-lg" type="button" onclick="addPost()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
 
-                </div>
-                <!-- /.container-fluid -->
+                        <!-- Posts Row -->
+                        <div class="row">
+                            <!-- Dynamic cards for user posts -->
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card shadow h-100">
+                                    <img class="card-img-top" src="https://via.placeholder.com/150" alt="User Post Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">User Name</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="#" class="btn btn-primary">View Post</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Repeat for each post -->
+                        </div>
+
+                    </div>
+                    <!-- /.container-fluid -->
+
 
             </div>
             <!-- End of Main Content -->
@@ -367,6 +365,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script>
+        function addPost() {
+    // Here, you might want to open a modal or a new page where users can submit a new post.
+    alert("Add post functionality to be implemented.");
+}
+    </script>
 
 </body>
 
