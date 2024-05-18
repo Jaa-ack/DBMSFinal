@@ -51,11 +51,29 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+            
+            <!-- 側邊欄 -->
             <!-- Heading -->
             <div class="sidebar-heading">
                 Interface
             </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-duotone fa-bullseye"></i>
+                    <span>Goals</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="food_exercise.html">Food & Exercise</a>
+                        <a class="collapse-item" href="feedback.html">Feedback</a>
+                        <a class="collapse-item" href="progress.html">Progress</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -95,6 +113,33 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            <li class="nav-item">
+                <a class="nav-link" href="community.html">
+                    <i class="fas fa-solid fa-pager"></i>
+                    <span>Community</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="rank.html">
+                    <i class="fas fa-solid fa-ranking-star"></i>
+                    <span>Rank</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="notification.html">
+                    <i class="fas fa-solid fa-envelope"></i>
+                    <span>Notification</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="profile.html">
+                    <i class="fas fa-solid fa-id-card"></i>
+                    <span>Profile</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
@@ -102,13 +147,11 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                    aria-controls="collapsePages">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
@@ -142,6 +185,13 @@
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            <div class="sidebar-card d-none d-lg-flex">
+                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
             </div>
 
         </ul>
