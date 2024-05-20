@@ -27,19 +27,19 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-    </a>
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Goals Menu -->
     <li class="nav-item">
@@ -53,43 +53,64 @@
                 <h6 class="collapse-header">Goals Overview:</h6>
                 <a class="collapse-item" href="foodandexercise.html">Food & Exercise</a>
                 <a class="collapse-item" href="database.html">Database</a>
-                <a class="collapse-item" href="cards.html">Feedback</a>
-                <a class="collapse-item" href="utilities-other.html">Progress</a>
+                <a class="collapse-item" href="feedback.html">Feedback</a>
+                <a class="collapse-item" href="progress.html">Progress</a>
             </div>
-        </div>
-    </li>
 
-    <!-- Nav Item - Community -->
-    <li class="nav-item">
-        <a class="nav-link" href="community.html">
-            <i class="fas fa-solid fa-users"></i>
-            <span>Community</span>
-        </a>
-    </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-duotone fa-bullseye"></i>
+                    <span>Goals</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="food_exercise.html">Food & Exercise</a>
+                        <a class="collapse-item" href="feedback.html">Feedback</a>
+                        <a class="collapse-item" href="progress.html">Progress</a>
+                    </div>
+                </div>
+            </li>
 
-    <!-- Nav Item - Ranks -->
-    <li class="nav-item">
-        <a class="nav-link" href="rankPage.html">
-            <i class="fas fa-solid fa-ranking-star"></i>
-            <span>Ranks</span>
-        </a>
-    </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
+                    </div>
+                </div>
+            </li>
 
-    <!-- Nav Item - Notifications -->
-    <li class="nav-item">
-        <a class="nav-link" href="notificationPage.html">
-            <i class="fas fa-solid fa-bell"></i>
-            <span>Notification</span>
-        </a>
-    </li>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
 
-    <!-- Nav Item - Profile -->
-    <li class="nav-item">
-        <a class="nav-link" href="profilePage.html">
-            <i class="fas fa-solid fa-user-circle"></i>
-            <span>Profile</span>
-        </a>
-    </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
     <!-- Nav Item - Goals Setting -->
     <li class="nav-item">
@@ -311,6 +332,123 @@
                     </div>
                     <!-- /.container-fluid -->
 
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Posts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <h4>文章一：現代科技對教育的影響</h4>隨著科技的不斷進步，現代教育發生了顯著變化。數位化學習工具如平板電腦和電子白板，逐漸取代了傳統的黑板和書本，讓教學方式更加多樣化和互動化。線上學習平台的出現，使學生不再受限於教室，無論身處何地都能獲得優質的教育資源。人工智慧輔助系統也被引入教育領域，能夠根據學生的學習表現提供個性化的學習建議，提升學習效率。然而，科技的快速發展也帶來了一些挑戰，如數位鴻溝問題和隱私安全的顧慮。因此，在推動教育科技化的同時，我們也需要考慮如何公平分配資源並保障學生的數位安全。
+                                    <table class="table table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>科技讓學習更方便</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row"><br></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <h4>文章二：飲食習慣與健康</h4>現代人生活節奏快，飲食習慣也因此發生了巨大變化。快餐和加工食品因為方便快捷成為許多人的首選，但這些食品通常含有高糖、高脂肪和高鹽，對健康不利。相反，均衡的飲食應包括新鮮的蔬菜、水果、全穀物和瘦肉，這些食物富含維生素、礦物質和纖維，有助於維持身體健康。研究表明，健康的飲食習慣可以降低患心臟病、糖尿病和某些癌症的風險。養成良好的飲食習慣不僅需要個人的自律，也需要社會的支持，如提供更多健康飲食選擇和加強營養教育。總之，健康的飲食是維持良好身體狀況的基石，值得每個人重視。
+                                    <table class="table table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>健康飲食很重要。</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row"><br></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <h4>文章三：環保意識的提升</h4>隨著環境問題日益嚴重，環保意識的提升變得愈發重要。全球氣候變遷、空氣污染、水資源短缺等問題已經威脅到人類的生存和發展。提高環保意識，不僅僅是個人行為的改變，更需要集體的努力和政策的支持。日常生活中，我們可以通過減少塑料使用、節約能源、選擇公共交通等方式來減少對環境的影響。政府和企業也應該加強環保法規，推動綠色技術的發展。教育方面，從小培養學生的環保意識，讓他們了解環保的重要性和基本知識，將對未來的環境保護起到長遠的積極作用。只有大家共同努力，才能真正實現可持續發展。
+                                    <table class="table table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>環保意識非常重要。</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row"><br></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <h4>文章四：運動對心理健康的影響</h4>運動不僅對身體健康有益，對心理健康也有顯著的積極影響。研究顯示，定期運動可以有效減少壓力、焦慮和抑鬱症狀，提升整體心理健康。運動能促使大腦釋放內啡肽，這種化學物質能讓人感到愉悅和放鬆。此外，參加團隊運動還能增強社交能力，促進人際關係。即使是簡單的日常活動，如散步或瑜伽，也能幫助改善情緒和增強心理韌性。對於現代人來說，養成規律的運動習慣至關重要，可以幫助他們應對生活中的各種挑戰，保持積極樂觀的心態。因此，無論多忙，都應該抽出時間來進行運動，以維持心理和身體的雙重健康。
+                                    <table class="table table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>運動能減少壓力</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row"><br></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <h4>文章五：人工智慧在醫療領域的應用</h4>人工智慧（AI）正在改變醫療領域的面貌，為診斷和治療帶來新的突破。AI技術可以快速分析大量的醫療數據，幫助醫生做出更準確的診斷。例如，AI可以通過分析影像資料，檢測出早期的癌症或其他疾病，比傳統方法更精確。機器學習算法還能根據患者的病歷數據，提供個性化的治療方案，提升治療效果。此外，AI還能優化醫院的運營管理，如病房安排和資源分配，提高醫療效率。然而，AI在醫療領域的應用也面臨挑戰，如數據隱私、安全問題和技術依賴等。未來，隨著技術的不斷進步和完善，AI在醫療領域的應用將會更加廣泛，為人類健康帶來更多福祉。
+                                    <table class="table table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>AI改變醫療面貌</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row"><br></th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
