@@ -388,8 +388,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col d-flex align-items-center">
                                 <h5>Comments</h5>
+                                <div style="margin-left: 10px;"></div>
+                                <button type="button" class="btn btn-primary px-2 py-1">留言</button>
                             </div>
                         </div>
                         <div class="row">
@@ -406,6 +408,42 @@
                                 <div class="box"><h5>user 9</h5>這新聞真的令人憤怒！我真的不明白記者在想什麼，居然還敢寫出這種荒謬的東西。我</div>
                             </div>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var btn = document.querySelector(".btn-primary");
+                                var container = document.querySelector(".scroll-container");
+                        
+                                btn.addEventListener("click", function() {
+                                    var newBox = document.createElement("div");
+                                    newBox.className = "box";
+                        
+                                    var textarea = document.createElement("textarea");
+                                    textarea.className = "form-control";
+                                    textarea.setAttribute("aria-label", "With textarea");
+                        
+                                    var submitBtn = document.createElement("button");
+                                    submitBtn.textContent = "提交";
+                                    submitBtn.addEventListener("click", function() {
+                                        var text = textarea.value.trim(); // Trim whitespace
+                                        if (text !== "") {
+                                            var content = document.createTextNode(text);
+                                            newBox.innerHTML = "<h5>User</h5>";
+                                            newBox.appendChild(content);
+                                            newBox.removeChild(textarea);
+                                            newBox.removeChild(submitBtn);
+                                        } else {
+                                            container.removeChild(newBox); // Remove box if content is empty
+                                        }
+                                    });
+                        
+                                    newBox.appendChild(textarea);
+                                    newBox.appendChild(submitBtn);
+                        
+                                    container.insertBefore(newBox, container.firstChild);
+                                });
+                            });
+                        </script>
+
                         <!-- Divider -->
                         <hr class="sidebar-divider">
                         <div class="row">
