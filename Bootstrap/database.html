@@ -27,82 +27,89 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-    </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Goals Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGoals"
-           aria-expanded="true" aria-controls="collapseGoals">
-            <i class="fas fa-fw fa-bullseye"></i>
-            <span>Goals</span>
-        </a>
-        <div id="collapseGoals" class="collapse" aria-labelledby="headingGoals" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Goals Overview:</h6>
-                <a class="collapse-item" href="foodandexercise.html">Food & Exercise</a>
-                <a class="collapse-item" href="database.html">Database</a>
-                <a class="collapse-item" href="cards.html">Feedback</a>
-                <a class="collapse-item" href="utilities-other.html">Progress</a>
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-solid fa-dumbbell"></i>
             </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Community -->
-    <li class="nav-item">
-        <a class="nav-link" href="community.html">
-            <i class="fas fa-solid fa-users"></i>
-            <span>Community</span>
+            <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
         </a>
-    </li>
+        
+        <!-- 側邊欄 -->
+        <!-- Nav Item - Custom Component -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                <i class="fas fa-duotone fa-bullseye"></i>
+                <span>Goals</span>
+            </a>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Goal Setting:</h6>
+                    <a class="collapse-item" href="food_exercise.html">Food & Exercise</a>
+                    <a class="collapse-item active" href="database.html">Database</a>
+                    <a class="collapse-item" href="feedback.html">Feedback</a>
+                    <a class="collapse-item" href="progress.html">Progress</a>
+                </div>
+            </div>
+        </li>
 
-    <!-- Nav Item - Ranks -->
-    <li class="nav-item">
-        <a class="nav-link" href="rankPage.html">
-            <i class="fas fa-solid fa-ranking-star"></i>
-            <span>Ranks</span>
-        </a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link" href="community.html">
+                <i class="fas fa-solid fa-pager"></i>
+                <span>Community</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="rank.html">
+                <i class="fas fa-regular fa-hand-point-up"></i>
+                <span>Rank</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="notification.html">
+                <i class="fas fa-solid fa-envelope"></i>
+                <span>Notification</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="profile.html">
+                <i class="fas fa-solid fa-id-card"></i>
+                <span>Profile</span></a>
+        </li>
+        
+        
 
     <!-- Nav Item - Notifications -->
     <li class="nav-item">
-        <a class="nav-link" href="notificationPage.html">
-            <i class="fas fa-solid fa-bell"></i>
-            <span>Notification</span>
-        </a>
+    <a class="nav-link" href="notificationPage.html">
+        <i class="fas fa-solid fa-bell"></i>
+        <span>Notification</span>
+    </a>
     </li>
 
-    <!-- Nav Item - Profile -->
-    <li class="nav-item">
-        <a class="nav-link" href="profilePage.html">
-            <i class="fas fa-solid fa-user-circle"></i>
-            <span>Profile</span>
-        </a>
-    </li>
+        
 
-    <!-- Nav Item - Goals Setting -->
-    <li class="nav-item">
-        <a class="nav-link" href="goalsetting.html">
-            <i class="fas fa-solid fa-user-circle"></i>
-            <span>Goals Setting</span>
-        </a>
-    </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-</ul>
-<!-- End of Sidebar -->
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+        <!-- Sidebar Message -->
+        <!--div class="sidebar-card d-none d-lg-flex">
+            <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+            <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+            <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+        </div-->
+
+    </ul>
+    <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -238,7 +245,7 @@
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="notification.html">Read More Messages</a>
                             </div>
                         </li>
 
