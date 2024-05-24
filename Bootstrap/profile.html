@@ -370,11 +370,24 @@
                                             }
                                         }
                                     </script>
-                                    <!--Calories Intake-->
+                                    <!-- Calories Intake -->
                                     <div class="form-group">
-                                        <label for="">Calories Intake</label>
+                                        <label for="caloriesIntake">Calories Intake</label>
                                         <input type="text" class="form-control" id="caloriesIntake" style="width: 30%;" placeholder="">
+                                        <!--button onclick="saveCalories()" class="btn btn-primary mt-2">Save Intake</button-->
+                                        <div class="d-flex justify-content-end">
+                                            <div class="form-group">
+                                                <button onclick="saveCalories()" class="btn btn-secondary">Save</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                     <script>
+                                        function saveCalories() {
+                                            var calories = document.getElementById('caloriesIntake').value;
+                                            localStorage.setItem('caloriesIntake', calories);
+                                        }
+                                    </script>
+
 
                                     <!-- Daily Macros Input Row -->
                                     <div class="row">
@@ -409,7 +422,7 @@
                                         var myPieChart = new Chart(ctx, {
                                             type: 'doughnut',
                                             data: {
-                                                labels: ['Carbohydrates', 'Protein', 'Fats'],
+                                                labels: ['Carbs', 'Protein', 'Fats'],
                                                 datasets: [{
                                                     data: [33, 33, 34],  // Initial values to ensure the chart isn't empty initially
                                                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
