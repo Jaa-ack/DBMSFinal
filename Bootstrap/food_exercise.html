@@ -505,6 +505,19 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
+    <!--Send Calories Intake-->
+    <script>
+        window.onload = function() {
+            var caloriesIntake = localStorage.getItem('caloriesIntake');
+            if (caloriesIntake) {
+                document.querySelectorAll('.h5.mb-0.font-weight-bold.text-gray-800').forEach(function(el) {
+                    el.textContent = caloriesIntake; // Update all relevant fields
+                });
+            }
+        }
+        </script>
+        
+
 </body>
 
 </html>
