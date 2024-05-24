@@ -19,6 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!--chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 </head>
 
@@ -143,21 +146,350 @@
                     <!-- Page Heading -->
                     <div class="row">
                         <!-- Image Column -->
-                        <div class="col-md-2">
-                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg" style="width: 100%;">
+                        <div class="col-md-2 d-flex flex-column align-items-center">
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg" style="width: 80%; height: auto;">
+                            <!-- Change Photo Button -->
+                            <button class="btn btn-primary mt-3" type="button">Change Photo</button>
                         </div>
                     
                         <!-- Card Column -->
                         <div class="col-md-10">
                             <div class="card shadow mb-4">
+                                <!--Profile setting-->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Basic Card Example</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Profile Setting</h6>
                                 </div>
                                 <div class="card-body">
-                                    The styling for this basic card example is created by using default Bootstrap
-                                    utility classes. By using utility classes, the style of the card component can be
-                                    easily modified with no need for any custom CSS!
+                                    <!--用戶名-->
+                                    <div class="form-group">
+                                        <label for="">User Name</label>
+                                        <input type="text" class="form-control" id="userName" style="width: 30%;" placeholder="">
+                                    </div>
+                                    <!--性別-->
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <div class="d-flex justify-content-start">
+                                            <div class="form-check mr-3"> <!-- Added margin to the right for spacing -->
+                                                <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+                                            <div class="form-check mr-3"> <!-- Added margin to the right for spacing -->
+                                                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                                <label class="form-check-label" for="other">Prefer not to say</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Weight Column -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="weight">Weight</label>
+                                                <input type="text" class="form-control" id="weight" style="width: 100%;" placeholder="">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Height Column -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="height">Height</label>
+                                                <input type="text" class="form-control" id="height" style="width: 100%;" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--生日-->
+                                    <div class="form-group">
+                                        <label for="">Birthday</label>
+                                        <input type="date" class="form-control" id="birthday" style="width: 30%;" placeholder="">
+                                    </div>
                                 </div>
+
+                                <!--Account Setting-->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Account Setting</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!--用戶帳號-->
+                                    <div class="form-group">
+                                        <label for="">User ID</label>
+                                        <input type="text" class="form-control" id="userID" style="width: 30%;" placeholder="">
+                                    </div>
+                                    <!--用戶密碼-->
+                                    <div class="form-group">
+                                        <label for="">Password</label>
+                                        <input type="password" class="form-control" id="password" style="width: 30%;" placeholder="">
+                                    </div>
+                                </div>
+
+                                <!--Goal Setting-->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Goal Setting</h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <!--目標體重-->
+                                    <div class="row">
+                                        <!-- Goal Weight -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="goalw">Goal Weight</label>
+                                                <input type="text" class="form-control" id="goalw" placeholder="">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Current Weight -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="currentw">Current Weight</label>
+                                                <input type="text" class="form-control" id="currentw" placeholder="">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Gain/Loss -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="gainorloss" id="gain">Gain</label>
+                                                <label for="gainorloss" id="loss">Lose</label>
+                                                <input type="text" class="form-control" id="gainorloss" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Calculate Button -->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="form-group">
+                                            <button onclick="calculateWeightChange()" class="btn btn-secondary">Calculate</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <script>
+                                        function resetLabelColors() {
+                                            var gainLabel = document.getElementById('gain');
+                                            var lossLabel = document.getElementById('loss');
+                                            gainLabel.style.color = 'black'; // Reset to default color
+                                            lossLabel.style.color = 'black'; // Reset to default color
+                                        }
+                                        
+                                        function calculateWeightChange() {
+                                            var goalWeight = parseFloat(document.getElementById('goalw').value);
+                                            var currentWeight = parseFloat(document.getElementById('currentw').value);
+                                            var output = document.getElementById('gainorloss');
+                                            var gainLabel = document.getElementById('gain');
+                                            var lossLabel = document.getElementById('loss');
+                                        
+                                            resetLabelColors(); // Reset label colors before doing any calculation
+                                        
+                                            if (!isNaN(goalWeight) && !isNaN(currentWeight)) {
+                                                var weightDiff = goalWeight - currentWeight;
+                                                if (weightDiff > 0) {
+                                                    output.value = 'Gain ' + Math.abs(weightDiff) + ' kg';
+                                                    gainLabel.style.color = 'green'; // Change to green if gain is needed
+                                                } else if (weightDiff < 0) {
+                                                    output.value = 'Lose ' + Math.abs(weightDiff) + ' kg';
+                                                    lossLabel.style.color = 'red'; // Change to red if loss is needed
+                                                } else {
+                                                    output.value = 'You are at your goal weight';
+                                                }
+                                            } else {
+                                                output.value = 'Please enter valid weights';
+                                            }
+                                        }
+                                    </script>
+                                    
+                                    <!--目標體脂-->
+                                    <div class="row">
+                                        <!-- Goal Body Fat -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="goalbf">Goal Body Fat</label>
+                                                <input type="text" class="form-control" id="goalbf" placeholder="">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Current Body Fat-->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="currentbf">Current Body Fat</label>
+                                                <input type="text" class="form-control" id="currentbf" placeholder="">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Gain/Loss -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="gainorlossBF" id="gainBF">Gain</label>
+                                                <label for="gainorlossBF" id="lossBF">Lose</label>
+                                                <input type="text" class="form-control" id="gainorlossBF" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <!-- Calculate Button -->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="form-group">
+                                            <button onclick="calculateBodyFatChange()" class="btn btn-secondary">Calculate</button>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <script>
+                                        function resetLabelColors() {
+                                            var gainLabel = document.getElementById('gainBF');
+                                            var lossLabel = document.getElementById('lossBF');
+                                            gainLabel.style.color = 'black'; // Reset to default color
+                                            lossLabel.style.color = 'black'; // Reset to default color
+                                        }
+                                        
+                                        function calculateBodyFatChange() {
+                                            var goalBFat = parseFloat(document.getElementById('goalbf').value);
+                                            var currentBFat = parseFloat(document.getElementById('currentbf').value);
+                                            var output = document.getElementById('gainorlossBF');
+                                            var gainLabel = document.getElementById('gainBF');
+                                            var lossLabel = document.getElementById('lossBF');
+                                        
+                                            resetLabelColors(); // Reset label colors before doing any calculation
+                                        
+                                            if (!isNaN(goalBFat) && !isNaN(currentBFat)) {
+                                                var bFatDiff = goalBFat - currentBFat;
+                                                if (bFatDiff > 0) {
+                                                    output.value = 'Gain ' + Math.abs(bFatDiff) + ' %';
+                                                    gainLabel.style.color = 'green'; // Change to green if gain is needed
+                                                } else if (bFatDiff < 0) {
+                                                    output.value = 'Lose ' + Math.abs(bFatDiff) + ' %';
+                                                    lossLabel.style.color = 'red'; // Change to red if loss is needed
+                                                } else {
+                                                    output.value = 'You are at your goal Body Fat';
+                                                }
+                                            } else {
+                                                output.value = 'Please enter valid Body Fat Percentage';
+                                            }
+                                        }
+                                    </script>
+                                    <!--Calories Intake-->
+                                    <div class="form-group">
+                                        <label for="">Calories Intake</label>
+                                        <input type="text" class="form-control" id="caloriesIntake" style="width: 30%;" placeholder="">
+                                    </div>
+
+                                    <!-- Daily Macros Input Row -->
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="carbs">Carbs</label>
+                                                <input type="number" class="form-control" id="carbs" placeholder="%" onchange="autoCalculate('carbs')">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="protein">Protein</label>
+                                                <input type="number" class="form-control" id="protein" placeholder="%" onchange="autoCalculate('protein')">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="fats">Fats</label>
+                                                <input type="number" class="form-control" id="fats" placeholder="%" onchange="autoCalculate('fats')">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <!-- Canvas for Chart.js Chart -->
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+
+                                    <script>
+                                        var ctx = document.getElementById('myPieChart').getContext('2d');
+                                        var myPieChart = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: ['Carbohydrates', 'Protein', 'Fats'],
+                                                datasets: [{
+                                                    data: [33, 33, 34],  // Initial values to ensure the chart isn't empty initially
+                                                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                                    hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                }],
+                                            },
+                                            options: {
+                                                maintainAspectRatio: false,
+                                                legend: {
+                                                    display: true
+                                                },
+                                                cutoutPercentage: 80,
+                                            }
+                                        });
+                                        
+                                        function autoCalculate(changed) {
+                                            var carbsInput = document.getElementById('carbs');
+                                            var proteinInput = document.getElementById('protein');
+                                            var fatsInput = document.getElementById('fats');
+                                        
+                                            var carbs = parseFloat(carbsInput.value) || 0;
+                                            var protein = parseFloat(proteinInput.value) || 0;
+                                            var fats = parseFloat(fatsInput.value) || 0;
+                                            var total = carbs + protein + fats;
+                                        
+                                            if (total > 100) {
+                                                alert('The total percentage cannot exceed 100%. Please adjust your values.');
+                                                document.getElementById(changed).value = '';
+                                                return;
+                                            }
+                                        
+                                            // Calculate the missing macro based on which input was changed
+                                            if (total <= 100) {
+                                                switch (changed) {
+                                                    case 'carbs':
+                                                        if (protein && carbs + protein <= 100) {
+                                                            fatsInput.value = (100 - carbs - protein).toFixed(2);
+                                                            fats = 100 - carbs - protein;
+                                                        } else if (fats && carbs + fats <= 100) {
+                                                            proteinInput.value = (100 - carbs - fats).toFixed(2);
+                                                            protein = 100 - carbs - fats;
+                                                        }
+                                                        break;
+                                                    case 'protein':
+                                                        if (carbs && carbs + protein <= 100) {
+                                                            fatsInput.value = (100 - carbs - protein).toFixed(2);
+                                                            fats = 100 - carbs - protein;
+                                                        } else if (fats && protein + fats <= 100) {
+                                                            carbsInput.value = (100 - protein - fats).toFixed(2);
+                                                            carbs = 100 - protein - fats;
+                                                        }
+                                                        break;
+                                                    case 'fats':
+                                                        if (carbs && carbs + fats <= 100) {
+                                                            proteinInput.value = (100 - carbs - fats).toFixed(2);
+                                                            protein = 100 - carbs - fats;
+                                                        } else if (protein && protein + fats <= 100) {
+                                                            carbsInput.value = (100 - protein - fats).toFixed(2);
+                                                            carbs = 100 - protein - fats;
+                                                        }
+                                                        break;
+                                                }
+                                            }
+                                        
+                                            // Convert to float to avoid string issues in Chart.js
+                                            carbs = parseFloat(carbsInput.value);
+                                            protein = parseFloat(proteinInput.value);
+                                            fats = parseFloat(fatsInput.value);
+                                        
+                                            // Update chart if total is 100
+                                            if (carbs + protein + fats === 100) {
+                                                myPieChart.data.datasets[0].data = [carbs, protein, fats];
+                                                myPieChart.update();
+                                            }
+                                        }
+                                        </script>
+                                       
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
