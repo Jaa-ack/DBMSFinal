@@ -161,7 +161,7 @@
                                         <h6 class="m-0 font-weight-bold text-primary">Profile Setting</h6>
                                     </div>
                                     <div class="card-body">
-                                        <form id="profileForm">
+                                        <form id="profileForm" onsubmit="event.preventDefault(); submitProfile();">
                                             <div class="form-group">
                                                 <label for="userName">User Name</label>
                                                 <input type="text" class="form-control" id="userName" placeholder="Enter your username">
@@ -201,13 +201,35 @@
                                                 <label for="birthday">Birthday</label>
                                                 <input type="date" class="form-control" id="birthday">
                                             </div>
-                                            
                                             <div class="d-flex justify-content-end">
                                                 <button type="submit" class="btn btn-secondary">Submit</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                function submitProfile() {
+                                    const userName = document.getElementById('userName').value;
+                                    const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
+                                    const weight = document.getElementById('weight').value;
+                                    const height = document.getElementById('height').value;
+                                    const birthday = document.getElementById('birthday').value;
+                                
+                                    // Here you would handle the data, possibly sending it to a server.
+                                    // For now, let's just log it to the console for demonstration.
+                                    console.log("Form submitted with:", {
+                                        userName: userName,
+                                        gender: gender,
+                                        weight: weight,
+                                        height: height,
+                                        birthday: birthday
+                                    });
+                                
+                                    alert('Profile data submitted!');
+                                }
+                                </script>
+                                
                                 
 
                                 <!--Account Setting-->
@@ -258,7 +280,7 @@
                                             <!-- Calories Intake -->
                                             <div class="form-group">
                                                 <label for="caloriesIntake">Calories Intake</label>
-                                                <input type="number" class="form-control" id="caloriesIntake" style="width: 30%;" placeholder="Enter calories intake">
+                                                <input type="text" class="form-control" id="caloriesIntake" style="width: 30%;" placeholder="Enter calories">
                                                 <div class="d-flex justify-content-end">
                                                     <button type="button" onclick="saveCalories('intake')" class="btn btn-secondary">Save</button>
                                                 </div>
@@ -267,10 +289,8 @@
                                             <!-- Calories Burned -->
                                             <div class="form-group">
                                                 <label for="caloriesBurned">Calories Burned</label>
-                                                <input type="number" class="form-control" id="caloriesBurned" style="width: 30%;" placeholder="Enter calories burned">
-                                                <div class="d-flex justify-content-end">
-                                                    <button type="button" onclick="saveCalories('burned')" class="btn btn-secondary">Save</button>
-                                                </div>
+                                                <input type="text" class="form-control" id="caloriesBurned" style="width: 30%;" placeholder="Enter calories">
+                                                
                                             </div>
                                 
                                             <div class="d-flex justify-content-end">
