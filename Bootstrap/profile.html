@@ -196,10 +196,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="birthday">Birthday</label>
-                                                <input type="date" class="form-control" id="birthday">
-                                            </div>
+                                            
                                             <div class="d-flex justify-content-end">
                                                 <button type="submit" class="btn btn-secondary">Submit</button>
                                             </div>
@@ -213,7 +210,7 @@
                                     const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
                                     const weight = document.getElementById('weight').value;
                                     const height = document.getElementById('height').value;
-                                    const birthday = document.getElementById('birthday').value;
+                                    
                                 
                                     // Here you would handle the data, possibly sending it to a server.
                                     // For now, let's just log it to the console for demonstration.
@@ -222,7 +219,7 @@
                                         gender: gender,
                                         weight: weight,
                                         height: height,
-                                        birthday: birthday
+                                        
                                     });
                                 
                                     alert('Profile data submitted!');
