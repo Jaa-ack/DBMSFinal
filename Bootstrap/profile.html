@@ -216,7 +216,7 @@
                                         <h6 class="m-0 font-weight-bold text-primary">Account Setting</h6>
                                     </div>
                                     <div class="card-body">
-                                        <form id="accountForm">
+                                        <form id="accountForm" onsubmit="event.preventDefault(); submitAccount();">
                                             <div class="form-group">
                                                 <label for="userID">User ID</label>
                                                 <input type="text" class="form-control" id="userID" placeholder="Enter your user ID">
@@ -231,6 +231,22 @@
                                         </form>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                function submitAccount() {
+                                    const userId = document.getElementById('userID').value;
+                                    const password = document.getElementById('password').value;
+                                    
+                                    
+                                    console.log("Form submitted with:", {
+                                        userID: userId,
+                                        password: password
+                                    });
+                                
+                                    alert('Account data submitted!');
+                                }
+                                </script>
+                                
                                 
                                 <!--Goal Setting-->
                                 <div class="card">
