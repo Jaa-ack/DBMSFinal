@@ -156,56 +156,59 @@
                         <div class="col-md-10">
                             <div class="card shadow mb-4">
                                 <!--Profile setting-->
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Profile Setting</h6>
-                                </div>
-                                <div class="card-body">
-                                    <!--用戶名-->
-                                    <div class="form-group">
-                                        <label for="">User Name</label>
-                                        <input type="text" class="form-control" id="userName" style="width: 30%;" placeholder="">
+                                <div class="card">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Profile Setting</h6>
                                     </div>
-                                    <!--性別-->
-                                    <div class="form-group">
-                                        <label>Gender</label>
-                                        <div class="d-flex justify-content-start">
-                                            <div class="form-check mr-3"> <!-- Added margin to the right for spacing -->
-                                                <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                                                <label class="form-check-label" for="male">Male</label>
-                                            </div>
-                                            <div class="form-check mr-3"> <!-- Added margin to the right for spacing -->
-                                                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                                                <label class="form-check-label" for="female">Female</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="gender" id="other" value="other">
-                                                <label class="form-check-label" for="other">Prefer not to say</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <!-- Weight Column -->
-                                        <div class="col-md-6">
+                                    <div class="card-body">
+                                        <form id="profileForm">
                                             <div class="form-group">
-                                                <label for="weight">Weight</label>
-                                                <input type="text" class="form-control" id="weight" style="width: 100%;" placeholder="kg">
+                                                <label for="userName">User Name</label>
+                                                <input type="text" class="form-control" id="userName" placeholder="Enter your username">
                                             </div>
-                                        </div>
-                                        
-                                        <!-- Height Column -->
-                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="height">Height</label>
-                                                <input type="text" class="form-control" id="height" style="width: 100%;" placeholder="cm">
+                                                <label>Gender</label>
+                                                <div class="d-flex">
+                                                    <div class="form-check mr-3">
+                                                        <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                                        <label class="form-check-label" for="male">Male</label>
+                                                    </div>
+                                                    <div class="form-check mr-3">
+                                                        <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                                        <label class="form-check-label" for="female">Female</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                                        <label class="form-check-label" for="other">Prefer not to say</label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <!--生日-->
-                                    <div class="form-group">
-                                        <label for="">Birthday</label>
-                                        <input type="date" class="form-control" id="birthday" style="width: 30%;" placeholder="">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="weight">Weight (kg)</label>
+                                                        <input type="text" class="form-control" id="weight" placeholder="Enter weight">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="height">Height (cm)</label>
+                                                        <input type="text" class="form-control" id="height" placeholder="Enter height">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="birthday">Birthday</label>
+                                                <input type="date" class="form-control" id="birthday">
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-secondary">Submit</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
+                                
 
                                 <!--Account Setting-->
                                 <div class="card-header py-3">
@@ -221,6 +224,10 @@
                                     <div class="form-group">
                                         <label for="">Password</label>
                                         <input type="password" class="form-control" id="password" style="width: 30%;" placeholder="">
+                                    </div>
+
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
                                     </div>
                                 </div>
 
@@ -389,10 +396,9 @@
                                     </script>
 
 
-                                    <!-- Daily Macros Input Row -->
-                                    
-                                    
-                                    <!-- Canvas for Chart.js Chart -->
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                    </div>
                                     
                                        
                                 </div>
