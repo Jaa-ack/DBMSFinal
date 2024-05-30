@@ -36,46 +36,100 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user">
+                            <form class="user needs-validation" novalidate>
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
+                                    <div class="col mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="Name" placeholder="Name" required>
+                                        <div class="invalid-feedback">Please provide your name.</div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
-                                    </div>
+                                        <input type="date" class="form-control form-control-user" id="birthday" placeholder="Birthday" required>
+                                        <div class="invalid-feedback">Please provide your birthday.</div>
+                                    </div>                                    
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
+                                    <div class="invalid-feedback">Please provide a valid email address.</div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                        <input type="text" class="form-control form-control-user" id="height" placeholder="Height (cm)" required>
+                                        <div class="invalid-feedback" id="height-feedback">Please provide a valid height.</div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                        <input type="text" class="form-control form-control-user" id="weight" placeholder="Weight (kg)" required>
+                                        <div class="invalid-feedback" id="weight-feedback">Please provide a valid weight.</div>
                                     </div>
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block mb-2">
-                                    Register Account
-                                </a>
-                                
-                                <!--a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a-->
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user" id="InputPassword" placeholder="Password" required>
+                                        <div class="invalid-feedback" id="password-feedback">Password is required.</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user" id="RepeatPassword" placeholder="Repeat Password" required>
+                                        <div class="invalid-feedback" id="repeat-password-feedback">Passwords do not match.</div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary btn-user btn-block mb-2" type="submit">Register Account</button>
                             </form>
-                            
-                            <!--div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div-->
+
+                            <script>
+                                (function () {
+                                    'use strict';
+                        
+                                    window.addEventListener('load', function () {
+                                        var forms = document.getElementsByClassName('needs-validation');
+                                        Array.prototype.filter.call(forms, function (form) {
+                                            form.addEventListener('submit', function (event) {
+                                                var isValid = true;
+                        
+                                                // Get input elements
+                                                var heightInput = document.getElementById('height');
+                                                var weightInput = document.getElementById('weight');
+                                                var passwordInput = document.getElementById('InputPassword');
+                                                var repeatPasswordInput = document.getElementById('RepeatPassword');
+                        
+                                                // Reset custom validity messages
+                                                heightInput.setCustomValidity('');
+                                                weightInput.setCustomValidity('');
+                                                passwordInput.setCustomValidity('');
+                                                repeatPasswordInput.setCustomValidity('');
+                        
+                                                // Check height
+                                                if (isNaN(heightInput.value) || heightInput.value.trim() === '') {
+                                                    heightInput.setCustomValidity('Invalid height');
+                                                    isValid = false;
+                                                }
+                        
+                                                // Check weight
+                                                if (isNaN(weightInput.value) || weightInput.value.trim() === '') {
+                                                    weightInput.setCustomValidity('Invalid weight');
+                                                    isValid = false;
+                                                }
+                        
+                                                // Check repeat password
+                                                if (repeatPasswordInput.value !== passwordInput.value) {
+                                                    repeatPasswordInput.setCustomValidity('Passwords do not match');
+                                                    isValid = false;
+                                                }
+                        
+                                                if (form.checkValidity() === false || !isValid) {
+                                                    event.preventDefault();
+                                                    event.stopPropagation();
+                                                } else {
+                                                    event.preventDefault(); // Prevent the form from submitting normally
+                                                    window.location.href = 'login.html'; // Redirect to login.html
+                                                }
+                        
+                                                form.classList.add('was-validated');
+                                            }, false);
+                                        });
+                                    }, false);
+                                })();
+                            </script>
+
                             <div class="text-center">
                                 <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
