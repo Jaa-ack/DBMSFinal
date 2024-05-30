@@ -132,67 +132,38 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    
                     <!-- Date -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <button class="btn btn-primary btn-circle" type="button" id="prev-day">&lt;</button>
-                        <script>
-                        window.onload = function() {
-                                var today = new Date();
-                                var displayDate = document.getElementById('current-date');
-                            
-                                function updateDisplay(date) {
-                                    displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                                }
-                            
-                                updateDisplay(today);
-                            
-                                document.getElementById('prev-day').addEventListener('click', function() {
-                                    today.setDate(today.getDate() - 1);
-                                    updateDisplay(today);
-                                });
-                            
-                                document.getElementById('next-day').addEventListener('click', function() {
-                                    today.setDate(today.getDate() + 1);
-                                    updateDisplay(today);
-                                });
-                            };
-                        </script>
                         <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
-                        <script>
-                        window.onload = function() {
-                            var today = new Date();
-                            var date = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                            document.getElementById('current-date').textContent = date;
-                        };
-                        </script>
-                        
                         <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
-                        <script>
-                            window.onload = function() {
-                                var today = new Date();
-                                var displayDate = document.getElementById('current-date');
-                            
-                                function updateDisplay(date) {
-                                    displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                                }
-                            
-                                updateDisplay(today);
-                            
-                                document.getElementById('prev-day').addEventListener('click', function() {
-                                    today.setDate(today.getDate() - 1);
-                                    updateDisplay(today);
-                                });
-                            
-                                document.getElementById('next-day').addEventListener('click', function() {
-                                    today.setDate(today.getDate() + 1);
-                                    updateDisplay(today);
-                                });
-                            };
-                            </script>
-                        
-                        
-                    
                     </div>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var today = new Date();
+                        var displayDate = document.getElementById('current-date');
+
+                        function updateDisplay(date) {
+                            displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                        }
+
+                        updateDisplay(today);
+
+                        document.getElementById('prev-day').addEventListener('click', function() {
+                            today.setDate(today.getDate() - 1);
+                            updateDisplay(today);
+                        });
+
+                        document.getElementById('next-day').addEventListener('click', function() {
+                            today.setDate(today.getDate() + 1);
+                            updateDisplay(today);
+                        });
+                    });
+                    </script>
+
+
                     <!-- Content Row -->
                     <div class="row">
 
