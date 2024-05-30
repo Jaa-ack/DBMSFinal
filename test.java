@@ -7,6 +7,8 @@ public class test {
 //		h1.analyzeDiet();
 //		h1.analyzeExercise();
 //		h1.analyzeHealth();
+		analyze x = new analyze();
+		x.getData();
 	}
 
 }
@@ -14,4 +16,4 @@ public class test {
 
 
 //發現的問題：
-//1. 資料庫沒有的資料要加進去 2. 關於Goal的設定，是不是只需要設定全部的goal（目前想不到healthGaol有什麼用）且goal用選單的方式會比較好處理 3. 如何用java串前後端 
+//1. 資料庫沒有的資料要加進去 2. 有些資料庫的資料看不懂 3. 程式設計的部分有什麼缺漏 4. 關於ranking的方式，可以用point去做 
