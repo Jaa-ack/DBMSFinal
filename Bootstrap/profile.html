@@ -269,6 +269,7 @@
                             placeholder="kg"
                           />
                         </div>
+<<<<<<< HEAD
                       </div>
 
                       <!-- Height Column -->
@@ -282,6 +283,261 @@
                             style="width: 100%"
                             placeholder="cm"
                           />
+=======
+                    
+                        <!-- Card Column -->
+                        <div class="col-md-10">
+                            <div class="card shadow mb-4">
+                                <!--Profile setting-->
+                                <div class="card">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Profile Setting</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="profileForm">
+                                            <div class="form-group">
+                                                <label for="userName">User Name</label>
+                                                <input type="text" class="form-control" id="userName" placeholder="Enter your username">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Gender</label>
+                                                <div class="d-flex">
+                                                    <div class="form-check mr-3">
+                                                        <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                                        <label class="form-check-label" for="male">Male</label>
+                                                    </div>
+                                                    <div class="form-check mr-3">
+                                                        <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                                        <label class="form-check-label" for="female">Female</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                                        <label class="form-check-label" for="other">Prefer not to say</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="weight">Weight (kg)</label>
+                                                        <input type="text" class="form-control" id="weight" placeholder="Enter weight">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="height">Height (cm)</label>
+                                                        <input type="text" class="form-control" id="height" placeholder="Enter height">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="birthday">Birthday</label>
+                                                <input type="date" class="form-control" id="birthday">
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-secondary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+
+                                <!--Account Setting-->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Account Setting</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!--用戶帳號-->
+                                    <div class="form-group">
+                                        <label for="">User ID</label>
+                                        <input type="text" class="form-control" id="userID" style="width: 30%;" placeholder="">
+                                    </div>
+                                    <!--用戶密碼-->
+                                    <div class="form-group">
+                                        <label for="">Password</label>
+                                        <input type="password" class="form-control" id="password" style="width: 30%;" placeholder="">
+                                    </div>
+
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                    </div>
+                                </div>
+
+                                <!--Goal Setting-->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Goal Setting</h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <!--目標體重-->
+                                    <div class="row">
+                                        <!-- Goal Weight -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="goalw">Goal Weight</label>
+                                                <input type="text" class="form-control" id="goalw" placeholder="kg">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Current Weight -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="currentw">Current Weight</label>
+                                                <input type="text" class="form-control" id="currentw" placeholder="kg">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Gain/Loss -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="gainorloss" id="gain">Gain</label>
+                                                <label for="gainorloss" id="loss">Lose</label>
+                                                <input type="text" class="form-control" id="gainorloss" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Calculate Button -->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="form-group">
+                                            <button onclick="calculateWeightChange()" class="btn btn-secondary">Calculate</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <script>
+                                        function resetLabelColors() {
+                                            var gainLabel = document.getElementById('gain');
+                                            var lossLabel = document.getElementById('loss');
+                                            gainLabel.style.color = 'black'; // Reset to default color
+                                            lossLabel.style.color = 'black'; // Reset to default color
+                                        }
+                                        
+                                        function calculateWeightChange() {
+                                            var goalWeight = parseFloat(document.getElementById('goalw').value);
+                                            var currentWeight = parseFloat(document.getElementById('currentw').value);
+                                            var output = document.getElementById('gainorloss');
+                                            var gainLabel = document.getElementById('gain');
+                                            var lossLabel = document.getElementById('loss');
+                                        
+                                            resetLabelColors(); // Reset label colors before doing any calculation
+                                        
+                                            if (!isNaN(goalWeight) && !isNaN(currentWeight)) {
+                                                var weightDiff = goalWeight - currentWeight;
+                                                if (weightDiff > 0) {
+                                                    output.value = 'Gain ' + Math.abs(weightDiff) + ' kg';
+                                                    gainLabel.style.color = 'green'; // Change to green if gain is needed
+                                                } else if (weightDiff < 0) {
+                                                    output.value = 'Lose ' + Math.abs(weightDiff) + ' kg';
+                                                    lossLabel.style.color = 'red'; // Change to red if loss is needed
+                                                } else {
+                                                    output.value = 'You are at your goal weight';
+                                                }
+                                            } else {
+                                                output.value = 'Please enter valid weights';
+                                            }
+                                        }
+                                    </script>
+                                    
+                                    <!--目標體脂-->
+                                    <div class="row">
+                                        <!-- Goal Body Fat -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="goalbf">Goal Body Fat</label>
+                                                <input type="text" class="form-control" id="goalbf" placeholder="%">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Current Body Fat-->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="currentbf">Current Body Fat</label>
+                                                <input type="text" class="form-control" id="currentbf" placeholder="%">
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Gain/Loss -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="gainorlossBF" id="gainBF">Gain</label>
+                                                <label for="gainorlossBF" id="lossBF">Lose</label>
+                                                <input type="text" class="form-control" id="gainorlossBF" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <!-- Calculate Button -->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="form-group">
+                                            <button onclick="calculateBodyFatChange()" class="btn btn-secondary">Calculate</button>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <script>
+                                        function resetLabelColors() {
+                                            var gainLabel = document.getElementById('gainBF');
+                                            var lossLabel = document.getElementById('lossBF');
+                                            gainLabel.style.color = 'black'; // Reset to default color
+                                            lossLabel.style.color = 'black'; // Reset to default color
+                                        }
+                                        
+                                        function calculateBodyFatChange() {
+                                            var goalBFat = parseFloat(document.getElementById('goalbf').value);
+                                            var currentBFat = parseFloat(document.getElementById('currentbf').value);
+                                            var output = document.getElementById('gainorlossBF');
+                                            var gainLabel = document.getElementById('gainBF');
+                                            var lossLabel = document.getElementById('lossBF');
+                                        
+                                            resetLabelColors(); // Reset label colors before doing any calculation
+                                        
+                                            if (!isNaN(goalBFat) && !isNaN(currentBFat)) {
+                                                var bFatDiff = goalBFat - currentBFat;
+                                                if (bFatDiff > 0) {
+                                                    output.value = 'Gain ' + Math.abs(bFatDiff) + ' %';
+                                                    gainLabel.style.color = 'green'; // Change to green if gain is needed
+                                                } else if (bFatDiff < 0) {
+                                                    output.value = 'Lose ' + Math.abs(bFatDiff) + ' %';
+                                                    lossLabel.style.color = 'red'; // Change to red if loss is needed
+                                                } else {
+                                                    output.value = 'You are at your goal Body Fat';
+                                                }
+                                            } else {
+                                                output.value = 'Please enter valid Body Fat Percentage';
+                                            }
+                                        }
+                                    </script>
+                                    <!-- Calories Intake -->
+                                    <div class="form-group">
+                                        <label for="caloriesIntake">Calories Intake</label>
+                                        <input type="text" class="form-control" id="caloriesIntake" style="width: 30%;" placeholder="">
+                                        <!--button onclick="saveCalories()" class="btn btn-primary mt-2">Save Intake</button-->
+                                        <div class="d-flex justify-content-end">
+                                            <div class="form-group">
+                                                <button onclick="saveCalories()" class="btn btn-secondary">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <script>
+                                        function saveCalories() {
+                                            var calories = document.getElementById('caloriesIntake').value;
+                                            localStorage.setItem('caloriesIntake', calories);
+                                        }
+                                    </script>
+
+
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                    </div>
+                                    
+                                       
+                                </div>
+                                
+                            </div>
+>>>>>>> b91b5493a5e9cf569f89500e36b2ac2361efc66d
                         </div>
                       </div>
                     </div>
