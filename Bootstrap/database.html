@@ -199,7 +199,7 @@
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
+                                <!-- Card Header -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary"></h6>
                                     <!-- Topbar Search -->
@@ -268,42 +268,64 @@
 
                         <!-- ADJUST PORTION AND ADD TO DIARY -->
                         <div class="col-xl-4 col-lg-5">
+                            
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">food data</h6>
+                                <!-- Card Header -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Food data</h6>
+                                    
                                 </div>
+
                                 <!-- Card Body -->
-                                
-                                    <!--choose which meal-->
+                                <div class="card-body">
+                                    <!-- Meal Selection -->
                                     <div class="form-group">
-                                        <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                                            <a class="navbar-brand" href="#">Meal</a>
-                                            <ul class="navbar-nav ml-auto">
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                                                        role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        Choose
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right animated--fade-in"
-                                                        aria-labelledby="navbarDropdown">
-                                                        <a class="dropdown-item" href="#">Breakfast</a>
-                                                        <a class="dropdown-item" href="#">Lunch</a>
-                                                        <a class="dropdown-item" href="#">Dinner</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                                                       
+                                        <label>Meal</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="meal" id="breakfast" value="Breakfast">
+                                            <label class="form-check-label" for="breakfast">Breakfast</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="meal" id="lunch" value="Lunch">
+                                            <label class="form-check-label" for="lunch">Lunch</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="meal" id="dinner" value="Dinner">
+                                            <label class="form-check-label" for="dinner">Dinner</label>
+                                        </div>
                                     </div>
-                                    <!--add-btn-->
+                                    <!-- Portion Input -->
+                                    <div class="form-group">
+                                        <label for="portion">Portion</label>
+                                        <input type="text" class="form-control" id="portion" placeholder="">
+                                    </div>
+                                    <!-- Add Button -->
                                     <div class="d-flex justify-content-end">
-                                       <a class="btn btn-primary" href="#">Add</a>
+                                        <button class="btn btn-primary" onclick="addMeal()">Add</button>
                                     </div>
                                 </div>
                             </div>
+                            
+                            <script>
+                            function addMeal() {
+                                const selectedMeal = document.querySelector('input[name="meal"]:checked');
+                                const portion = document.getElementById('portion').value;
+                            
+                                if (selectedMeal) {
+                                    console.log('Meal added:', {
+                                        meal: selectedMeal.value,
+                                        portion: portion
+                                    });
+                                    alert('Meal added: ' + selectedMeal.value + ' with portion: ' + portion);
+                                } else {
+                                    alert('Please select a meal before adding.');
+                                }
+                            }
+                            
+                            function selectMeal(meal) {
+                                document.querySelector(`input[name="meal"][value="${meal}"]`).checked = true;
+                            }
+                            </script>
                         </div>
                     </div>
 
@@ -392,20 +414,37 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="minutesPerformed">Minutes Performed</label>
+                                            <input type="text" class="form-control" id="minutesPerformed" placeholder="">
+                                        </div>
+                                    
+                                        <div class="form-group">
+                                            <label for="caloriesBurned">Calories Burned</label>
+                                            <input type="text" class="form-control" id="caloriesBurned" placeholder="">
+                                        </div>
                                         
-                                        <div class="form-group">
-                                            <label for="">Minutes Performed</label>
-                                            <input type="text" class="form-control" id="number" placeholder=""> 
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="">Calories Burned</label>
-                                            <input type="text" class="form-control" id="number" placeholder="">
-                                        </div>
                                         <div class="d-flex justify-content-end">
-                                        <a class="btn btn-primary" href="#">Add</a>
-                                        </div>                               
+                                            <button class="btn btn-primary" onclick="addPerformance()">Add</button>
+                                        </div>
                                     </div>
+                                    
+                                    <script>
+                                    function addPerformance() {
+                                        const minutesPerformed = document.getElementById('minutesPerformed').value;
+                                        const caloriesBurned = document.getElementById('caloriesBurned').value;
+                                    
+                                        // Here you would handle the data, possibly sending it to a server or adding it to a list
+                                        // For demonstration, we'll just log it to the console
+                                        console.log("Performance added with:", {
+                                            minutesPerformed: minutesPerformed,
+                                            caloriesBurned: caloriesBurned
+                                        });
+                                    
+                                        alert('Performance data added!');
+                                    }
+                                    </script>
+                                    
                                 </div>
                             
                             </div>
