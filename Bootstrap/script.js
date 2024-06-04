@@ -99,3 +99,36 @@ function loadComments() {
         });
     });
 }
+
+$(document).ready(function() {
+    $.getJSON('users.json', function(users) {
+        users.forEach(function(user, index) {
+            var progressClass = user.today >= 90 ? 'bg-danger' :
+                                user.today >= 80 ? 'bg-gradient-warning' : 
+                                'bg-gradient-success';
+
+            var tableRow = `
+                <tr class="${progressClass}">
+                    <th scope="row">${index + 1}</th>
+                    <td>${user.name}</td>
+                    <td>${user.today}%</td>
+                    <td>
+                        <div class="progress">
+                            <div
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width: ${user.average}%"
+                                aria-valuenow="${user.average}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                ${user.average}%
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            $('#userTableBody').append(tableRow);
+        });
+    });
+});

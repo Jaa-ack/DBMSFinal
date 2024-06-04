@@ -1,0 +1,22 @@
+[
+    {"name": "User1", "today": 90, "average": 80},
+    {"name": "User2", "today": 85, "average": 75},
+    {"name": "User3", "today": 95, "average": 85},
+    {"name": "User4", "today": 70, "average": 65},
+    {"name": "User5", "today": 60, "average": 55},
+    {"name": "User6", "today": 92, "average": 82},
+    {"name": "User7", "today": 88, "average": 78},
+    {"name": "User8", "today": 76, "average": 66},
+    {"name": "User9", "today": 83, "average": 73},
+    {"name": "User10", "today": 99, "average": 89},
+    {"name": "User11", "today": 50, "average": 45},
+    {"name": "User12", "today": 65, "average": 60},
+    {"name": "User13", "today": 77, "average": 70},
+    {"name": "User14", "today": 55, "average": 50},
+    {"name": "User15", "today": 91, "average": 81},
+    {"name": "User16", "today": 82, "average": 72},
+    {"name": "User17", "today": 68, "average": 58},
+    {"name": "User18", "today": 73, "average": 63},
+    {"name": "User19", "today": 66, "average": 56},
+    {"name": "User20", "today": 89, "average": 79}
+]
