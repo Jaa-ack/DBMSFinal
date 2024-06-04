@@ -100,12 +100,25 @@ function loadComments() {
     });
 }
 
+// rank.html排序
 $(document).ready(function() {
     $.getJSON('users.json', function(users) {
+        // Sort users by today score in descending order
+        users.sort(function(a, b) {
+            return b.today - a.today;
+        });
+
         users.forEach(function(user, index) {
-            var progressClass = user.today >= 90 ? 'bg-danger' :
-                                user.today >= 80 ? 'bg-gradient-warning' : 
-                                'bg-gradient-success';
+            var progressClass;
+            if (index === 0) {
+                progressClass = 'bg-danger'; // First place: danger red
+            } else if (index === 1) {
+                progressClass = 'bg-warning'; // Second place: warning yellow
+            } else if (index === 2) {
+                progressClass = 'bg-success'; // Third place: success green
+            } else {
+                progressClass = index % 2 === 0 ? 'bg-gray-400' : 'bg-gray-600'; // Alternating gray shades
+            }
 
             var tableRow = `
                 <tr class="${progressClass}">
@@ -130,5 +143,40 @@ $(document).ready(function() {
             `;
             $('#userTableBody').append(tableRow);
         });
+    });
+});
+
+// database.html 搜尋食物
+$(document).ready(function() {
+    $('#searchFood').click(function() {
+        var query = $('#foodSearchInput').val().trim();
+        
+        if (query === "") {
+            alert("Search input cannot be empty!");
+        } else {
+            $.getJSON('food.json', function(data) {
+                var filteredData = data.filter(function(item) {
+                    return item.name.toLowerCase().includes(query.toLowerCase());
+                });
+                
+                var tableBody = $('#foodTable tbody');
+                tableBody.empty(); // Clear existing data
+                
+                if (filteredData.length === 0) {
+                    tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
+                } else {
+                    filteredData.forEach(function(item) {
+                        var tableRow = `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.portion}</td>
+                                <td>${item.calories}</td>
+                            </tr>
+                        `;
+                        tableBody.append(tableRow);
+                    });
+                }
+            });
+        }
     });
 });
