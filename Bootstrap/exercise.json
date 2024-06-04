@@ -1,0 +1,52 @@
+[
+    {
+        "type": "Walking",
+        "time": 30,
+        "calories": 130
+    },
+    {
+        "type": "Running",
+        "time": 20,
+        "calories": 260
+    },
+    {
+        "type": "Cycling",
+        "time": 45,
+        "calories": 350
+        },
+    {
+        "type": "Swimming",
+        "time": 30,
+        "calories": 290
+        },
+    {
+        "type": "Strength Training",
+        "time": 60,
+        "calories": 250
+    },
+    {
+        "type": "Yoga",
+        "time": 60,
+        "calories": 200
+    },
+    {
+        "type": "Dancing",
+        "time": 30,
+        "calories": 280
+    },
+    {
+        "type": "Jumping Rope",
+        "time": 15,
+        "calories": 210
+    },
+    {
+        "type": "Hiking",
+        "time": 60,
+        "calories": 350
+    },
+    {
+        "type": "Pilates",
+        "time": 45,
+        "calories": 230
+    }
+]
