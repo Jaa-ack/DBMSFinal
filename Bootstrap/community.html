@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
 
     <style>
         .scroll-container {
@@ -79,9 +81,10 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="community.html">
+                <a class="nav-link" href="community.html?autoload=true">
                     <i class="fas fa-solid fa-pager"></i>
-                    <span>Community</span></a>
+                    <span>Community</span>
+                </a>
             </li>
 
             <li class="nav-item">
@@ -153,176 +156,23 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                    <div class="container-fluid">
+                <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="container">
-                        
-                    <button id="countButton">點擊查詢</button>
-                    <div id="result"></div>
-                    <script src="script.js"></script>
-
-                    <h2>test</h2>
-                    <div id="articleList"></div>
-                    <script src="script.js"></script>
-
-                    <div class="row">
-                        <div class="col-sm-5"></div>
-                        <div class="col-sm-5"><h1 class="h3 mb-4 text-gray-800">Posts</h1></div>
-                        <div class="col-sm-2"><a class="btn btn-outline-info" href="post.html">發文</a></div>
+                        <div class="row">
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-5"><h1 class="h3 mb-4 text-gray-800">Posts</h1></div>
+                            <div class="col-sm-2"><a class="btn btn-outline-info" href="post.html">發文</a></div>
                     </div>
                     
-                    
-
                     <!-- Page Content -->
                     <div class="container">
-                        <div class="row">
-                            <div class="col" style="color: rgb(4, 4, 29);">
-                                <h4>文章一：現代科技對教育的影響</h4>
-                                <p>隨著科技的不斷進步，現代教育發生了顯著變化。數位化學習工具如平板電腦和電子白板，逐漸取代了傳統的黑板和書本，讓教學方式更加多樣化和互動化。線上學習平台的出現，使學生不再受限於教室，無論身處何地都能獲得優質的教育資源。人工智慧輔助系統也被引入教育領域，能夠根據學生的學習表現提供個性化的學習建議，提升學習效率。然而，科技的快速發展也帶來了一些挑戰，如數位鴻溝問題和隱私安全的顧慮。因此，在推動教育科技化的同時，我們也需要考慮如何公平分配資源並保障學生的數位安全。</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col d-flex align-items-center">
-                                <h5>Comments</h5>
-                                <div style="margin-left: 10px;"></div>
-                                <button type="button" class="btn btn-primary px-2 py-1">留言</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- 橫向滾動區域 -->
-                            <div class="scroll-container">
-                                <div class="box"><h5>user 1</h5>欸欸，這個新聞根本就是瞎扯，記者也是一群垃圾，整天就知道胡說八道。這種新聞我都懶得點進去看，浪費時間。不知道他們是怎麼畢業的，寫得一堆廢話。還有，這個主題也太無聊了吧，有什麼好報導的，全都是垃圾。希望下次能看到一些真正有內容的新聞，不要再給我看到這種無聊的東西了！</div>
-                                <div class="box"><h5>user 2</h5>這根本就是假消息！我每次看到這種標題就想吐，這些記者都是腦子進水了嗎？我都懷疑他們是不是專業的，完全不負責任。這種文章還要不要寫啊，浪費紙張！我真的受夠了，每天都是這種無聊的內容，實在受不了。希望他們能停止寫這種廢話，轉換一下題材吧！</div>
-                                <div class="box"><h5>user 3</h5>我真的不敢相信這是真的新聞，這麼無聊的話題也值得報導？記者是不是想破壞我們的大腦？我越來越懷疑他們的動機了，到底是為了什麼？這種新聞根本就是垃圾，我不明白為什麼他們還要寫。我希望他們能停止寫這種無聊的東西，轉而關注一些有意義的事情！</div>
-                                <div class="box"><h5>user 4</h5>這新聞實在太扯了！我怎麼能相信這種胡說八道的東西？記者的專業素養在哪裡？我真的無法理解，他們難道沒有更有內容的新聞可以報導嗎？每次看到這種無聊的報導都覺得世界越來越瘋狂了。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 5</h5>這新聞簡直就是在搞笑吧！我真的不知道這些記者是怎麼想的，居然還敢寫出這種荒謬的東西。我對他們的專業能力感到懷疑，難道他們沒有更有價值的事情可以報導嗎？這種無聊的新聞真的讓人失望，我希望他們能停止寫這種無聊的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 6</h5>我真的受夠了這種新聞！每次看到這種無聊的報導都覺得很生氣，記者難道沒有更有意義的事情可以報導嗎？我對他們的專業能力感到懷疑，這種荒謬的新聞真的讓人無語。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 7</h5>這新聞真的是莫名其妙！我完全無法相信這是真的，記者的專業素養在哪裡？我真的覺得他們在浪費我的時間，這種無聊的報導一點也不值得一看。我希望他們能停止寫這種毫無意義的東西，轉而關注一些真正有內容的議題！</div>
-                                <div class="box"><h5>user 8</h5>這新聞簡直就是笑話！我真的不知道這些記者在想什麼，居然還敢寫出這種胡說八道的東西。我對他們的專業能力感到懷疑，這種無聊的報導一點也不值得一看。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 9</h5>這新聞真的令人憤怒！我真的不明白記者在想什麼，居然還敢寫出這種荒謬的東西。我</div>
-                            </div>
-                        </div>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function() {
-                                var btn = document.querySelector(".btn-primary");
-                                var container = document.querySelector(".scroll-container");
-                        
-                                btn.addEventListener("click", function() {
-                                    var newBox = document.createElement("div");
-                                    newBox.className = "box";
-                        
-                                    var textarea = document.createElement("textarea");
-                                    textarea.className = "form-control";
-                                    textarea.setAttribute("aria-label", "With textarea");
-                        
-                                    var submitBtn = document.createElement("button");
-                                    submitBtn.textContent = "提交";
-                                    submitBtn.addEventListener("click", function() {
-                                        var text = textarea.value.trim(); // Trim whitespace
-                                        if (text !== "") {
-                                            var content = document.createTextNode(text);
-                                            newBox.innerHTML = "<h5>User</h5>";
-                                            newBox.appendChild(content);
-                                            newBox.removeChild(textarea);
-                                            newBox.removeChild(submitBtn);
-                                        } else {
-                                            container.removeChild(newBox); // Remove box if content is empty
-                                        }
-                                    });
-                        
-                                    newBox.appendChild(textarea);
-                                    newBox.appendChild(submitBtn);
-                        
-                                    container.insertBefore(newBox, container.firstChild);
-                                });
-                            });
-                        </script>
-
-                        <!-- Divider -->
-                        <hr class="sidebar-divider">
-                        <div class="row">
-                            <div class="col" style="color: rgb(4, 4, 29);">
-                                <h4>文章二：飲食習慣與健康</h4>
-                                <p>現代人生活節奏快，飲食習慣也因此發生了巨大變化。快餐和加工食品因為方便快捷成為許多人的首選，但這些食品通常含有高糖、高脂肪和高鹽，對健康不利。相反，均衡的飲食應包括新鮮的蔬菜、水果、全穀物和瘦肉，這些食物富含維生素、礦物質和纖維，有助於維持身體健康。研究表明，健康的飲食習慣可以降低患心臟病、糖尿病和某些癌症的風險。養成良好的飲食習慣不僅需要個人的自律，也需要社會的支持，如提供更多健康飲食選擇和加強營養教育。總之，健康的飲食是維持良好身體狀況的基石，值得每個人重視。</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <h5>Comments</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- 橫向滾動區域 -->
-                            <div class="scroll-container">
-                                <div class="box"><h5>user 1</h5>欸欸，這個新聞根本就是瞎扯，記者也是一群垃圾，整天就知道胡說八道。這種新聞我都懶得點進去看，浪費時間。不知道他們是怎麼畢業的，寫得一堆廢話。還有，這個主題也太無聊了吧，有什麼好報導的，全都是垃圾。希望下次能看到一些真正有內容的新聞，不要再給我看到這種無聊的東西了！</div>
-                                <div class="box"><h5>user 2</h5>這根本就是假消息！我每次看到這種標題就想吐，這些記者都是腦子進水了嗎？我都懷疑他們是不是專業的，完全不負責任。這種文章還要不要寫啊，浪費紙張！我真的受夠了，每天都是這種無聊的內容，實在受不了。希望他們能停止寫這種廢話，轉換一下題材吧！</div>
-                                <div class="box"><h5>user 3</h5>我真的不敢相信這是真的新聞，這麼無聊的話題也值得報導？記者是不是想破壞我們的大腦？我越來越懷疑他們的動機了，到底是為了什麼？這種新聞根本就是垃圾，我不明白為什麼他們還要寫。我希望他們能停止寫這種無聊的東西，轉而關注一些有意義的事情！</div>
-                                <div class="box"><h5>user 4</h5>這新聞實在太扯了！我怎麼能相信這種胡說八道的東西？記者的專業素養在哪裡？我真的無法理解，他們難道沒有更有內容的新聞可以報導嗎？每次看到這種無聊的報導都覺得世界越來越瘋狂了。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 5</h5>這新聞簡直就是在搞笑吧！我真的不知道這些記者是怎麼想的，居然還敢寫出這種荒謬的東西。我對他們的專業能力感到懷疑，難道他們沒有更有價值的事情可以報導嗎？這種無聊的新聞真的讓人失望，我希望他們能停止寫這種無聊的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 6</h5>我真的受夠了這種新聞！每次看到這種無聊的報導都覺得很生氣，記者難道沒有更有意義的事情可以報導嗎？我對他們的專業能力感到懷疑，這種荒謬的新聞真的讓人無語。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 7</h5>這新聞真的是莫名其妙！我完全無法相信這是真的，記者的專業素養在哪裡？我真的覺得他們在浪費我的時間，這種無聊的報導一點也不值得一看。我希望他們能停止寫這種毫無意義的東西，轉而關注一些真正有內容的議題！</div>
-                                <div class="box"><h5>user 8</h5>這新聞簡直就是笑話！我真的不知道這些記者在想什麼，居然還敢寫出這種胡說八道的東西。我對他們的專業能力感到懷疑，這種無聊的報導一點也不值得一看。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 9</h5>這新聞真的令人憤怒！我真的不明白記者在想什麼，居然還敢寫出這種荒謬的東西。我</div>
-                            </div>
-                        </div>
-                        <!-- Divider -->
-                        <hr class="sidebar-divider">
-                        <div class="row">
-                            <div class="col" style="color: rgb(4, 4, 29);">
-                                <h4>文章三：環保意識的提升</h4>
-                                <p>隨著環境問題日益嚴重，環保意識的提升變得愈發重要。全球氣候變遷、空氣污染、水資源短缺等問題已經威脅到人類的生存和發展。提高環保意識，不僅僅是個人行為的改變，更需要集體的努力和政策的支持。日常生活中，我們可以通過減少塑料使用、節約能源、選擇公共交通等方式來減少對環境的影響。政府和企業也應該加強環保法規，推動綠色技術的發展。教育方面，從小培養學生的環保意識，讓他們了解環保的重要性和基本知識，將對未來的環境保護起到長遠的積極作用。只有大家共同努力，才能真正實現可持續發展。</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <h5>Comments</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- 橫向滾動區域 -->
-                            <div class="scroll-container">
-                                <div class="box"><h5>user 1</h5>欸欸，這個新聞根本就是瞎扯，記者也是一群垃圾，整天就知道胡說八道。這種新聞我都懶得點進去看，浪費時間。不知道他們是怎麼畢業的，寫得一堆廢話。還有，這個主題也太無聊了吧，有什麼好報導的，全都是垃圾。希望下次能看到一些真正有內容的新聞，不要再給我看到這種無聊的東西了！</div>
-                                <div class="box"><h5>user 2</h5>這根本就是假消息！我每次看到這種標題就想吐，這些記者都是腦子進水了嗎？我都懷疑他們是不是專業的，完全不負責任。這種文章還要不要寫啊，浪費紙張！我真的受夠了，每天都是這種無聊的內容，實在受不了。希望他們能停止寫這種廢話，轉換一下題材吧！</div>
-                                <div class="box"><h5>user 3</h5>我真的不敢相信這是真的新聞，這麼無聊的話題也值得報導？記者是不是想破壞我們的大腦？我越來越懷疑他們的動機了，到底是為了什麼？這種新聞根本就是垃圾，我不明白為什麼他們還要寫。我希望他們能停止寫這種無聊的東西，轉而關注一些有意義的事情！</div>
-                                <div class="box"><h5>user 4</h5>這新聞實在太扯了！我怎麼能相信這種胡說八道的東西？記者的專業素養在哪裡？我真的無法理解，他們難道沒有更有內容的新聞可以報導嗎？每次看到這種無聊的報導都覺得世界越來越瘋狂了。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 5</h5>這新聞簡直就是在搞笑吧！我真的不知道這些記者是怎麼想的，居然還敢寫出這種荒謬的東西。我對他們的專業能力感到懷疑，難道他們沒有更有價值的事情可以報導嗎？這種無聊的新聞真的讓人失望，我希望他們能停止寫這種無聊的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 6</h5>我真的受夠了這種新聞！每次看到這種無聊的報導都覺得很生氣，記者難道沒有更有意義的事情可以報導嗎？我對他們的專業能力感到懷疑，這種荒謬的新聞真的讓人無語。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 7</h5>這新聞真的是莫名其妙！我完全無法相信這是真的，記者的專業素養在哪裡？我真的覺得他們在浪費我的時間，這種無聊的報導一點也不值得一看。我希望他們能停止寫這種毫無意義的東西，轉而關注一些真正有內容的議題！</div>
-                                <div class="box"><h5>user 8</h5>這新聞簡直就是笑話！我真的不知道這些記者在想什麼，居然還敢寫出這種胡說八道的東西。我對他們的專業能力感到懷疑，這種無聊的報導一點也不值得一看。我希望他們能停止寫這種沒有意義的東西，轉而關注一些真正重要的議題！</div>
-                                <div class="box"><h5>user 9</h5>這新聞真的令人憤怒！我真的不明白記者在想什麼，居然還敢寫出這種荒謬的東西。我</div>
-                            </div>
-                        </div>
-
-                        <!-- Divider -->
-                        <hr class="sidebar-divider">
-
-                        <div class="btn-toolbar d-flex justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group mr-2" role="group" aria-label="group">
-                                <button type="button" class="btn btn-secondary">1</button>
-                                <button type="button" class="btn btn-secondary">2</button>
-                                <button type="button" class="btn btn-secondary">3</button>
-                                <button type="button" class="btn btn-secondary">4</button>
-                                <button type="button" class="btn btn-secondary">5</button>
-                                <button type="button" class="btn btn-secondary">6</button>
-                                <button type="button" class="btn btn-secondary">7</button>
-                                <button type="button" class="btn btn-secondary">8</button>
-                                <button type="button" class="btn btn-secondary">9</button>
-                                <button type="button" class="btn btn-secondary">10</button>
-                                <button type="button" class="btn btn-secondary">>></button>
-                            </div>
-                            <!--  text-primary -->
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text m-0 font-weight-bold" id="btnGroupAddon2">跳至第_頁</div>
-                                </div>
-                                <input type="text" class="form-control" placeholder="0" aria-label="0" aria-describedby="btnGroupAddon2" style="width:30pt">
-                            </div>
+                        <div class="container" id="articlesContainer">
+                            <!-- Articles will be dynamically inserted here -->
                         </div>
                     </div>
-                        
-                    <!-- 文章四：運動對心理健康的影響</h4>運動不僅對身體健康有益，對心理健康也有顯著的積極影響。研究顯示，定期運動可以有效減少壓力、焦慮和抑鬱症狀，提升整體心理健康。運動能促使大腦釋放內啡肽，這種化學物質能讓人感到愉悅和放鬆。此外，參加團隊運動還能增強社交能力，促進人際關係。即使是簡單的日常活動，如散步或瑜伽，也能幫助改善情緒和增強心理韌性。對於現代人來說，養成規律的運動習慣至關重要，可以幫助他們應對生活中的各種挑戰，保持積極樂觀的心態。因此，無論多忙，都應該抽出時間來進行運動，以維持心理和身體的雙重健康。 -->
-                    <!-- <h4>文章五：人工智慧在醫療領域的應用</h4>人工智慧（AI）正在改變醫療領域的面貌，為診斷和治療帶來新的突破。AI技術可以快速分析大量的醫療數據，幫助醫生做出更準確的診斷。例如，AI可以通過分析影像資料，檢測出早期的癌症或其他疾病，比傳統方法更精確。機器學習算法還能根據患者的病歷數據，提供個性化的治療方案，提升治療效果。此外，AI還能優化醫院的運營管理，如病房安排和資源分配，提高醫療效率。然而，AI在醫療領域的應用也面臨挑戰，如數據隱私、安全問題和技術依賴等。未來，隨著技術的不斷進步和完善，AI在醫療領域的應用將會更加廣泛，為人類健康帶來更多福祉。            -->
+                    
                 </div>
                 <!-- /.container-fluid -->
 
