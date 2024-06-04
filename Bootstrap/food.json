@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Banana",
+        "portion": "1 medium",
+        "calories": 105
+    },
+    {
+        "name": "Apple",
+        "portion": "1 medium",
+        "calories": 95
+    },
+    {
+        "name": "Orange",
+        "portion": "1 medium",
+        "calories": 62
+    },
+    {
+        "name": "Egg",
+        "portion": "1 large",
+        "calories": 78
+    },
+    {
+        "name": "Chicken breast",
+        "portion": "3 ounces (cooked)",
+        "calories": 136
+    },
+    {
+        "name": "Salmon",
+        "portion": "3 ounces (cooked)",
+        "calories": 171
+    },
+    {
+        "name": "Rice",
+        "portion": "1/2 cup (cooked)",
+        "calories": 103
+    },
+    {
+        "name": "Pasta",
+        "portion": "1/2 cup (cooked)",
+        "calories": 115
+    },
+    {
+        "name": "Bread",
+        "portion": "1 slice",
+        "calories": 80
+    },
+    {
+        "name": "Cheese",
+        "portion": "1 ounce",
+        "calories": 113
+    }
+]

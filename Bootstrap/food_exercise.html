@@ -392,36 +392,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
-    <!-- Send Calories Intake -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var caloriesIntake = localStorage.getItem("caloriesIntake");
-        if (caloriesIntake) {
-            document.querySelectorAll(".h5.mb-0.font-weight-bold.text-gray-800").forEach(function(el) {
-                el.textContent = caloriesIntake; // Update all relevant fields
-            });
-        }
-        
-        var today = new Date();
-        var displayDate = document.getElementById('current-date');
     
-        function updateDisplay(date) {
-            displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        }
-    
-        updateDisplay(today);
-    
-        document.getElementById('prev-day').addEventListener('click', function() {
-            today.setDate(today.getDate() - 1);
-            updateDisplay(today);
-        });
-    
-        document.getElementById('next-day').addEventListener('click', function() {
-            today.setDate(today.getDate() + 1);
-            updateDisplay(today);
-        });
-    });
-    </script>
 </body>
 </html>

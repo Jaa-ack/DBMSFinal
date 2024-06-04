@@ -219,51 +219,61 @@ $(document).ready(function() {
 });
 
 // 加载并显示餐点数据
-function loadMealData(mealType, tableId) {
-    let currentDate = new Date();
-    const dateString = currentDate.toISOString().split('T')[0];
-
-    $.getJSON('meals.json', function(data) {
-        const tableBody = $(`${tableId} tbody`);
-        tableBody.empty(); // 清空现有数据
-
-        const filteredData = data.filter(item => item.date === dateString && item.type === mealType);
-        if (filteredData.length === 0) {
-            tableBody.append('<tr><td colspan="3">No data available for this meal</td></tr>');
-        } else {
-            filteredData.forEach(function(item) {
-                const tableRow = `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.portion}</td>
-                        <td>${item.calories}</td>
-                    </tr>
-                `;
-                tableBody.append(tableRow);
-            });
-        }
-    }).fail(function() {
-        console.error('Error loading JSON data');
-    });
-}
-
-// 加载并显示运动数据
-function loadExerciseData() {
-    $.getJSON('exercise.json', function(data) {
-        const tableBody = $('#exerciseTable tbody');
-        tableBody.empty(); // 清空现有数据
-
-        data.forEach(function(item) {
-            const tableRow = `
-                <tr>
-                    <td>${item.type}</td>
-                    <td>${item.time}</td>
-                    <td>${item.calories}</td>
-                </tr>
-            `;
-            tableBody.append(tableRow);
+document.addEventListener('DOMContentLoaded', function() {
+    var caloriesIntake = localStorage.getItem("caloriesIntake");
+    if (caloriesIntake) {
+        document.querySelectorAll(".h5.mb-0.font-weight-bold.text-gray-800").forEach(function(el) {
+            el.textContent = caloriesIntake; // Update all relevant fields
         });
-    }).fail(function() {
-        console.error('Error loading JSON data');
+    }
+    
+    var today = new Date();
+    var displayDate = document.getElementById('current-date');
+
+    function updateDisplay(date) {
+        displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const dateString = date.toISOString().split('T')[0];
+        loadMealData(dateString, 'breakfast', '#breakfastTable');
+        loadMealData(dateString, 'lunch', '#lunchTable');
+        loadMealData(dateString, 'dinner', '#dinnerTable');
+    }
+
+    // 加载并显示餐点数据
+    function loadMealData(dateString, mealType, tableId) {
+        $.getJSON('meals.json', function(data) {
+            const tableBody = $(`${tableId} tbody`);
+            tableBody.empty(); // 清空现有数据
+
+            const filteredData = data.filter(item => item.date === dateString && item.type === mealType);
+            if (filteredData.length === 0) {
+                tableBody.append('<tr><td colspan="3">No data available for this meal</td></tr>');
+            } else {
+                filteredData.forEach(function(item) {
+                    const tableRow = `
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.portion}</td>
+                            <td>${item.calories}</td>
+                        </tr>
+                    `;
+                    tableBody.append(tableRow);
+                });
+            }
+        }).fail(function() {
+            console.error('Error loading JSON data');
+        });
+    }
+
+    document.getElementById('prev-day').addEventListener('click', function() {
+        today.setDate(today.getDate() - 1);
+        updateDisplay(today);
     });
-}
+
+    document.getElementById('next-day').addEventListener('click', function() {
+        today.setDate(today.getDate() + 1);
+        updateDisplay(today);
+    });
+
+    // 初始加载
+    updateDisplay(today);
+});
