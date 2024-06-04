@@ -1,22 +1,5 @@
-$(function() {
-    // 判断 URL 中是否包含 autoload 参数
-    var autoload = getUrlParameter('autoload');
-    if (autoload === 'true') {
-        // 自动加载文章内容
-        loadArticlesAndComments();
-    }
-});
-
-// 获取 URL 参数的函数
-function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-function loadArticlesAndComments() {
-    // 使用 jQuery 的 AJAX 方法获取文章 JSON 数据
+$(document).ready(function() {
+    // 自动加载文章内容
     $.getJSON('articles.json', function(articlesData) {
         // 遍历每篇文章
         $.each(articlesData, function(index, article) {
@@ -47,10 +30,28 @@ function loadArticlesAndComments() {
         });
 
         // 加载并显示留言
-        loadComments();
+        $.getJSON('comments.json', function(commentsData) {
+            // 遍历每条留言
+            $.each(commentsData, function(index, comment) {
+                // 获取对应文章的容器
+                var articleContainer = $(`.article[data-article-id="${comment.post_id}"]`);
+
+                // 创建留言的 HTML
+                var commentHTML = `
+                    <div class="box"><h5>${comment.user}</h5>${comment.message}</div>
+                `;
+                // 将留言添加到对应文章的容器中
+                articleContainer.find('.scroll-container').append(commentHTML);
+            });
+        });
 
         // 添加留言按钮的功能
-        $(".btn-primary").click(function() {
+        $(document).on('click', '.btn-primary', function() {
+            // 检查页面上是否已经有一个活动的输入栏位
+            if ($('.scroll-container').find('textarea').length > 0) {
+                return; // 如果已经存在输入栏位，则不执行后续代码
+            }
+
             var newBox = document.createElement("div");
             newBox.className = "box";
 
@@ -60,16 +61,18 @@ function loadArticlesAndComments() {
 
             var submitBtn = document.createElement("button");
             submitBtn.textContent = "提交";
+            submitBtn.className = "btn btn-primary"; // 添加样式
             submitBtn.addEventListener("click", function() {
                 var text = textarea.value.trim(); // Trim whitespace
                 if (text !== "") {
                     var content = document.createTextNode(text);
                     newBox.innerHTML = "<h5>User</h5>";
                     newBox.appendChild(content);
-                    newBox.removeChild(textarea);
-                    newBox.removeChild(submitBtn);
-                } else {
-                    container.removeChild(newBox); // Remove box if content is empty
+                }
+                newBox.removeChild(textarea);
+                newBox.removeChild(submitBtn);
+                if (text === "") {
+                    newBox.remove(); // Remove box if content is empty
                 }
             });
 
@@ -80,25 +83,7 @@ function loadArticlesAndComments() {
             container.prepend(newBox);
         });
     });
-}
-
-function loadComments() {
-    // 使用 jQuery 的 AJAX 方法获取留言 JSON 数据
-    $.getJSON('comments.json', function(commentsData) {
-        // 遍历每条留言
-        $.each(commentsData, function(index, comment) {
-            // 获取对应文章的容器
-            var articleContainer = $(`.article[data-article-id="${comment.post_id}"]`);
-
-            // 创建留言的 HTML
-            var commentHTML = `
-                <div class="box"><h5>${comment.user}</h5>${comment.message}</div>
-            `;
-            // 将留言添加到对应文章的容器中
-            articleContainer.find('.scroll-container').append(commentHTML);
-        });
-    });
-}
+});
 
 // rank.html排序
 $(document).ready(function() {
@@ -182,36 +167,103 @@ $(document).ready(function() {
 });
 
 // database.html 搜尋運動 (有缺陷)
-// $(document).ready(function() {
-//     $('#searchExercise').click(function() {
-//         var query = $('#exerciseSearchInput').val().trim();
+$(document).ready(function() {
+    $('#searchExercise').click(function() {
+        var query = $('#exerciseSearchInput').val().trim();
         
-//         if (query === "") {
-//             alert("Search input cannot be empty!");
-//         } else {
-//             $.getJSON('exercise.json', function(data) {
-//                 var filteredData = data.filter(function(item) {
-//                     return item.name.toLowerCase().includes(query.toLowerCase());
-//                 });
+        if (query === "") {
+            alert("Search input cannot be empty!");
+        } else {
+            $.getJSON('exercise.json', function(data) {
+                var filteredData = data.filter(function(item) {
+                    return item.type.toLowerCase().includes(query.toLowerCase());
+                });
                 
-//                 var tableBody = $('#exerciseTable tbody');
-//                 tableBody.empty(); // Clear existing data
+                var tableBody = $('#ExerciseTable tbody');
+                tableBody.empty(); // Clear existing data
                 
-//                 if (filteredData.length === 0) {
-//                     tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
-//                 } else {
-//                     filteredData.forEach(function(item) {
-//                         var tableRow = `
-//                             <tr>
-//                                 <td>${item.type}</td>
-//                                 <td>${item.time}</td>
-//                                 <td>${item.calories}</td>
-//                             </tr>
-//                         `;
-//                         tableBody.append(tableRow);
-//                     });
-//                 }
-//             });
-//         }
-//     });
-// });
+                if (filteredData.length === 0) {
+                    tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
+                } else {
+                    filteredData.forEach(function(item) {
+                        var tableRow = `
+                            <tr>
+                                <td>${item.type}</td>
+                                <td>${item.time}</td>
+                                <td>${item.calories}</td>
+                            </tr>
+                        `;
+                        tableBody.append(tableRow);
+                    });
+                }
+            });
+        }
+    });
+});
+
+// food_exercise.html 更新飲食資訊
+$(document).ready(function() {
+    // 加载并显示早餐数据
+    loadMealData('breakfast', '#breakfastTable');
+
+    // 加载并显示午餐数据
+    loadMealData('lunch', '#lunchTable');
+
+    // 加载并显示晚餐数据
+    loadMealData('dinner', '#dinnerTable');
+
+    // 加载运动数据
+    loadExerciseData();
+
+    // 事件监听器可以在这里添加
+});
+
+// 加载并显示餐点数据
+function loadMealData(mealType, tableId) {
+    let currentDate = new Date();
+    const dateString = currentDate.toISOString().split('T')[0];
+
+    $.getJSON('meals.json', function(data) {
+        const tableBody = $(`${tableId} tbody`);
+        tableBody.empty(); // 清空现有数据
+
+        const filteredData = data.filter(item => item.date === dateString && item.type === mealType);
+        if (filteredData.length === 0) {
+            tableBody.append('<tr><td colspan="3">No data available for this meal</td></tr>');
+        } else {
+            filteredData.forEach(function(item) {
+                const tableRow = `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.portion}</td>
+                        <td>${item.calories}</td>
+                    </tr>
+                `;
+                tableBody.append(tableRow);
+            });
+        }
+    }).fail(function() {
+        console.error('Error loading JSON data');
+    });
+}
+
+// 加载并显示运动数据
+function loadExerciseData() {
+    $.getJSON('exercise.json', function(data) {
+        const tableBody = $('#exerciseTable tbody');
+        tableBody.empty(); // 清空现有数据
+
+        data.forEach(function(item) {
+            const tableRow = `
+                <tr>
+                    <td>${item.type}</td>
+                    <td>${item.time}</td>
+                    <td>${item.calories}</td>
+                </tr>
+            `;
+            tableBody.append(tableRow);
+        });
+    }).fail(function() {
+        console.error('Error loading JSON data');
+    });
+}
