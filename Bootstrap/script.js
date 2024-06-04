@@ -181,38 +181,37 @@ $(document).ready(function() {
     });
 });
 
-// database.html 搜尋運動
-$(document).ready(function() {
-    $('#searchExercise').click(function() {
-        var query = $('#exerciseSearchInput').val().trim();
+// database.html 搜尋運動 (有缺陷)
+// $(document).ready(function() {
+//     $('#searchExercise').click(function() {
+//         var query = $('#exerciseSearchInput').val().trim();
         
-        if (query === "") {
-            alert("Search input cannot be empty!");
-        } else {
-            $.getJSON('exercise.json', function(data) {
-                var filteredData = data.filter(function(item) {
-                    return item.name.toLowerCase().includes(query.toLowerCase());
-                });
+//         if (query === "") {
+//             alert("Search input cannot be empty!");
+//         } else {
+//             $.getJSON('exercise.json', function(data) {
+//                 var filteredData = data.filter(function(item) {
+//                     return item.name.toLowerCase().includes(query.toLowerCase());
+//                 });
                 
-                var tableBody = $('#exerciseTable tbody');
-                tableBody.empty(); // Clear existing data
-                tableBody.append('<tr><td colspan="3">test!</td></tr>');
+//                 var tableBody = $('#exerciseTable tbody');
+//                 tableBody.empty(); // Clear existing data
                 
-                if (filteredData.length === 0) {
-                    tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
-                } else {
-                    filteredData.forEach(function(item) {
-                        var tableRow = `
-                            <tr>
-                                <td>${item.type}</td>
-                                <td>${item.time}</td>
-                                <td>${item.calories}</td>
-                            </tr>
-                        `;
-                        tableBody.append(tableRow);
-                    });
-                }
-            });
-        }
-    });
-});
+//                 if (filteredData.length === 0) {
+//                     tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
+//                 } else {
+//                     filteredData.forEach(function(item) {
+//                         var tableRow = `
+//                             <tr>
+//                                 <td>${item.type}</td>
+//                                 <td>${item.time}</td>
+//                                 <td>${item.calories}</td>
+//                             </tr>
+//                         `;
+//                         tableBody.append(tableRow);
+//                     });
+//                 }
+//             });
+//         }
+//     });
+// });
