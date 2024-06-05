@@ -1,7 +1,0 @@
-[
-    {"type": "Running", "time": "30 minutes", "calories": 300},
-    {"type": "Cycling", "time": "45 minutes", "calories": 400},
-    {"type": "Swimming", "time": "60 minutes", "calories": 500},
-    {"type": "Yoga", "time": "60 minutes", "calories": 200},
-    {"type": "Weightlifting", "time": "30 minutes", "calories": 250}
-]

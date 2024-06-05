@@ -43,54 +43,17 @@
                                     </div>
 
                                     <!-- 登入資料 -->
-                                    <form class="user">
+                                    <form class="user" id="loginForm">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="InputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="email" class="form-control form-control-user" id="InputEmail" aria-describedby="emailHelp" placeholder="輸入電子郵件地址..." required>
+                                            <div class="invalid-feedback" id="email-feedback">電子郵件地址是必填欄位。</div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="InputPassword" placeholder="Password">
+                                            <input type="password" class="form-control form-control-user" id="InputPassword" placeholder="密碼" required>
+                                            <div class="invalid-feedback" id="password-feedback">密碼是必填欄位。</div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <!-- 登入功能 -->
-                                        <button class="btn btn-primary btn-user btn-block mb-2" type="submit">Login</button>
-                                        <script>
-                                            document.querySelector('.user').addEventListener('submit', function(event) {
-                                                // 防止表單提交默認行為
-                                                event.preventDefault();
-                                                // // 獲取用戶名和密碼
-                                                var userEmail = document.getElementById('InputEmail').value;
-                                                var password = document.getElementById('InputPassword').value;
-
-                                                // if (){
-                                                //     // 登入成功，導向到目標頁面
-                                                //     window.location.href = 'food_exercise.html';
-                                                // }else {
-                                                //     alert('帳號密碼錯誤');
-                                                // }
-                                            });
-                                        </script>
-
-                                        <!--button class="btn btn-primary btn-user btn-block" href="register.html">Register</button-->
-                                         <a href="register.html" class="btn btn-secondary btn-user btn-block">
-                                            Register
-                                        </a>
-
-                                        
-                                        <!--a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a-->
+                                        <button class="btn btn-primary btn-user btn-block mb-2" type="button" onclick="loginUser()">登入</button>
+                                        <a href="register.html" class="btn btn-secondary btn-user btn-block">註冊</a>
                                     </form>
                                     <hr>
 
@@ -98,11 +61,6 @@
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
-
-                                    <!-- 註冊帳號 -->
-                                    <!--div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div-->
                                 </div>
                             </div>
                         </div>
@@ -124,6 +82,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="script.js"></script>
 
 </body>
 

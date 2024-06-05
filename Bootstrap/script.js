@@ -1,329 +1,270 @@
-// $(document).ready(function() {
-//     // 自动加载文章内容
-//     $.getJSON('articles.json', function(articlesData) {
-//         // 遍历每篇文章
-//         $.each(articlesData, function(index, article) {
-//             // 创建文章内容的 HTML
-//             var articleHTML = `
-//                 <div class="article" data-article-id="${article.id}">
-//                     <div class="row">
-//                         <div class="col" style="color: rgb(4, 4, 29);">
-//                             <h4>${article.title}</h4>
-//                             <p>${article.content}</p>
-//                         </div>
-//                     </div>
-//                     <div class="row comments-row">
-//                         <div class="col d-flex align-items-center">
-//                             <h5>Comments</h5>
-//                             <div style="margin-left: 10px;"></div>
-//                             <button type="button" class="btn btn-primary px-2 py-1">留言</button>
-//                         </div>
-//                     </div>
-//                     <div class="scroll-container">
-//                     </div>
-//                 </div>
-//                 <!-- Divider -->
-//                 <hr class="sidebar-divider">
-//             `;
-//             // 将文章内容添加到页面
-//             $('#articlesContainer').append(articleHTML);
-//         });
+async function loginUser() {
+    const email = document.getElementById('InputEmail').value.trim();
+    const password = document.getElementById('InputPassword').value.trim();
 
-//         // 加载并显示留言
-//         $.getJSON('comments.json', function(commentsData) {
-//             // 遍历每条留言
-//             $.each(commentsData, function(index, comment) {
-//                 // 获取对应文章的容器
-//                 var articleContainer = $(`.article[data-article-id="${comment.post_id}"]`);
+    // 检查邮箱和密码是否为空
+    if (!email || !password) {
+        document.getElementById('email-feedback').style.display = !email ? 'block' : 'none';
+        document.getElementById('password-feedback').style.display = !password ? 'block' : 'none';
+        return;
+    }
 
-//                 // 创建留言的 HTML
-//                 var commentHTML = `
-//                     <div class="box"><h5>${comment.user}</h5>${comment.message}</div>
-//                 `;
-//                 // 将留言添加到对应文章的容器中
-//                 articleContainer.find('.scroll-container').append(commentHTML);
-//             });
-//         });
+    try {
+        const response = await fetch(`http://localhost:3000/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+        const data = await response.json();
 
-//         // 添加留言按钮的功能
-//         $(document).on('click', '.btn-primary', function() {
-//             // 检查页面上是否已经有一个活动的输入栏位
-//             if ($('.scroll-container').find('textarea').length > 0) {
-//                 return; // 如果已经存在输入栏位，则不执行后续代码
-//             }
-
-//             var newBox = document.createElement("div");
-//             newBox.className = "box";
-
-//             var textarea = document.createElement("textarea");
-//             textarea.className = "form-control";
-//             textarea.setAttribute("aria-label", "With textarea");
-
-//             var submitBtn = document.createElement("button");
-//             submitBtn.textContent = "提交";
-//             submitBtn.className = "btn btn-primary"; // 添加样式
-//             submitBtn.addEventListener("click", function() {
-//                 var text = textarea.value.trim(); // Trim whitespace
-//                 if (text !== "") {
-//                     var content = document.createTextNode(text);
-//                     newBox.innerHTML = "<h5>User</h5>";
-//                     newBox.appendChild(content);
-//                 }
-//                 newBox.removeChild(textarea);
-//                 newBox.removeChild(submitBtn);
-//                 if (text === "") {
-//                     newBox.remove(); // Remove box if content is empty
-//                 }
-//             });
-
-//             newBox.appendChild(textarea);
-//             newBox.appendChild(submitBtn);
-
-//             var container = $(this).closest(".article").find(".scroll-container");
-//             container.prepend(newBox);
-//         });
-//     });
-// });
-
-// rank.html排序
-$(document).ready(function() {
-    $.getJSON('users.json', function(users) {
-        // Sort users by today score in descending order
-        users.sort(function(a, b) {
-            return b.today - a.today;
-        });
-
-        users.forEach(function(user, index) {
-            var progressClass;
-            if (index === 0) {
-                progressClass = 'bg-danger'; // First place: danger red
-            } else if (index === 1) {
-                progressClass = 'bg-warning'; // Second place: warning yellow
-            } else if (index === 2) {
-                progressClass = 'bg-success'; // Third place: success green
+        if (response.ok) {
+            if (data.message === 'Login successful') {
+                alert('登入成功');
+                saveUserDataToLocalStorage(data.userId, data.name);
+                window.location.href = 'food_exercise.html';
             } else {
-                progressClass = index % 2 === 0 ? 'bg-gray-400' : 'bg-gray-600'; // Alternating gray shades
+                alert(data.message);
             }
-
-            var tableRow = `
-                <tr class="${progressClass}">
-                    <th scope="row">${index + 1}</th>
-                    <td>${user.name}</td>
-                    <td>${user.today}%</td>
-                    <td>
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: ${user.average}%"
-                                aria-valuenow="${user.average}"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            >
-                                ${user.average}%
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            `;
-            $('#userTableBody').append(tableRow);
-        });
-    });
-});
-
-// database.html 搜尋食物
-$(document).ready(function() {
-    $('#searchFood').click(function() {
-        var query = $('#foodSearchInput').val().trim();
-        
-        if (query === "") {
-            alert("Search input cannot be empty!");
         } else {
-            $.getJSON('food.json', function(data) {
-                var filteredData = data.filter(function(item) {
-                    return item.name.toLowerCase().includes(query.toLowerCase());
-                });
-                
-                var tableBody = $('#foodTable tbody');
-                tableBody.empty(); // Clear existing data
-                
-                if (filteredData.length === 0) {
-                    tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
-                } else {
-                    filteredData.forEach(function(item) {
-                        var tableRow = `
-                            <tr>
-                                <td>${item.name}</td>
-                                <td>${item.portion}</td>
-                                <td>${item.calories}</td>
-                            </tr>
-                        `;
-                        tableBody.append(tableRow);
-                    });
-                }
-            });
+            alert(`登入失敗: ${data.message}`);
         }
-    });
-});
-
-// database.html 搜尋運動
-$(document).ready(function() {
-    $('#searchExercise').click(function() {
-        var query = $('#exerciseSearchInput').val().trim();
-        
-        if (query === "") {
-            alert("Search input cannot be empty!");
-        } else {
-            $.getJSON('exercise.json', function(data) {
-                var filteredData = data.filter(function(item) {
-                    return item.type.toLowerCase().includes(query.toLowerCase());
-                });
-                
-                var tableBody = $('#ExerciseTable tbody');
-                tableBody.empty(); // Clear existing data
-                
-                if (filteredData.length === 0) {
-                    tableBody.append('<tr><td colspan="3">No matching results found</td></tr>');
-                } else {
-                    filteredData.forEach(function(item) {
-                        var tableRow = `
-                            <tr>
-                                <td>${item.type}</td>
-                                <td>${item.time}</td>
-                                <td>${item.calories}</td>
-                            </tr>
-                        `;
-                        tableBody.append(tableRow);
-                    });
-                }
-            });
-        }
-    });
-});
-
-// food_exercise.html 更新飲食資訊
-$(document).ready(function() {
-    // 加载并显示早餐数据
-    loadMealData('breakfast', '#breakfastTable');
-
-    // 加载并显示午餐数据
-    loadMealData('lunch', '#lunchTable');
-
-    // 加载并显示晚餐数据
-    loadMealData('dinner', '#dinnerTable');
-
-    // 加载运动数据
-    loadExerciseData();
-
-    // 事件监听器可以在这里添加
-});
-
-// 加载并显示餐点数据
-document.addEventListener('DOMContentLoaded', function() {
-    var caloriesIntake = localStorage.getItem("caloriesIntake");
-    if (caloriesIntake) {
-        document.querySelectorAll(".h5.mb-0.font-weight-bold.text-gray-800").forEach(function(el) {
-            el.textContent = caloriesIntake; // Update all relevant fields
-        });
+    } catch (error) {
+        console.error('錯誤:', error);
+        alert('登入時發生錯誤。');
     }
-    
-    var today = new Date();
-    var displayDate = document.getElementById('current-date');
+}
 
-    function updateDisplay(date) {
-        displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        const dateString = date.toISOString().split('T')[0];
-        loadMealData(dateString, 'breakfast', '#breakfastTable');
-        loadMealData(dateString, 'lunch', '#lunchTable');
-        loadMealData(dateString, 'dinner', '#dinnerTable');
+async function registerUser() {
+    const name = document.getElementById('Name').value.trim();
+    const birthday = document.getElementById('birthday').value.trim();
+    const email = document.getElementById('exampleInputEmail').value.trim();
+    const height = document.getElementById('height').value.trim();
+    const weight = document.getElementById('weight').value.trim();
+    const password = document.getElementById('InputPassword').value.trim();
+    const repeatPassword = document.getElementById('RepeatPassword').value.trim();
+
+    if (password !== repeatPassword) {
+        document.getElementById('repeat-password-feedback').innerText = 'Passwords do not match';
+        return;
     }
 
-    // 加载并显示餐点数据
-    function loadMealData(dateString, mealType, tableId) {
-        $.getJSON('meals.json', function(data) {
-            const tableBody = $(`${tableId} tbody`);
-            tableBody.empty(); // 清空现有数据
+    try {
+        const response = await fetch(`http://localhost:3000/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                birthday: birthday,
+                email: email,
+                height: height,
+                weight: weight,
+                password: password
+            })
+        });
 
-            const filteredData = data.filter(item => item.date === dateString && item.type === mealType);
-            if (filteredData.length === 0) {
-                tableBody.append('<tr><td colspan="3">No data available for this meal</td></tr>');
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('User registered successfully');
+            window.location.href = 'login.html'; // Redirect to login.html
+        } else {
+            alert(`Registration failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while registering.');
+    }
+}
+
+// 登入成功後將用戶信息保存到 localStorage 中
+function saveUserDataToLocalStorage(userId, name) {
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('name', name);
+}
+
+// 從 localStorage 中讀取用戶信息
+function getUserDataFromLocalStorage() {
+    const userId = localStorage.getItem('userId');
+    const name = localStorage.getItem('name');
+    return { userId, name };
+}
+
+// 在需要使用用戶信息的地方，從 localStorage 中取出
+const userData = getUserDataFromLocalStorage();
+
+document.getElementById('user-name').innerText = userData.name;
+
+(function () {
+    'use strict';
+
+    window.addEventListener('load', function () {
+        var forms = document.getElementsByClassName('needs-validation');
+        Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                var isValid = true;
+
+                // Get input elements
+                var heightInput = document.getElementById('height');
+                var weightInput = document.getElementById('weight');
+                var passwordInput = document.getElementById('InputPassword');
+                var repeatPasswordInput = document.getElementById('RepeatPassword');
+                var emailInput = document.getElementById('exampleInputEmail');
+
+                // Reset custom validity messages
+                heightInput.setCustomValidity('');
+                weightInput.setCustomValidity('');
+                passwordInput.setCustomValidity('');
+                repeatPasswordInput.setCustomValidity('');
+                emailInput.setCustomValidity('');
+
+                // Check height
+                if (isNaN(heightInput.value) || heightInput.value.trim() === '') {
+                    heightInput.setCustomValidity('Invalid height');
+                    isValid = false;
+                }
+
+                // Check weight
+                if (isNaN(weightInput.value) || weightInput.value.trim() === '') {
+                    weightInput.setCustomValidity('Invalid weight');
+                    isValid = false;
+                }
+
+                // Check repeat password
+                if (repeatPasswordInput.value !== passwordInput.value) {
+                    repeatPasswordInput.setCustomValidity('Passwords do not match');
+                    isValid = false;
+                }
+
+                // Check email
+                if (!emailInput.validity.valid) {
+                    emailInput.setCustomValidity('Please provide a valid email address');
+                    isValid = false;
+                }
+
+                if (form.checkValidity() === false || !isValid) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    event.preventDefault(); // Prevent the form from submitting normally
+                    registerUser(); // Register user
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+
+// 加载给定日期和用户ID的餐数据
+function loadMealData(date, userId, mealType, tableId) {
+    fetch(`http://localhost:3000/meal?date=${date.toISOString()}&userId=${userId}&mealType=${mealType}`)
+        .then(response => response.json())
+        .then(data => {
+            // 清空表格
+            var tableBody = document.getElementById(tableId).querySelector("tbody");
+            tableBody.innerHTML = "";
+
+            // 如果没有数据，显示一条消息
+            if (data.length === 0) {
+                var messageRow = `<tr><td colspan="2">No data available</td></tr>`;
+                tableBody.insertAdjacentHTML("beforeend", messageRow);
             } else {
-                filteredData.forEach(function(item) {
-                    const tableRow = `
-                        <tr>
-                            <td>${item.name}</td>
-                            <td>${item.portion}</td>
-                            <td>${item.calories}</td>
-                        </tr>
-                    `;
-                    tableBody.append(tableRow);
+                // 将数据添加到表格中
+                data.forEach(function (meal) {
+                    var row = `<tr><td>${meal.food_Name}</td><td>${meal.calories}</td></tr>`;
+                    tableBody.insertAdjacentHTML("beforeend", row);
                 });
             }
-        }).fail(function() {
-            console.error('Error loading JSON data');
-        });
+        })
+        .catch(error => console.error("Error fetching data:", error));
+}
+
+// 加载给定日期的运动数据
+function loadExerciseData(date, userId, tableId) {
+    fetch(`http://localhost:3000/workout?date=${date.toISOString()}&userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 清空表格
+            var tableBody = document.getElementById(tableId).querySelector("tbody");
+            tableBody.innerHTML = "";
+
+            // 如果没有数据，显示一条消息
+            if (data.length === 0) {
+                var messageRow = `<tr><td colspan="2">No data available</td></tr>`;
+                tableBody.insertAdjacentHTML("beforeend", messageRow);
+            } else {
+                // 将数据添加到表格中
+                data.forEach(function (exercise) {
+                    var row = `<tr><td>${exercise.type}</td><td>${exercise.calories}</td></tr>`;
+                    tableBody.insertAdjacentHTML("beforeend", row);
+                });
+            }
+        })
+        .catch(error => console.error("Error fetching data:", error));
+}
+
+function loadMeals(date, userId, targetElementId) {
+    fetch(`http://localhost:3000/meals?date=${date.toISOString()}&userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 如果没有数据，显示一条消息
+            if (data.length === 0) {
+                var body = document.getElementById(targetElementId);
+                body.innerHTML = `<tr><td colspan="2">No data available</td></tr>`;
+            } else {
+                // 计算总卡路里
+                var totalCalories = data.reduce((total, meal) => total + meal.calories, 0);
+
+                // 添加到目标元素中
+                var targetElement = document.getElementById(targetElementId);
+                targetElement.textContent = totalCalories + ' calories';
+            }
+        })
+        .catch(error => console.error("Error fetching data:", error));
+}
+
+function loadExercises(date, userId, targetElementId) {
+    fetch(`http://localhost:3000/workouts?date=${date.toISOString()}&userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            // 如果没有数据，显示一条消息
+            if (data.length === 0) {
+                var body = document.getElementById(targetElementId);
+                body.innerHTML = `<tr><td colspan="2">No data available</td></tr>`;
+            } else {
+                // 计算总卡路里
+                var totalCalories = data.reduce((total, meal) => total + meal.calories, 0);
+
+                // 添加到目标元素中
+                var targetElement = document.getElementById(targetElementId);
+                targetElement.textContent = totalCalories + ' calories';
+            }
+        })
+        .catch(error => console.error("Error fetching data:", error));
+}
+
+function calculateRemainingCalories() {
+    // 获取 FOOD BLOCK 和 EXERCISE BLOCK 的值并提取数字部分
+    var foodCaloriesString = document.getElementById("foodCalories").textContent;
+    var exerciseCaloriesString = document.getElementById("exerciseCalories").textContent;
+
+    var foodCalories = extractNumberFromString(foodCaloriesString);
+    var exerciseCalories = extractNumberFromString(exerciseCaloriesString);
+
+    // 计算热量盈余
+    var remainingCalories = foodCalories - exerciseCalories;
+
+    // 将热量盈余显示在 REMAIN BLOCK 中
+    document.getElementById("remainCalories").textContent = remainingCalories + ' calories';
+}
+
+function extractNumberFromString(string) {
+    // 使用正则表达式匹配字符串中的数字部分
+    var match = string.match(/\d+/);
+
+    // 如果找到匹配项，则返回第一个匹配的数字
+    if (match) {
+        return parseInt(match[0]);
+    } else {
+        // 如果未找到匹配项，则返回0或者您认为合适的默认值
+        return 0;
     }
-
-    document.getElementById('prev-day').addEventListener('click', function() {
-        today.setDate(today.getDate() - 1);
-        updateDisplay(today);
-    });
-
-    document.getElementById('next-day').addEventListener('click', function() {
-        today.setDate(today.getDate() + 1);
-        updateDisplay(today);
-    });
-
-    // 初始加载
-    updateDisplay(today);
-});
-
-<script>
-const initialProfileData = {
-    userName: "exampleUser",
-    gender: "male",
-    weight: 70,
-    height: 175
-};
-
-function populateProfileForm(data) {
-    document.getElementById('userName').value = data.userName || '';
-    if (data.gender) {
-        document.querySelector(`input[name="gender"][value="${data.gender}"]`).checked = true;
-    }
-    document.getElementById('weight').value = data.weight || '';
-    document.getElementById('height').value = data.height || '';
 }
-
-function loadProfileData() {
-    const savedProfile = localStorage.getItem('profileData');
-    return savedProfile ? JSON.parse(savedProfile) : initialProfileData;
-}
-
-function submitProfile() {
-    const userName = document.getElementById('userName').value;
-    const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
-    const weight = document.getElementById('weight').value;
-    const height = document.getElementById('height').value;
-
-    const profileData = {
-        userName: userName,
-        gender: gender,
-        weight: weight,
-        height: height
-    };
-
-    // Save the form data to localStorage
-    localStorage.setItem('profileData', JSON.stringify(profileData));
-
-    console.log("Form submitted with:", profileData);
-
-    alert('Profile data submitted!');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const profileData = loadProfileData();
-    populateProfileForm(profileData);
-});
-
-        </script>
