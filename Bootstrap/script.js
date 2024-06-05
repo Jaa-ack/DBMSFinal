@@ -278,89 +278,52 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDisplay(today);
 });
 
-// food_exercise.html 更新運動資訊
+<script>
+const initialProfileData = {
+    userName: "exampleUser",
+    gender: "male",
+    weight: 70,
+    height: 175
+};
+
+function populateProfileForm(data) {
+    document.getElementById('userName').value = data.userName || '';
+    if (data.gender) {
+        document.querySelector(`input[name="gender"][value="${data.gender}"]`).checked = true;
+    }
+    document.getElementById('weight').value = data.weight || '';
+    document.getElementById('height').value = data.height || '';
+}
+
+function loadProfileData() {
+    const savedProfile = localStorage.getItem('profileData');
+    return savedProfile ? JSON.parse(savedProfile) : initialProfileData;
+}
+
+function submitProfile() {
+    const userName = document.getElementById('userName').value;
+    const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
+
+    const profileData = {
+        userName: userName,
+        gender: gender,
+        weight: weight,
+        height: height
+    };
+
+    // Save the form data to localStorage
+    localStorage.setItem('profileData', JSON.stringify(profileData));
+
+    console.log("Form submitted with:", profileData);
+
+    alert('Profile data submitted!');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    var caloriesIntake = localStorage.getItem("caloriesIntake");
-    if (caloriesIntake) {
-        document.querySelectorAll(".h5.mb-0.font-weight-bold.text-gray-800").forEach(function(el) {
-            el.textContent = caloriesIntake; // Update all relevant fields
-        });
-    }
-    
-    var today = new Date();
-    var displayDate = document.getElementById('current-date');
-
-    function updateDisplay(date) {
-        displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        const dateString = date.toISOString().split('T')[0];
-        loadMealData(dateString, 'breakfast', '#breakfastTable');
-        loadMealData(dateString, 'lunch', '#lunchTable');
-        loadMealData(dateString, 'dinner', '#dinnerTable');
-        loadExerciseData(dateString, '#exerciseTable');
-    }
-
-    // 加载并显示餐点数据
-    function loadMealData(dateString, mealType, tableId) {
-        $.getJSON('meals.json', function(data) {
-            const tableBody = $(`${tableId} tbody`);
-            tableBody.empty(); // 清空现有数据
-
-            const filteredData = data.filter(item => item.date === dateString && item.type === mealType);
-            if (filteredData.length === 0) {
-                tableBody.append('<tr><td colspan="3">No data available for this meal</td></tr>');
-            } else {
-                filteredData.forEach(function(item) {
-                    const tableRow = `
-                        <tr>
-                            <td>${item.name}</td>
-                            <td>${item.portion}</td>
-                            <td>${item.calories}</td>
-                        </tr>
-                    `;
-                    tableBody.append(tableRow);
-                });
-            }
-        }).fail(function() {
-            console.error('Error loading JSON data');
-        });
-    }
-
-    // 加载并显示运动数据
-    function loadExerciseData(dateString, tableId) {
-        $.getJSON('workout.json', function(data) {
-            const tableBody = $(`${tableId} tbody`);
-            tableBody.empty(); // 清空现有数据
-
-            const filteredData = data.filter(item => item.date === dateString);
-            if (filteredData.length === 0) {
-                tableBody.append('<tr><td colspan="3">No data available for this date</td></tr>');
-            } else {
-                filteredData.forEach(function(item) {
-                    const tableRow = `
-                        <tr>
-                            <td>${item.type}</td>
-                            <td>${item.time}</td>
-                            <td>${item.calories}</td>
-                        </tr>
-                    `;
-                    tableBody.append(tableRow);
-                });
-            }
-        }).fail(function() {
-            console.error('Error loading JSON data');
-        });
-    }
-
-    document.getElementById('prev-day').addEventListener('click', function() {
-        today.setDate(today.getDate() - 1);
-        updateDisplay(today);
-    });
-
-    document.getElementById('next-day').addEventListener('click', function() {
-        today.setDate(today.getDate() + 1);
-        updateDisplay(today);
-    });
-
-    // 初始加载
-    updateDisplay(today);
+    const profileData = loadProfileData();
+    populateProfileForm(profileData);
 });
+
+        </script>
