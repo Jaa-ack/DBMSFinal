@@ -405,20 +405,28 @@
                   </script>
                   
 
-                  <!--Goal Setting-->
+                  
+                    <!--Goal Setting-->
                     <div class="card">
                         <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Goal Setting</h6>
                         </div>
                         <div class="card-body">
                         <form id="goalForm" onsubmit="event.preventDefault(); submitGoals();">
-                            <!-- Goal Type -->
-                            <div class="form-group">
-                            <select class="form-control" id="goalType" style="width: 30%">
-                                <option value="diet">Diet</option>
-                                <option value="exercise">Exercise</option>
-                            </select>
+                            <!-- Goal Type Dropdown -->
+                            <div class="dropdown no-arrow mb-4">
+                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Select Goal
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item"  onclick="selectGoal('Diet')">Diet</a>
+                                <a class="dropdown-item"  onclick="selectGoal('Exercise')">Exercise</a>
                             </div>
+                            </div>
+                            <input type="hidden" id="goalType" name="goalType">
+                            
                             <!-- Calories -->
                             <div class="form-group">
                             <label for="calories">Calories</label>
@@ -437,6 +445,11 @@
                     </div>
                     
                     <script>
+                        function selectGoal(goal) {
+                        document.getElementById('dropdownMenuButton').textContent = goal;
+                        document.getElementById('goalType').value = goal;
+                        }
+                    
                         function submitGoals() {
                         var goalType = document.getElementById("goalType").value;
                         var calories = document.getElementById("calories").value;
@@ -473,6 +486,7 @@
                         });
                         }
                     </script>
+  
   
                 </div>
               </div>
