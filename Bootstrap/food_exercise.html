@@ -173,34 +173,57 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Date -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <button class="btn btn-primary btn-circle" type="button" id="prev-day">&lt;</button>
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <button
+                class="btn btn-primary btn-circle"
+                type="button"
+                id="prev-day"
+              >
+                &lt;
+              </button>
               <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
-              <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
-          </div>
+              <button
+                class="btn btn-primary btn-circle"
+                type="button"
+                id="next-day"
+              >
+                &gt;
+              </button>
+            </div>
 
-          <script>
-          document.addEventListener('DOMContentLoaded', function() {
-              var today = new Date();
-              var displayDate = document.getElementById('current-date');
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                var today = new Date();
+                var displayDate = document.getElementById("current-date");
 
-              function updateDisplay(date) {
-                  displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-              }
+                function updateDisplay(date) {
+                  displayDate.textContent = date.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  });
+                }
 
-              updateDisplay(today);
+                updateDisplay(today);
 
-              document.getElementById('prev-day').addEventListener('click', function() {
-                  today.setDate(today.getDate() - 1);
-                  updateDisplay(today);
+                document
+                  .getElementById("prev-day")
+                  .addEventListener("click", function () {
+                    today.setDate(today.getDate() - 1);
+                    updateDisplay(today);
+                  });
+
+                document
+                  .getElementById("next-day")
+                  .addEventListener("click", function () {
+                    today.setDate(today.getDate() + 1);
+                    updateDisplay(today);
+                  });
               });
-
-              document.getElementById('next-day').addEventListener('click', function() {
-                  today.setDate(today.getDate() + 1);
-                  updateDisplay(today);
-              });
-          });
-          </script>
+            </script>
 
             <!-- Content Row -->
             <div class="row">
@@ -299,7 +322,7 @@
                           <thead>
                             <tr>
                               <th>Name</th>
-                              
+
                               <th>Calories</th>
                             </tr>
                           </thead>
@@ -315,7 +338,6 @@
                       class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                     >
                       <h6 class="m-0 font-weight-bold text-primary">Lunch</h6>
-                      
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -328,7 +350,7 @@
                           <thead>
                             <tr>
                               <th>Name</th>
-                              
+
                               <th>Calories</th>
                             </tr>
                           </thead>
@@ -344,7 +366,6 @@
                       class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                     >
                       <h6 class="m-0 font-weight-bold text-primary">Dinner</h6>
-                      
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -357,7 +378,7 @@
                           <thead>
                             <tr>
                               <th>Name</th>
-                              
+
                               <th>Calories</th>
                             </tr>
                           </thead>
@@ -375,7 +396,6 @@
                       <h6 class="m-0 font-weight-bold text-primary">
                         Exercise
                       </h6>
-                      
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -388,7 +408,7 @@
                           <thead>
                             <tr>
                               <th>Type</th>
-                              <th>Time</th>
+
                               <th>Calories</th>
                             </tr>
                           </thead>
