@@ -277,3 +277,53 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始加载
     updateDisplay(today);
 });
+
+<script>
+const initialProfileData = {
+    userName: "exampleUser",
+    gender: "male",
+    weight: 70,
+    height: 175
+};
+
+function populateProfileForm(data) {
+    document.getElementById('userName').value = data.userName || '';
+    if (data.gender) {
+        document.querySelector(`input[name="gender"][value="${data.gender}"]`).checked = true;
+    }
+    document.getElementById('weight').value = data.weight || '';
+    document.getElementById('height').value = data.height || '';
+}
+
+function loadProfileData() {
+    const savedProfile = localStorage.getItem('profileData');
+    return savedProfile ? JSON.parse(savedProfile) : initialProfileData;
+}
+
+function submitProfile() {
+    const userName = document.getElementById('userName').value;
+    const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
+
+    const profileData = {
+        userName: userName,
+        gender: gender,
+        weight: weight,
+        height: height
+    };
+
+    // Save the form data to localStorage
+    localStorage.setItem('profileData', JSON.stringify(profileData));
+
+    console.log("Form submitted with:", profileData);
+
+    alert('Profile data submitted!');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const profileData = loadProfileData();
+    populateProfileForm(profileData);
+});
+
+        </script>
