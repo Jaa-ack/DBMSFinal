@@ -173,6 +173,71 @@
                         </div>
                     </div>
                     
+                    <!-- Database Script -->
+                    <script>
+                        $(document).ready(function() {
+                            // 当页面加载完成后，发送AJAX请求
+                            (function () {
+                                var httpRequest;
+                
+                                function makeRequest() {
+                                    httpRequest = new XMLHttpRequest();
+                
+                                    if (!httpRequest) {
+                                        alert("Giving up :( Cannot create an XMLHTTP instance");
+                                        return false;
+                                    }
+                                    httpRequest.onreadystatechange = alertContents;
+                                    httpRequest.open("POST", "http://127.0.0.1:64550/article/get");
+                                    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                    httpRequest.send();
+                                }
+                
+                                function alertContents() {
+                                    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                                        if (httpRequest.status === 200) {
+                                            var articlesData = JSON.parse(httpRequest.responseText);
+                                            displayArticles(articlesData);
+                                        } else {
+                                            alert("There was a problem with the request.");
+                                        }
+                                    }
+                                }
+                
+                                // 显示文章内容的函数
+                                function displayArticles(articlesData) {
+                                    $.each(articlesData, function(index, article) {
+                                        var articleHTML = `
+                                            <div class="article" data-article-id="${article.id}">
+                                                <div class="row">
+                                                    <div class="col" style="color: rgb(4, 4, 29);">
+                                                        <h4>${article.title}</h4>
+                                                        <p>${article.content}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row comments-row">
+                                                    <div class="col d-flex align-items-center">
+                                                        <h5>Comments</h5>
+                                                        <div style="margin-left: 10px;"></div>
+                                                        <button type="button" class="btn btn-primary px-2 py-1">留言</button>
+                                                    </div>
+                                                </div>
+                                                <div class="scroll-container">
+                                                </div>
+                                            </div>
+                                            <!-- Divider -->
+                                            <hr class="sidebar-divider">
+                                        `;
+                                        $('#articlesContainer').append(articleHTML);
+                                    });
+                                }
+                
+                                // 页面加载完成后立即执行请求
+                                makeRequest();
+                            })();
+                        });
+                    </script>
+
                 </div>
                 <!-- /.container-fluid -->
 
