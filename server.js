@@ -167,6 +167,30 @@ app.get('/workouts', (req, res) => {
     });
 });
 
+// 文章数据路由
+app.get('/articles', (req, res) => {
+    let query = 'SELECT post_id, title, content FROM Article';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
+// 评论数据路由
+app.get('/comments', (req, res) => {
+    let query = 'SELECT content, post_id FROM Comment';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
 app.listen(port, () => {
     console.log(`服务器已启动在 http://localhost:${port}`);
 });

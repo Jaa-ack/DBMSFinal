@@ -19,10 +19,12 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="script.js" defer></script>
 
     <style>
+        .article { margin-bottom: 20px; }
+
+        .comments { margin-top: 10px; }
+
         .scroll-container {
             height: 150px;
             overflow-x: auto;
@@ -131,7 +133,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user-name"></span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -164,78 +166,9 @@
                             <div class="col-sm-2"><a class="btn btn-outline-info" href="post.html">發文</a></div>
                     </div>
                     
-                    <!-- Page Content -->
                     <div class="container">
-                        <div class="container" id="articlesContainer">
-                            <!-- Articles will be dynamically inserted here -->
-                        </div>
+                        <div id="articles"></div>
                     </div>
-                    
-                    <!-- Database Script -->
-                    <script>
-                        $(document).ready(function() {
-                            // 当页面加载完成后，发送AJAX请求
-                            (function () {
-                                var httpRequest;
-                
-                                function makeRequest() {
-                                    httpRequest = new XMLHttpRequest();
-                
-                                    if (!httpRequest) {
-                                        alert("Giving up :( Cannot create an XMLHTTP instance");
-                                        return false;
-                                    }
-                                    httpRequest.onreadystatechange = alertContents;
-                                    httpRequest.open("POST", "http://127.0.0.1:64550/article/get");
-                                    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                                    httpRequest.send();
-                                }
-                
-                                function alertContents() {
-                                    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                                        if (httpRequest.status === 200) {
-                                            var articlesData = JSON.parse(httpRequest.responseText);
-                                            displayArticles(articlesData);
-                                        } else {
-                                            alert("There was a problem with the request.");
-                                        }
-                                    }
-                                }
-                
-                                // 显示文章内容的函数
-                                function displayArticles(articlesData) {
-                                    $.each(articlesData, function(index, article) {
-                                        var articleHTML = `
-                                            <div class="article" data-article-id="${article.id}">
-                                                <div class="row">
-                                                    <div class="col" style="color: rgb(4, 4, 29);">
-                                                        <h4>${article.title}</h4>
-                                                        <p>${article.content}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row comments-row">
-                                                    <div class="col d-flex align-items-center">
-                                                        <h5>Comments</h5>
-                                                        <div style="margin-left: 10px;"></div>
-                                                        <button type="button" class="btn btn-primary px-2 py-1">留言</button>
-                                                    </div>
-                                                </div>
-                                                <div class="scroll-container">
-                                                </div>
-                                            </div>
-                                            <!-- Divider -->
-                                            <hr class="sidebar-divider">
-                                        `;
-                                        $('#articlesContainer').append(articleHTML);
-                                    });
-                                }
-                
-                                // 页面加载完成后立即执行请求
-                                makeRequest();
-                            })();
-                        });
-                    </script>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -292,8 +225,20 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <script></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                // 從本地存儲中獲取用戶名稱
+                var userId = localStorage.getItem('userId');
+                // 從本地存儲中獲取用戶名稱
+                var username = localStorage.getItem('username');
+                // 如果用戶名稱存在，則將其設置到 span 標籤中
+                if (username) {
+                    document.getElementById('user-name').innerText = username;
+                }
+                fetchArticles();
+        });
+    </script>
 
 </body>
 

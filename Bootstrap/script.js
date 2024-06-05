@@ -268,3 +268,123 @@ function extractNumberFromString(string) {
         return 0;
     }
 }
+
+function fetchArticles() {
+    fetch('http://localhost:3000/articles')
+        .then(response => response.json())
+        .then(data => {
+            const articlesContainer = document.getElementById("articles");
+
+            // Check if articlesContainer exists
+            if (!articlesContainer) {
+                console.error("Error: articles element not found");
+                return;
+            }
+
+            // 清空文章容器
+            articlesContainer.innerHTML = '';
+
+            data.forEach(function (article) {
+                const articleDiv = document.createElement("div");
+                articleDiv.className = "article mb-4";
+                articleDiv.innerHTML = `
+                    <div class="row">
+                        <div class="col" style="color: rgb(4, 4, 29);">
+                            <h4>${article.title}</h4>
+                            <p>${article.content}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col d-flex align-items-center">
+                            <h5>Comments</h5>
+                            <div style="margin-left: 10px;"></div>
+                            <button type="button" class="btn btn-primary px-2 py-1 comment-btn" data-post-id="${article.post_id}">留言</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- 橫向滾動區域 -->
+                        <div class="scroll-container" id="comments-${article.post_id}"></div>
+                    </div>
+                    <hr class="sidebar-divider">
+                `;
+
+                articlesContainer.appendChild(articleDiv);
+            });
+
+            // 添加事件监听器
+            articlesContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('comment-btn')) {
+                    const postId = event.target.getAttribute('data-post-id');
+                    const container = document.getElementById(`comments-${postId}`);
+                    
+                    // 检查是否已存在留言框
+                    const existingCommentBox = container.querySelector('.box');
+                    if (existingCommentBox) {
+                        return; // 如果已存在留言框，不执行任何操作
+                    }
+
+                    const newBox = document.createElement("div");
+                    newBox.className = "box";
+
+                    const textarea = document.createElement("textarea");
+                    textarea.className = "form-control";
+                    textarea.setAttribute("aria-label", "With textarea");
+
+                    const submitBtn = document.createElement("button");
+                    submitBtn.textContent = "提交";
+                    submitBtn.addEventListener("click", function() {
+                        const text = textarea.value.trim(); // 获取输入的文字
+                        if (text !== "") { // 如果文字不为空
+                            // 创建一个新的评论框显示用户评论
+                            const newComment = document.createElement("div");
+                            newComment.className = "box";
+                            newComment.innerHTML = `<h5>User</h5><p>${text}</p>`;
+                            container.appendChild(newComment);
+                    
+                            // 插入数据库
+                            comment();
+                    
+                            // 清空并禁用 textarea
+                            textarea.value = "";
+                            textarea.disabled = true;
+                            // 移除提交按钮
+                            submitBtn.parentNode.removeChild(submitBtn);
+                        } else { // 如果文字为空
+                            // 移除留言框
+                            container.removeChild(newBox);
+                        }
+                    });                    
+
+                    newBox.appendChild(textarea);
+                    newBox.appendChild(submitBtn);
+
+                    container.insertBefore(newBox, container.firstChild);
+                }
+            });
+
+            // Fetch and display comments
+            fetchComments();
+        })
+        .catch(error => console.error("Error fetching data:", error));
+}
+
+function fetchComments() {
+    fetch('http://localhost:3000/comments')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(function(comment) {
+                const container = document.getElementById(`comments-${comment.post_id}`);
+                if (container) {
+                    const commentDiv = document.createElement("div");
+                    commentDiv.className = "box";
+                    commentDiv.innerHTML = `<h5>User</h5><p>${comment.content}</p>`;
+                    container.appendChild(commentDiv);
+                }
+            });
+        })
+        .catch(error => console.error("Error fetching comments:", error));
+}
+
+function comment(){
+    
+}
