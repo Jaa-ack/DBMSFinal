@@ -356,21 +356,21 @@
                         onsubmit="event.preventDefault(); submitAccount();"
                       >
                         <div class="form-group">
-                          <label for="userID">User ID</label>
+                          <label for="newPW">Change Password</label>
                           <input
-                            type="text"
+                            type="password" 
                             class="form-control"
-                            id="userID"
-                            placeholder="Enter your user ID"
+                            id="newPW"
+                            placeholder="Enter your new password"
                           />
                         </div>
                         <div class="form-group">
-                          <label for="password">Password</label>
+                          <label for="confirmPW">Confirm Password</label>
                           <input
                             type="password"
                             class="form-control"
-                            id="password"
-                            placeholder="Enter your password"
+                            id="confirmPW"
+                            placeholder="Confirm your password"
                           />
                         </div>
                         <div class="d-flex justify-content-end">
@@ -384,18 +384,26 @@
 
                   <script>
                     function submitAccount() {
-                      const userId = document.getElementById("userID").value;
-                      const password =
-                        document.getElementById("password").value;
-
+                      const newPassword = document.getElementById("newPW").value;
+                      const confirmPassword = document.getElementById("confirmPW").value;
+                  
+                      // Check if the newPassword and confirmPassword are the same
+                      if (newPassword !== confirmPassword) {
+                        alert("Passwords do not match. Please try again.");
+                        return;  // Stop the function if the passwords do not match
+                      }
+                  
+                      // If the passwords match, proceed with submission
                       console.log("Form submitted with:", {
-                        userID: userId,
-                        password: password,
+                        // Assuming 'userId' and 'password' are defined elsewhere or you need to fetch them
+                        newPassword: newPassword,  // Ensure 'userId' is correctly defined or fetched in your actual code
+                        confirmPassword: confirmPassword,
                       });
-
+                  
                       alert("Account data submitted!");
                     }
                   </script>
+                  
 
                   <!--Goal Setting-->
                   <div class="card">
