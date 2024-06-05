@@ -406,84 +406,74 @@
                   
 
                   <!--Goal Setting-->
-                  <div class="card">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Goal Setting
-                      </h6>
+                    <div class="card">
+                        <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Goal Setting</h6>
+                        </div>
+                        <div class="card-body">
+                        <form id="goalForm" onsubmit="event.preventDefault(); submitGoals();">
+                            <!-- Goal Type -->
+                            <div class="form-group">
+                            <select class="form-control" id="goalType" style="width: 30%">
+                                <option value="diet">Diet</option>
+                                <option value="exercise">Exercise</option>
+                            </select>
+                            </div>
+                            <!-- Calories -->
+                            <div class="form-group">
+                            <label for="calories">Calories</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="calories"
+                                placeholder="Enter Calories"
+                            />
+                            </div>
+                            <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-secondary">Submit</button>
+                            </div>
+                        </form>
+                        </div>
                     </div>
-                    <div class="card-body">
-                      <form
-                        id="goalForm"
-                        onsubmit="event.preventDefault(); submitGoals();"
-                      >
-                        <!-- Calories Intake -->
-                        <div class="form-group">
-                          <label for="caloriesIntake">Calories Intake</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="caloriesIntake"
-                            style="width: 30%"
-                            placeholder="Enter calories"
-                          />
-                          <div class="d-flex justify-content-end">
-                            <button
-                              type="button"
-                              onclick="saveCalories('intake')"
-                              class="btn btn-secondary"
-                            >
-                              Save
-                            </button>
-                          </div>
-                        </div>
-
-                        <!-- Calories Burned -->
-                        <div class="form-group">
-                          <label for="caloriesBurned">Calories Burned</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="caloriesBurned"
-                            style="width: 30%"
-                            placeholder="Enter calories"
-                          />
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                          <button type="submit" class="btn btn-secondary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <script>
-                    function saveCalories(type) {
-                      var value = document.getElementById(
-                        type === "intake" ? "caloriesIntake" : "caloriesBurned"
-                      ).value;
-                      localStorage.setItem(
-                        type === "intake" ? "caloriesIntake" : "caloriesBurned",
-                        value
-                      );
-                      alert(
-                        type.charAt(0).toUpperCase() +
-                          type.slice(1) +
-                          " saved successfully!"
-                      );
-                    }
-
-                    function submitGoals() {
-                      // Here you can handle the form submission event, validate input, and submit data to the server
-                      console.log("Form submitted with:", {
-                        intake: document.getElementById("caloriesIntake").value,
-                        burned: document.getElementById("caloriesBurned").value,
-                      });
-                      alert("Form data submitted!");
-                    }
-                  </script>
+                    
+                    <script>
+                        function submitGoals() {
+                        var goalType = document.getElementById("goalType").value;
+                        var calories = document.getElementById("calories").value;
+                    
+                        if (!goalType || !calories) {
+                            alert("Please select a goal type and enter calories.");
+                            return;
+                        }
+                    
+                        console.log("Form submitted with:", {
+                            goalType: goalType,
+                            calories: calories
+                        });
+                    
+                        // Example of sending data to a server (using fetch)
+                        fetch('/submit-goals', {
+                            method: 'POST',
+                            headers: {
+                            'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                            goalType: goalType,
+                            calories: calories,
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            alert("Form data submitted successfully!");
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            alert("Error submitting form data.");
+                        });
+                        }
+                    </script>
+  
                 </div>
               </div>
             </div>
