@@ -142,7 +142,6 @@
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
                     >Douglas McGee</span
                   >
-                  
                 </a>
                 <!-- Dropdown - User Information -->
                 <div
@@ -176,7 +175,6 @@
             <!-- Page Heading -->
             <div class="row">
               <!-- Image Column -->
-              
 
               <!-- Card Column -->
               <div class="col-md-12">
@@ -203,47 +201,7 @@
                             required
                           />
                         </div>
-                        <div class="form-group">
-                          <label>Gender</label>
-                          <div class="d-flex">
-                            <div class="form-check mr-3">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="gender"
-                                id="male"
-                                value="male"
-                              />
-                              <label class="form-check-label" for="male"
-                                >Male</label
-                              >
-                            </div>
-                            <div class="form-check mr-3">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="gender"
-                                id="female"
-                                value="female"
-                              />
-                              <label class="form-check-label" for="female"
-                                >Female</label
-                              >
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="gender"
-                                id="other"
-                                value="other"
-                              />
-                              <label class="form-check-label" for="other"
-                                >Prefer not to say</label
-                              >
-                            </div>
-                          </div>
-                        </div>
+
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
@@ -358,7 +316,7 @@
                         <div class="form-group">
                           <label for="newPW">Change Password</label>
                           <input
-                            type="password" 
+                            type="password"
                             class="form-control"
                             id="newPW"
                             placeholder="Enter your new password"
@@ -384,110 +342,133 @@
 
                   <script>
                     function submitAccount() {
-                      const newPassword = document.getElementById("newPW").value;
-                      const confirmPassword = document.getElementById("confirmPW").value;
-                  
+                      const newPassword =
+                        document.getElementById("newPW").value;
+                      const confirmPassword =
+                        document.getElementById("confirmPW").value;
+
                       // Check if the newPassword and confirmPassword are the same
                       if (newPassword !== confirmPassword) {
                         alert("Passwords do not match. Please try again.");
-                        return;  // Stop the function if the passwords do not match
+                        return; // Stop the function if the passwords do not match
                       }
-                  
+
                       // If the passwords match, proceed with submission
                       console.log("Form submitted with:", {
                         // Assuming 'userId' and 'password' are defined elsewhere or you need to fetch them
-                        newPassword: newPassword,  // Ensure 'userId' is correctly defined or fetched in your actual code
+                        newPassword: newPassword, // Ensure 'userId' is correctly defined or fetched in your actual code
                         confirmPassword: confirmPassword,
                       });
-                  
+
                       alert("Account data submitted!");
                     }
                   </script>
-                  
 
-                  
-                    <!--Goal Setting-->
-                    <div class="card">
-                        <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Goal Setting</h6>
-                        </div>
-                        <div class="card-body">
-                        <form id="goalForm" onsubmit="event.preventDefault(); submitGoals();">
-                            <!-- Goal Type Dropdown -->
-                            <div class="dropdown no-arrow mb-4">
-                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                Select Goal
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item"  onclick="selectGoal('Diet')">Diet</a>
-                                <a class="dropdown-item"  onclick="selectGoal('Exercise')">Exercise</a>
-                            </div>
-                            </div>
-                            <input type="hidden" id="goalType" name="goalType">
-                            
-                            <!-- Calories -->
-                            <div class="form-group">
-                            <label for="calories">Calories</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="calories"
-                                placeholder="Enter Calories"
-                            />
-                            </div>
-                            <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-secondary">Submit</button>
-                            </div>
-                        </form>
-                        </div>
+                  <!--Goal Setting-->
+                  <div class="card">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        Goal Setting
+                      </h6>
                     </div>
-                    
-                    <script>
-                        function selectGoal(goal) {
-                        document.getElementById('dropdownMenuButton').textContent = goal;
-                        document.getElementById('goalType').value = goal;
-                        }
-                    
-                        function submitGoals() {
-                        var goalType = document.getElementById("goalType").value;
-                        var calories = document.getElementById("calories").value;
-                    
-                        if (!goalType || !calories) {
-                            alert("Please select a goal type and enter calories.");
-                            return;
-                        }
-                    
-                        console.log("Form submitted with:", {
-                            goalType: goalType,
-                            calories: calories
-                        });
-                    
-                        // Example of sending data to a server (using fetch)
-                        fetch('/submit-goals', {
-                            method: 'POST',
-                            headers: {
-                            'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                            goalType: goalType,
-                            calories: calories,
-                            }),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('Success:', data);
-                            alert("Form data submitted successfully!");
+                    <div class="card-body">
+                      <form
+                        id="goalForm"
+                        onsubmit="event.preventDefault(); submitGoals();"
+                      >
+                        <!-- Goal Type Dropdown -->
+                        <div class="dropdown no-arrow mb-4">
+                          <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            Select Goal
+                          </button>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton"
+                          >
+                            <a
+                              class="dropdown-item"
+                              onclick="selectGoal('Diet')"
+                              >Diet</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              onclick="selectGoal('Exercise')"
+                              >Exercise</a
+                            >
+                          </div>
+                        </div>
+                        <input type="hidden" id="goalType" name="goalType" />
+
+                        <!-- Calories -->
+                        <div class="form-group">
+                          <label for="calories">Calories</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="calories"
+                            placeholder="Enter Calories"
+                          />
+                        </div>
+                        <div class="d-flex justify-content-end">
+                          <button type="submit" class="btn btn-secondary">
+                            Submit
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <script>
+                    function selectGoal(goal) {
+                      document.getElementById(
+                        "dropdownMenuButton"
+                      ).textContent = goal;
+                      document.getElementById("goalType").value = goal;
+                    }
+
+                    function submitGoals() {
+                      var goalType = document.getElementById("goalType").value;
+                      var calories = document.getElementById("calories").value;
+
+                      if (!goalType || !calories) {
+                        alert("Please select a goal type and enter calories.");
+                        return;
+                      }
+
+                      console.log("Form submitted with:", {
+                        goalType: goalType,
+                        calories: calories,
+                      });
+
+                      // Example of sending data to a server (using fetch)
+                      fetch("/submit-goals", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          goalType: goalType,
+                          calories: calories,
+                        }),
+                      })
+                        .then((response) => response.json())
+                        .then((data) => {
+                          console.log("Success:", data);
+                          alert("Form data submitted successfully!");
                         })
                         .catch((error) => {
-                            console.error('Error:', error);
-                            alert("Error submitting form data.");
+                          console.error("Error:", error);
+                          alert("Error submitting form data.");
                         });
-                        }
-                    </script>
-  
-  
+                    }
+                  </script>
                 </div>
               </div>
             </div>
