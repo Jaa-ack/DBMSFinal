@@ -384,6 +384,10 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="form-group">
+                                            <label for="minutesPerformed">Exercise Name</label>
+                                            <input type="text" class="form-control" id="exerciseName" placeholder="">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="minutesPerformed">Minutes Performed</label>
                                             <input type="text" class="form-control" id="minutesPerformed" placeholder="">
                                         </div>
@@ -400,12 +404,14 @@
                                     
                                     <script>
                                     function addPerformance() {
+                                        const exerciseName = document.getElementById('exerciseName').value;
                                         const minutesPerformed = document.getElementById('minutesPerformed').value;
                                         const caloriesBurned = document.getElementById('caloriesBurned').value;
                                     
                                         // Here you would handle the data, possibly sending it to a server or adding it to a list
                                         // For demonstration, we'll just log it to the console
                                         console.log("Performance added with:", {
+                                            exerciseName: exerciseName,
                                             minutesPerformed: minutesPerformed,
                                             caloriesBurned: caloriesBurned
                                         });
