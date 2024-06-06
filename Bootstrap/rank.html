@@ -131,7 +131,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user-name"></span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -155,16 +155,19 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">進度排行榜</h1>
+                <!-- Date -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <button class="btn btn-primary btn-circle" type="button" id="prev-day">&lt;</button>
+                    <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
+                    <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
+                </div>
 
                 <table class="table table-dark">
                 <thead class="thead-dark">
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">姓名</th>
-                    <th scope="col">今日目標</th>
-                    <th scope="col">平均目標完成率</th>
+                    <th scope="col">今日目標達成率</th>
                     </tr>
                 </thead>
                 <tbody id="userTableBody">
@@ -225,7 +228,54 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <script></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 從本地存儲中獲取用戶名稱
+            var userId = localStorage.getItem('userId');
+            // 從本地存儲中獲取用戶名稱
+            var username = localStorage.getItem('name');
+            // 如果用戶名稱存在，則將其設置到 span 標籤中
+            if (username) {
+                document.getElementById('user-name').innerText = username;
+            }
+
+            // 获取日期显示元素和当前日期
+            var displayDate = document.getElementById("current-date");
+            var today = new Date();
+
+            // 更新日期显示函数
+            function updateDisplay(date) {
+                displayDate.textContent = date.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                });
+            }
+
+            // 初始化日期显示
+            updateDisplay(today);
+
+            // 点击按钮更新日期
+            document.getElementById("prev-day").addEventListener("click", function () {
+                today.setDate(today.getDate() - 1);
+                updateDisplay(today);
+                // 加载前一天的数据
+                fetchDataAndPopulateTable(today);
+            });
+
+            document.getElementById("next-day").addEventListener("click", function () {
+                today.setDate(today.getDate() + 1);
+                updateDisplay(today);
+                // 加载后一天的数据
+                fetchDataAndPopulateTable(today);
+            });
+
+            // 加载初始日期的数据
+            fetchDataAndPopulateTable(today);
+        });
+    </script>
 
 </body>
 

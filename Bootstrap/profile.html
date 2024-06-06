@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -14,525 +14,328 @@
 
     <!-- Custom fonts for this template-->
     <link
-      href="vendor/fontawesome-free/css/all.min.css"
-      rel="stylesheet"
-      type="text/css"
+        href="vendor/fontawesome-free/css/all.min.css"
+        rel="stylesheet"
+        type="text/css"
     />
     <link
-      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"
     />
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
     <!--chart.js-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+</head>
 
-  <body id="page-top">
+<body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
-      <!-- Sidebar -->
-      <ul
-        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        id="accordionSidebar"
-      >
-        <!-- Sidebar - Brand -->
-        <a
-          class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="food_exercise.html"
+        <!-- Sidebar -->
+        <ul
+            class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+            id="accordionSidebar"
         >
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-solid fa-dumbbell"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
+            <!-- Sidebar - Brand -->
+            <a
+            class="sidebar-brand d-flex align-items-center justify-content-center"
+            href="food_exercise.html"
+            >
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-solid fa-dumbbell"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
+            </a>
+
+            <!-- Nav Item - Custom Component -->
+            <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                href="#"
+                data-toggle="collapse"
+                data-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+            >
+                <i class="fas fa-duotone fa-bullseye"></i>
+                <span>Goals</span>
+            </a>
+            <div
+                id="collapseOne"
+                class="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionSidebar"
+            >
+                <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Goal Setting:</h6>
+                <a class="collapse-item" href="food_exercise.html"
+                    >Food & Exercise</a
+                >
+                <a class="collapse-item" href="database.html">Database</a>
+                </div>
+            </div>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="community.html">
+                <i class="fas fa-solid fa-pager"></i>
+                <span>Community</span></a
+            >
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="rank.html">
+                <i class="fas fa-regular fa-hand-point-up"></i>
+                <span>Rank</span></a
+            >
+            </li>
+
+            <li class="nav-item active">
+            <a class="nav-link" href="profile.html">
+                <i class="fas fa-solid fa-id-card"></i>
+                <span>Profile</span></a
+            >
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block" />
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+            <!-- Topbar -->
+            <nav
+                class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            >
+                <!-- Sidebar Toggle (Topbar) -->
+                <button
+                id="sidebarToggleTop"
+                class="btn btn-link d-md-none rounded-circle mr-3"
+                >
+                <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                <div class="topbar-divider d-none d-sm-block"></div>
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                    <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="userDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user-name"></span>
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div
+                    class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="userDropdown"
+                    >
+                    <a class="dropdown-item" href="profile.html">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profile
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#logoutModal"
+                    >
+                        <i
+                        class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                        ></i>
+                        Logout
+                    </a>
+                    </div>
+                </li>
+                </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                <!-- Image Column -->
+
+                <!-- Card Column -->
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                    <!-- Profile setting -->
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Profile Setting</h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="profileForm">
+                                <div class="form-group">
+                                    <label for="updateName">User Name</label>
+                                    <input type="text" class="form-control" id="updateName" placeholder="Enter your username" required>
+                                    <div class="invalid-feedback" id="name-feedback">Please enter your name.</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="updateWeight">Weight (kg)</label>
+                                            <input type="number" class="form-control" id="updateWeight" placeholder="Enter weight" required>
+                                            <div class="invalid-feedback" id="weight-feedback">Please enter weight.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="updateHeight">Height (cm)</label>
+                                            <input type="number" class="form-control" id="updateHeight" placeholder="Enter height" required>
+                                            <div class="invalid-feedback" id="height-feedback">Please enter height.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-secondary" onclick="updateInfo()">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--Account Setting-->
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Account Setting</h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="passwordForm">
+                                <div class="form-group">
+                                    <label for="updateName">Change Password</label>
+                                    <input type="password" class="form-control form-control-user" id="updatePassword" placeholder="Enter new password" required>
+                                    <div class="invalid-feedback" id="upassword-feedback">密碼不得為空</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateName">Confirm Password</label>
+                                    <input type="password" class="form-control form-control-user" id="checkPassword" placeholder="Confirm your password" required>
+                                    <div class="invalid-feedback" id="cpassword-feedback">密碼不得為空</div>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-secondary" onclick="updatePassword()">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+
+                    <!--Goal Setting-->
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Goal Setting
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="goalForm">
+                                <!-- Goal Type Dropdown -->
+                                <div class="dropdown no-arrow mb-4">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Goal
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" onclick="selectGoal('Diet')">Diet</a>
+                                        <a class="dropdown-item" onclick="selectGoal('Exercise')">Exercise</a>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="goalType" name="goalType" />
+                    
+                                <!-- Calories -->
+                                <div class="form-group">
+                                    <label for="calories">Calories</label>
+                                    <input type="text" class="form-control" id="calories" placeholder="Enter Calories" />
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-secondary" onclick="updateGoal()">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Nav Item - Custom Component -->
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseOne"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-            <i class="fas fa-duotone fa-bullseye"></i>
-            <span>Goals</span>
-          </a>
-          <div
-            id="collapseOne"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Goal Setting:</h6>
-              <a class="collapse-item" href="food_exercise.html"
-                >Food & Exercise</a
-              >
-              <a class="collapse-item" href="database.html">Database</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="community.html">
-            <i class="fas fa-solid fa-pager"></i>
-            <span>Community</span></a
-          >
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="rank.html">
-            <i class="fas fa-regular fa-hand-point-up"></i>
-            <span>Rank</span></a
-          >
-        </li>
-
-        <li class="nav-item active">
-          <a class="nav-link" href="profile.html">
-            <i class="fas fa-solid fa-id-card"></i>
-            <span>Profile</span></a
-          >
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block" />
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
-      <!-- End of Sidebar -->
-
-      <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-          <!-- Topbar -->
-          <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
-          >
-            <!-- Sidebar Toggle (Topbar) -->
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3"
-            >
-              <i class="fa fa-bars"></i>
-            </button>
-
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-              <div class="topbar-divider d-none d-sm-block"></div>
-
-              <!-- Nav Item - User Information -->
-              <li class="nav-item dropdown no-arrow">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="userDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+        <!-- Logout Modal-->
+        <div
+        class="modal fade"
+        id="logoutModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button
+                class="close"
+                type="button"
+                data-dismiss="modal"
+                aria-label="Close"
                 >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >Douglas McGee</span
-                  >
-                </a>
-                <!-- Dropdown - User Information -->
-                <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="userDropdown"
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Select "Logout" below if you are ready to end your current session.
+            </div>
+            <div class="modal-footer">
+                <button
+                class="btn btn-secondary"
+                type="button"
+                data-dismiss="modal"
                 >
-                  <a class="dropdown-item" href="profile.html">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                  >
-                    <i
-                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
-                    ></i>
-                    Logout
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </nav>
-          <!-- End of Topbar -->
-
-          <!-- Begin Page Content -->
-          <div class="container-fluid">
-            <!-- Page Heading -->
-            <div class="row">
-              <!-- Image Column -->
-
-              <!-- Card Column -->
-              <div class="col-md-12">
-                <div class="card shadow mb-4">
-                  <!--Profile setting-->
-                  <div class="card">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Profile Setting
-                      </h6>
-                    </div>
-                    <div class="card-body">
-                      <form
-                        id="profileForm"
-                        onsubmit="event.preventDefault(); submitProfile();"
-                      >
-                        <div class="form-group">
-                          <label for="userName">User Name</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="userName"
-                            placeholder="Enter your username"
-                            required
-                          />
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="weight">Weight (kg)</label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                id="weight"
-                                placeholder="Enter weight"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="height">Height (cm)</label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                id="height"
-                                placeholder="Enter height"
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                          <button type="submit" class="btn btn-secondary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <script>
-                    const initialProfileData = {
-                      userName: "exampleUser",
-                      gender: "male",
-                      weight: 70,
-                      height: 175,
-                    };
-
-                    function populateProfileForm(data) {
-                      document.getElementById("userName").value =
-                        data.userName || "";
-                      if (data.gender) {
-                        document.querySelector(
-                          `input[name="gender"][value="${data.gender}"]`
-                        ).checked = true;
-                      }
-                      document.getElementById("weight").value =
-                        data.weight || "";
-                      document.getElementById("height").value =
-                        data.height || "";
-                    }
-
-                    function loadProfileData() {
-                      const savedProfile = localStorage.getItem("profileData");
-                      return savedProfile
-                        ? JSON.parse(savedProfile)
-                        : initialProfileData;
-                    }
-
-                    function submitProfile() {
-                      const userName =
-                        document.getElementById("userName").value;
-                      const gender = document.querySelector(
-                        'input[name="gender"]:checked'
-                      )
-                        ? document.querySelector('input[name="gender"]:checked')
-                            .value
-                        : "";
-                      const weight = document.getElementById("weight").value;
-                      const height = document.getElementById("height").value;
-
-                      const profileData = {
-                        userName: userName,
-                        gender: gender,
-                        weight: weight,
-                        height: height,
-                      };
-
-                      // Save the form data to localStorage
-                      localStorage.setItem(
-                        "profileData",
-                        JSON.stringify(profileData)
-                      );
-
-                      console.log("Form submitted with:", profileData);
-
-                      alert("Profile data submitted!");
-                    }
-
-                    document.addEventListener("DOMContentLoaded", function () {
-                      const profileData = loadProfileData();
-                      populateProfileForm(profileData);
-                    });
-                  </script>
-
-                  <!--Account Setting-->
-                  <div class="card">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Account Setting
-                      </h6>
-                    </div>
-                    <div class="card-body">
-                      <form
-                        id="accountForm"
-                        onsubmit="event.preventDefault(); submitAccount();"
-                      >
-                        <div class="form-group">
-                          <label for="newPW">Change Password</label>
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="newPW"
-                            placeholder="Enter your new password"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="confirmPW">Confirm Password</label>
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="confirmPW"
-                            placeholder="Confirm your password"
-                          />
-                        </div>
-                        <div class="d-flex justify-content-end">
-                          <button type="submit" class="btn btn-secondary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <script>
-                    function submitAccount() {
-                      const newPassword =
-                        document.getElementById("newPW").value;
-                      const confirmPassword =
-                        document.getElementById("confirmPW").value;
-
-                      // Check if the newPassword and confirmPassword are the same
-                      if (newPassword !== confirmPassword) {
-                        alert("Passwords do not match. Please try again.");
-                        return; // Stop the function if the passwords do not match
-                      }
-
-                      // If the passwords match, proceed with submission
-                      console.log("Form submitted with:", {
-                        // Assuming 'userId' and 'password' are defined elsewhere or you need to fetch them
-                        newPassword: newPassword, // Ensure 'userId' is correctly defined or fetched in your actual code
-                        confirmPassword: confirmPassword,
-                      });
-
-                      alert("Account data submitted!");
-                    }
-                  </script>
-
-                  <!--Goal Setting-->
-                  <div class="card">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Goal Setting
-                      </h6>
-                    </div>
-                    <div class="card-body">
-                      <form
-                        id="goalForm"
-                        onsubmit="event.preventDefault(); submitGoals();"
-                      >
-                        <!-- Goal Type Dropdown -->
-                        <div class="dropdown no-arrow mb-4">
-                          <button
-                            class="btn btn-secondary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            Select Goal
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a
-                              class="dropdown-item"
-                              onclick="selectGoal('Diet')"
-                              >Diet</a
-                            >
-                            <a
-                              class="dropdown-item"
-                              onclick="selectGoal('Exercise')"
-                              >Exercise</a
-                            >
-                          </div>
-                        </div>
-                        <input type="hidden" id="goalType" name="goalType" />
-
-                        <!-- Calories -->
-                        <div class="form-group">
-                          <label for="calories">Calories</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="calories"
-                            placeholder="Enter Calories"
-                          />
-                        </div>
-                        <div class="d-flex justify-content-end">
-                          <button type="submit" class="btn btn-secondary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <script>
-                    function selectGoal(goal) {
-                      document.getElementById(
-                        "dropdownMenuButton"
-                      ).textContent = goal;
-                      document.getElementById("goalType").value = goal;
-                    }
-
-                    function submitGoals() {
-                      var goalType = document.getElementById("goalType").value;
-                      var calories = document.getElementById("calories").value;
-
-                      if (!goalType || !calories) {
-                        alert("Please select a goal type and enter calories.");
-                        return;
-                      }
-
-                      console.log("Form submitted with:", {
-                        goalType: goalType,
-                        calories: calories,
-                      });
-
-                      // Example of sending data to a server (using fetch)
-                      fetch("/submit-goals", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          goalType: goalType,
-                          calories: calories,
-                        }),
-                      })
-                        .then((response) => response.json())
-                        .then((data) => {
-                          console.log("Success:", data);
-                          alert("Form data submitted successfully!");
-                        })
-                        .catch((error) => {
-                          console.error("Error:", error);
-                          alert("Error submitting form data.");
-                        });
-                    }
-                  </script>
-                </div>
-              </div>
+                Cancel
+                </button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2020</span>
             </div>
-          </div>
-        </footer>
-        <!-- End of Footer -->
-      </div>
-      <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
         </div>
-      </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -544,5 +347,27 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-  </body>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 從本地存儲中獲取用戶名稱
+            var userId = localStorage.getItem('userId');
+            // 從本地存儲中獲取用戶名稱
+            var username = localStorage.getItem('name');
+            // 如果用戶名稱存在，則將其設置到 span 標籤中
+            if (username) {
+                document.getElementById('user-name').innerText = username;
+            }
+        });
+
+        function selectGoal(goalType) {
+            document.getElementById('goalType').value = goalType;
+            
+            // 更新显示的文本
+            const dropdownButton = document.getElementById('dropdownMenuButton');
+            dropdownButton.textContent = `Selected Goal: ${goalType}`;
+        }
+    </script>
+</body>
 </html>

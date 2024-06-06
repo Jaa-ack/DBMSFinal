@@ -19,8 +19,6 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="script.js" defer></script>
 
 </head>
 
@@ -107,7 +105,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user-name"></span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -267,8 +265,8 @@
                                         <label for="portion">Name</label>
                                         <input type="text" class="form-control" id="portion" placeholder="">
                                     </div>
-                                     <!-- Calories Input -->
-                                     <div class="form-group">
+                                    <!-- Calories Input -->
+                                    <div class="form-group">
                                         <label for="portion">Calories</label>
                                         <input type="text" class="form-control" id="portion" placeholder="">
                                     </div>
@@ -493,6 +491,19 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 從本地存儲中獲取用戶名稱
+            var userId = localStorage.getItem('userId');
+            // 從本地存儲中獲取用戶名稱
+            var username = localStorage.getItem('name');
+            // 如果用戶名稱存在，則將其設置到 span 標籤中
+            if (username) {
+                document.getElementById('user-name').innerText = username;
+            }
+        });
+    </script>
 
 </body>
 
