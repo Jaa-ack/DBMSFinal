@@ -2,101 +2,113 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Register</title>
-
-    <!-- Custom fonts for this template-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <title>Register Account</title>
 </head>
 
 <body class="bg-gradient-primary">
 
     <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                    </div>
+                                    <form class="user needs-validation" novalidate>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="text" class="form-control form-control-user" id="Name" placeholder="Name" required>
+                                                <div class="invalid-feedback">Please provide your name.</div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control form-control-user" id="birthday" placeholder="Birthday" required>
+                                                <div class="invalid-feedback">Please provide your birthday.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
+                                            <div class="invalid-feedback">Please provide a valid email address.</div>
+                                            <div class="invalid-feedback" id="duplicate-email-feedback">Email address has already been registered.</div>
+                                        </div>
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <!--div class="col-lg-5 d-none d-lg-block bg-register-image"></div-->
-                    <div class="col-lg-12">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                            </div>
-                            <form class="user needs-validation" novalidate>
-                                <div class="form-group row">
-                                    <div class="col mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="Name" placeholder="Name" required>
-                                        <div class="invalid-feedback">Please provide your name.</div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="password" class="form-control form-control-user" id="InputPassword" placeholder="Password" required>
+                                                <div class="invalid-feedback" id="password-feedback">Password is required.</div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="password" class="form-control form-control-user" id="RepeatPassword" placeholder="Repeat Password" required>
+                                                <div class="invalid-feedback" id="repeat-password-feedback">Passwords do not match.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="text" class="form-control form-control-user" id="height" placeholder="Height (cm)" required>
+                                                <div class="invalid-feedback" id="height-feedback">Please provide a valid height.</div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-user" id="weight" placeholder="Weight (kg)" required>
+                                                <div class="invalid-feedback" id="weight-feedback">Please provide a valid weight.</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <div class="form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                                                    <label class="form-check-label" for="male">Male</label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+                                                    <label class="form-check-label" for="female">Female</label>
+                                                </div>
+                                                <div class="invalid-feedback" id="gender-feedback">Please select a gender.</div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <select class="form-control form-control-user" id="activity-level" required>
+                                                    <option value="" disabled selected>Select Activity Level</option>
+                                                    <option value="1">Sedentary</option>
+                                                    <option value="2">Lightly Active(1~3 exercise/week)</option>
+                                                    <option value="3">Moderately Active(3~5 exercise/week)</option>
+                                                    <option value="4">Very Active(6~7 exercise/week)</option>
+                                                    <option value="5">Super Active(intensive exercise daily)</option>
+                                                </select>
+                                                <div class="invalid-feedback" id="activity-level-feedback">Please select your activity level.</div>
+                                            </div>
+                                        </div>
+
+                                        
+
+                                        
+
+                                        <button class="btn btn-primary btn-user btn-block mb-2" type="submit">Register Account</button>
+                                    </form>
+
+                                    <div class="text-center">
+                                        <a class="small" href="login.html">Already have an account? Login!</a>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="date" class="form-control form-control-user" id="birthday" placeholder="Birthday" required>
-                                        <div class="invalid-feedback">Please provide your birthday.</div>
-                                    </div>                                    
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
-                                    <div class="invalid-feedback">Please provide a valid email address.</div>
-                                    <div class="invalid-feedback" id="duplicate-email-feedback">Email address has already been registered.</div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="height" placeholder="Height (cm)" required>
-                                        <div class="invalid-feedback" id="height-feedback">Please provide a valid height.</div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="weight" placeholder="Weight (kg)" required>
-                                        <div class="invalid-feedback" id="weight-feedback">Please provide a valid weight.</div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" id="InputPassword" placeholder="Password" required>
-                                        <div class="invalid-feedback" id="password-feedback">Password is required.</div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" id="RepeatPassword" placeholder="Repeat Password" required>
-                                        <div class="invalid-feedback" id="repeat-password-feedback">Passwords do not match.</div>
-                                    </div>
-                                </div>
-                        
-                                <button class="btn btn-primary btn-user btn-block mb-2" type="submit">Register Account</button>
-                            </form>
-                        
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <script src="script.js"></script>
 
 </body>
 
