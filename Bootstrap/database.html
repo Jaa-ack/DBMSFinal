@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
 </head>
 
@@ -137,30 +138,6 @@
                         <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
                     </div>
 
-                    <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var today = new Date();
-                        var displayDate = document.getElementById('current-date');
-
-                        function updateDisplay(date) {
-                            displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                        }
-
-                        updateDisplay(today);
-
-                        document.getElementById('prev-day').addEventListener('click', function() {
-                            today.setDate(today.getDate() - 1);
-                            updateDisplay(today);
-                        });
-
-                        document.getElementById('next-day').addEventListener('click', function() {
-                            today.setDate(today.getDate() + 1);
-                            updateDisplay(today);
-                        });
-                    });
-                    </script>
-
-
                     <!-- Content Row -->
                     <div class="row">
 
@@ -169,45 +146,18 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary"></h6>
                                     <!-- Topbar Search -->
                                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                         <div class="input-group">
                                             <input type="text" id="foodSearchInput" class="form-control bg-light border-0 small" placeholder="Search for food!"
                                                 aria-label="Search" aria-describedby="basic-addon2">
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button" id="searchFood">
+                                                <button class="btn btn-primary" type="button" id="searchFoodButton" onclick="searchFood()">
                                                     <i class="fas fa-search fa-sm"></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
-
-                                    <!-- Topbar Navbar -->
-                                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                                        <li class="nav-item dropdown no-arrow d-sm-none">
-                                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-search fa-fw"></i>
-                                            </a>
-                                            <!-- Dropdown - Messages -->
-                                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                                aria-labelledby="searchDropdown">
-                                                <form class="form-inline mr-auto w-100 navbar-search">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control bg-light border-0 small"
-                                                            placeholder="Search for food" aria-label="Search"
-                                                            aria-describedby="basic-addon2">
-                                                            <div class="input-group-append">
-                                                            <button class="btn btn-primary" type="button">
-                                                                <i class="fas fa-search fa-sm"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </li>
-
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
@@ -216,23 +166,21 @@
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    
                                                     <th>Calories(per portion)</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <!-- DATA FROM DATABASE -->
+                                            <tbody id="foodTableBody">
+                                                <!-- DATA FROM DATABASE WILL BE POPULATED HERE -->
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div> 
 
                         
 
-                        <!-- ADJUST PORTION AND ADD TO DIARY -->
+                        <!-- ADJUST PORTION AND ADD TO MEAL -->
                         <div class="col-xl-4 col-lg-5">
                             
                             <div class="card shadow mb-4">
@@ -276,33 +224,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <script>
-                            function addMeal() {
-                                const selectedMeal = document.querySelector('input[name="meal"]:checked');
-                                const portion = document.getElementById('portion').value;
-                            
-                                if (selectedMeal) {
-                                    console.log('Meal added:', {
-                                        meal: selectedMeal.value,
-                                        portion: portion
-                                    });
-                                    alert('Meal added: ' + selectedMeal.value + ' with portion: ' + portion);
-                                } else {
-                                    alert('Please select a meal before adding.');
-                                }
-                            }
-                            
-                            function selectMeal(meal) {
-                                document.querySelector(`input[name="meal"][value="${meal}"]`).checked = true;
-                            }
-                            </script>
                         </div>
                     </div>
-
-
-                
-
 
                     <!-- Content Row -->
                         <div class="row">
@@ -324,32 +247,6 @@
                                                 </div>
                                             </div>
                                         </form>
-
-                                        <!-- Topbar Navbar -->
-                                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                                            <li class="nav-item dropdown no-arrow d-sm-none">
-                                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-search fa-fw"></i>
-                                                </a>
-                                                <!-- Dropdown - Messages -->
-                                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                                    aria-labelledby="searchDropdown">
-                                                    <form class="form-inline mr-auto w-100 navbar-search">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control bg-light border-0 small"
-                                                                placeholder="Search for exercise" aria-label="Search"
-                                                                aria-describedby="basic-addon2">
-                                                                <div class="input-group-append">
-                                                                <button class="btn btn-primary" type="button">
-                                                                    <i class="fas fa-search fa-sm"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </li>
-
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -369,7 +266,7 @@
                                 </div>
                             </div>
 
-                            <!-- ADD TO DIARY -->
+                            <!-- ADD TO WORKOUT -->
                             <div class="col-xl-4 col-lg-5">
                                 <div class="card shadow mb-4">
                                     <!-- Card Header -->
@@ -394,27 +291,10 @@
                                         </div>
                                         
                                         <div class="d-flex justify-content-end">
-                                            <button class="btn btn-primary" onclick="addPerformance()">Add</button>
+                                            <button class="btn btn-primary" onclick="addWorkout()">Add</button>
                                         </div>
                                     </div>
                                     
-                                    <script>
-                                    function addPerformance() {
-                                        const exerciseName = document.getElementById('exerciseName').value;
-                                        const minutesPerformed = document.getElementById('minutesPerformed').value;
-                                        const caloriesBurned = document.getElementById('caloriesBurned').value;
-                                    
-                                        // Here you would handle the data, possibly sending it to a server or adding it to a list
-                                        // For demonstration, we'll just log it to the console
-                                        console.log("Performance added with:", {
-                                            exerciseName: exerciseName,
-                                            minutesPerformed: minutesPerformed,
-                                            caloriesBurned: caloriesBurned
-                                        });
-                                    
-                                        alert('Performance data added!');
-                                    }
-                                    </script>
                                     
                                 </div>
                             
@@ -485,12 +365,6 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
     <script src="script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -502,6 +376,25 @@
             if (username) {
                 document.getElementById('user-name').innerText = username;
             }
+
+            var today = new Date();
+                var displayDate = document.getElementById('current-date');
+
+                function updateDisplay(date) {
+                    displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                }
+
+                updateDisplay(today);
+
+                document.getElementById('prev-day').addEventListener('click', function() {
+                    today.setDate(today.getDate() - 1);
+                    updateDisplay(today);
+                });
+
+                document.getElementById('next-day').addEventListener('click', function() {
+                    today.setDate(today.getDate() + 1);
+                    updateDisplay(today);
+                });
         });
     </script>
 

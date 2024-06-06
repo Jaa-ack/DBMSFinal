@@ -290,10 +290,6 @@ app.post('/updatepassword', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`服务器已启动在 http://localhost:${port}`);
-});
-
 app.post('/updategoal', (req, res) => {
     const goalType = req.body.type;
     const calories = req.body.calories;
@@ -326,4 +322,21 @@ app.post('/updategoal', (req, res) => {
             });
         }
     });
+});
+
+// 处理搜索食物的路由
+app.get('/foods', (req, res) => {
+    const keyword = req.query.keyword;
+    const query = `SELECT food_name, calories FROM Food WHERE food_name LIKE '%${keyword}%'`;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
+app.listen(port, () => {
+    console.log(`服务器已启动在 http://localhost:${port}`);
 });

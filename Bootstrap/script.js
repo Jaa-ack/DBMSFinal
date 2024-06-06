@@ -630,3 +630,52 @@ async function updateGoal() {
         alert(error);
     }
 }
+
+async function searchFood() {
+    var foodSearchInput = document.getElementById("foodSearchInput");
+    var searchText = foodSearchInput.value.trim(); // 获取输入框的值并去除两侧空格
+
+    if (searchText === "") {
+        // 如果搜索框为空，则显示提示信息
+        alert("Please enter a food name before searching.");
+        return; // 终止函数执行
+    }
+
+    try {
+        // 发送异步请求
+        const response = await fetch(`http://localhost:3000/foods?searchtext=${searchText}`);
+        const data = await response.json();
+
+        if (response.ok) {
+            if (data.message === 'Update successful') {
+                // 填充表格
+                populateFoodTable(data);
+            } else {
+                alert(data.message);
+            }
+        } else {
+            // 在响应不成功的情况下，直接显示响应中的错误消息
+            alert(`目標提交失敗: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('錯誤:', error);
+        alert(error);
+    }
+}
+
+// 填充表格函数
+function populateFoodTable(data) {
+    const foodTable = document.getElementById("foodTable");
+    const foodTableBody = foodTable.getElementsByTagName("tbody")[0];
+    foodTableBody.innerHTML = ""; // 清空表格内容
+
+    data.forEach(function(food) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${food.food_name}</td>
+            <td>${food.calories}</td>
+        `;
+        foodTableBody.appendChild(row);
+    });
+}
+
