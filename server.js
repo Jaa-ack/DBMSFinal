@@ -78,7 +78,7 @@ app.get('/meal', (req, res) => {
     const mealType = req.query.mealType;
 
     let query = `
-        SELECT Food.food_name, Food.calories
+        SELECT Food.food_name, Meal.calories
         FROM Meal
         LEFT JOIN Food ON Meal.food_id = Food.food_id
         WHERE DATE(Meal.date) = '${date}' AND Meal.user_id = ? AND Meal.meal_type = ?
@@ -126,10 +126,9 @@ app.get('/meals', (req, res) => {
 
     // 构建查询语句
     let query = `
-        SELECT SUM(Food.calories) AS totalCalories
+        SELECT SUM(calories) AS totalCalories
         FROM Meal
-        LEFT JOIN Food ON Meal.food_id = Food.food_id
-        WHERE DATE(Meal.date) = '${date}' AND Meal.user_id = ?
+        WHERE DATE(date) = '${date}' AND user_id = ?
     `;
 
     // 执行查询
@@ -155,6 +154,44 @@ app.get('/workouts', (req, res) => {
         SELECT SUM(calories) AS totalCalories
         FROM Workout
         WHERE DATE(date) = '${date}' AND user_id = ?
+    `;
+
+    // 执行查询
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            // 处理数据库查询错误
+            console.error('Database query error:', err);
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        
+        // 将查询结果作为 JSON 响应发送回客户端
+        res.json(results);
+    });
+});
+
+// 定义一个路由来处理请求
+app.get('/goalProgress', (req, res) => {
+    const userId = req.query.userId;
+    const date = req.query.date;
+
+    // 构建查询语句
+    let query = `
+        SELECT 
+            g.goal_name,
+            CASE 
+                WHEN g.goal_name = 'diet' THEN (g.quantity - ABS(g.quantity - SUM(m.calories))) / g.quantity
+                WHEN g.goal_name = 'exercise' THEN SUM(w.calories) / g.quantity
+            END AS progress
+        FROM 
+            Goal g
+        LEFT JOIN 
+            Meal m ON g.user_id = m.user_id AND DATE(m.date) = '${date}'
+        LEFT JOIN 
+            Workout w ON g.user_id = w.user_id AND DATE(w.date) = '${date}'
+        WHERE 
+            g.user_id = ?
+        GROUP BY 
+            g.goal_name
     `;
 
     // 执行查询
@@ -234,7 +271,7 @@ app.get('/rank', (req, res) => {
             u.name AS username,
             CASE 
                 WHEN g.goal_name = 'diet' THEN 
-                    ABS(SUM(f.calories) - g.quantity) / g.quantity
+                    (g.quantity - ABS(g.quantity - SUM(m.calories))) / g.quantity
                 WHEN g.goal_name = 'exercise' THEN 
                     SUM(w.calories) / g.quantity
                 ELSE

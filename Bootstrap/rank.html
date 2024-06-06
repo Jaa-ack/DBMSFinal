@@ -262,18 +262,18 @@
                 today.setDate(today.getDate() - 1);
                 updateDisplay(today);
                 // 加载前一天的数据
-                fetchDataAndPopulateTable(today);
+                ranking(today);
             });
 
             document.getElementById("next-day").addEventListener("click", function () {
                 today.setDate(today.getDate() + 1);
                 updateDisplay(today);
                 // 加载后一天的数据
-                fetchDataAndPopulateTable(today);
+                ranking(today);
             });
 
             // 加载初始日期的数据
-            fetchDataAndPopulateTable(today);
+            ranking(today);
         });
     </script>
 

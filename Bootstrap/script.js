@@ -149,8 +149,9 @@ function getUserDataFromLocalStorage() {
 })();
 
 // 加载给定日期和用户ID的餐数据
-function loadMealData(date, userId, mealType, tableId) {
+function loadMealData(date, mealType, tableId) { 
     const formattedDate = date.toISOString().split('T')[0];
+    const userId = localStorage.getItem('userId');
     fetch(`http://localhost:3000/meal?date=${formattedDate}&userId=${userId}&mealType=${mealType}`)
         .then(response => response.json())
         .then(data => {
@@ -165,7 +166,7 @@ function loadMealData(date, userId, mealType, tableId) {
             } else {
                 // 将数据添加到表格中
                 data.forEach(function (meal) {
-                    var row = `<tr><td>${meal.food_Name}</td><td>${meal.calories}</td></tr>`;
+                    var row = `<tr><td>${meal.food_name}</td><td>${meal.calories}</td></tr>`;
                     tableBody.insertAdjacentHTML("beforeend", row);
                 });
             }
@@ -174,8 +175,9 @@ function loadMealData(date, userId, mealType, tableId) {
 }
 
 // 加载给定日期的运动数据
-function loadExerciseData(date, userId, tableId) {
+function loadExerciseData(date, tableId) {
     const formattedDate = date.toISOString().split('T')[0];
+    const userId = localStorage.getItem('userId');
     fetch(`http://localhost:3000/workout?date=${formattedDate}&userId=${userId}`)
         .then(response => response.json())
         .then(data => {
@@ -198,44 +200,57 @@ function loadExerciseData(date, userId, tableId) {
         .catch(error => console.error("Error fetching data:", error));
 }
 
-function loadMeals(date, userId, targetElementId) {
+function loadMeals(date, targetElementId) {
     const formattedDate = date.toISOString().split('T')[0];
+    const userId = localStorage.getItem('userId');
     fetch(`http://localhost:3000/meals?date=${formattedDate}&userId=${userId}`)
         .then(response => response.json())
         .then(data => {
+            // 清空目标元素内容
+            var targetElement = document.getElementById(targetElementId);
+            targetElement.innerHTML = "";
+
             // 如果没有数据，显示一条消息
             if (data.length === 0) {
                 var body = document.getElementById(targetElementId);
                 body.innerHTML = `<tr><td colspan="2">No data available</td></tr>`;
             } else {
-                // 计算总卡路里
-                var totalCalories = data.reduce((total, meal) => total + meal.calories, 0);
-
-                // 添加到目标元素中
-                var targetElement = document.getElementById(targetElementId);
-                targetElement.textContent = totalCalories + ' calories';
+                var total = data[0];
+                if (total.totalCalories === null) {
+                    targetElement.textContent = `0 calories`;
+                } else {
+                    targetElement.textContent = `${total.totalCalories} calories`;
+                } 
             }
         })
         .catch(error => console.error("Error fetching data:", error));
 }
 
-function loadExercises(date, userId, targetElementId) {
+function loadExercises(date, targetElementId) {
     const formattedDate = date.toISOString().split('T')[0];
+    const userId = localStorage.getItem('userId');
     fetch(`http://localhost:3000/workouts?date=${formattedDate}&userId=${userId}`)
         .then(response => response.json())
         .then(data => {
+            // 清空目标元素内容
+            var targetElement = document.getElementById(targetElementId);
+            targetElement.innerHTML = "";
+
             // 如果没有数据，显示一条消息
             if (data.length === 0) {
                 var body = document.getElementById(targetElementId);
                 body.innerHTML = `<tr><td colspan="2">No data available</td></tr>`;
             } else {
-                // 计算总卡路里
-                var totalCalories = data.reduce((total, meal) => total + meal.calories, 0);
-
-                // 添加到目标元素中
-                var targetElement = document.getElementById(targetElementId);
-                targetElement.textContent = totalCalories + ' calories';
+                var total = data[0];
+                if (total.totalCalories === null) {
+                    targetElement.textContent = `0 calories`;
+                } else {
+                    targetElement.textContent = `${total.totalCalories} calories`;
+                }
             }
+
+            // 计算热量盈余
+            calculateRemainingCalories();
         })
         .catch(error => console.error("Error fetching data:", error));
 }
@@ -253,6 +268,41 @@ function calculateRemainingCalories() {
 
     // 将热量盈余显示在 REMAIN BLOCK 中
     document.getElementById("remainCalories").textContent = remainingCalories + ' calories';
+}
+
+function updateGoalProgress(date) {
+    const formattedDate = date.toISOString().split('T')[0];
+    const userId = localStorage.getItem('userId');
+
+    fetch(`http://localhost:3000/goalProgress?date=${formattedDate}&userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            
+            console.log(data); // 这里是返回的数据
+        })
+        .catch(error => console.error("Error fetching goal progress:", error));
+
+    // // 假设这是你的查询结果，用一个对象来模拟
+    // var queryResult = [
+    //     { goal_name: 'diet', progress: 60 },
+    //     { goal_name: 'exercise', progress: 20 }
+    // ];
+
+    // // 根据查询结果更新卡片内容
+    // queryResult.forEach(function(item) {
+    //     var goalNameElement = document.getElementById('goalName');
+    //     var progressPercentageElement = document.getElementById('progressPercentage');
+    //     var progressBarElement = document.getElementById('progressBar');
+
+    //     // 更新目标名称
+    //     goalNameElement.textContent = item.goal_name.charAt(0).toUpperCase() + item.goal_name.slice(1);
+
+    //     // 更新进度百分比
+    //     progressPercentageElement.textContent = item.progress + '%';
+
+    //     // 更新进度条宽度
+    //     progressBarElement.style.width = item.progress + '%';
+    // });
 }
 
 function extractNumberFromString(string) {
@@ -423,7 +473,7 @@ async function postArticle() {
 }
 
 // 获取数据并填充表格
-function fetchDataAndPopulateTable(date) {
+function ranking(date) {
     const formattedDate = date.toISOString().split('T')[0];
     fetch(`http://localhost:3000/rank?date=${formattedDate}`)
         .then(response => response.json())

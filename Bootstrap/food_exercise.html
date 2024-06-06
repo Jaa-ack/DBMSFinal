@@ -363,54 +363,25 @@
                 <!-- Calories -->
                 <div class="col-xl-4 col-lg-5">
                     <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Goal</h6>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="small font-weight-bold">
-                        Exercise <span class="float-right">20%</span>
-                        </h4>
-                        <div class="progress mb-4">
-                        <div
-                            class="progress-bar bg-danger"
-                            role="progressbar"
-                            style="width: 20%"
-                            aria-valuenow="20"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        ></div>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Goal</h6>
                         </div>
-                        <h4 class="small font-weight-bold">
-                        Calories <span class="float-right">40%</span>
-                        </h4>
-                        <div class="progress mb-4">
-                        <div
-                            class="progress-bar bg-warning"
-                            role="progressbar"
-                            style="width: 80%"
-                            aria-valuenow="40"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        ></div>
+                        <div class="card-body">
+                            <h4 class="small font-weight-bold">
+                                <!-- 目标名称（从数据库查询结果中获取） -->
+                                <span id="goalName"></span> <span class="float-right" id="progressPercentage"></span>
+                            </h4>
+                            <!-- 进度条 -->
+                            <div class="progress mb-4">
+                                <!-- 根据进度设置进度条的宽度 -->
+                                <div id="progressBar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                </div>
-                </div>
+                </div>                
             </div>
             <!-- /.container-fluid -->
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2021</span>
-                </div>
-            </div>
-            </footer>
-            <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
         </div>
@@ -519,19 +490,19 @@
 
             function loadMealAndExerciseData(date, userId) {
                 // 调用函数加载早餐数据
-                loadMealData(date, userId, 'breakfast', 'breakfastTable');
+                loadMealData(date, 'breakfast', 'breakfastTable');
                 // 调用函数加载午餐数据
-                loadMealData(date, userId, 'lunch', 'lunchTable');
+                loadMealData(date, 'lunch', 'lunchTable');
                 // 调用函数加载晚餐数据
-                loadMealData(date, userId, 'dinner', 'dinnerTable');
+                loadMealData(date, 'dinner', 'dinnerTable');
                 // 加载给定日期的运动数据
-                loadExerciseData(date, userId, 'exerciseTable');
+                loadExerciseData(date, 'exerciseTable');
                 // 計算給定日期攝取卡路里
-                loadMeals(date, userId, 'foodCalories');
+                loadMeals(date, 'foodCalories');
                 // 計算給定日期消耗卡路里
-                loadExercises(date, userId, 'foodCalories');
-                // 计算热量盈余
-                calculateRemainingCalories();
+                loadExercises(date, 'exerciseCalories');
+                // 計算每日目標達成率
+                updateGoalProgress(date);
             }
         </script>
     </body>
