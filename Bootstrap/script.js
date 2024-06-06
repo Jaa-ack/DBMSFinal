@@ -632,30 +632,45 @@ async function updateGoal() {
 }
 
 async function searchFood() {
-    var foodSearchInput = document.getElementById("foodSearchInput");
-    var searchText = foodSearchInput.value.trim(); // 获取输入框的值并去除两侧空格
-
-    if (searchText === "") {
-        // 如果搜索框为空，则显示提示信息
-        alert("Please enter a food name before searching.");
-        return; // 终止函数执行
-    }
+    const text = document.getElementById('foodSearchInput').value.trim();
+    console.log(text)
 
     try {
-        // 发送异步请求
-        const response = await fetch(`http://localhost:3000/foods?searchtext=${searchText}`);
+        const response = await fetch(`http://localhost:3000/foods?text=${text}`);
         const data = await response.json();
-
+        
+        console.log('Response:', response); // 检查响应对象
+        console.log('Data:', data); // 检查返回的数据
+        
         if (response.ok) {
-            if (data.message === 'Update successful') {
-                // 填充表格
-                populateFoodTable(data);
-            } else {
-                alert(data.message);
-            }
+            // 填充表格
+            populateTable(data, "foodTable");
         } else {
             // 在响应不成功的情况下，直接显示响应中的错误消息
-            alert(`目標提交失敗: ${data.message}`);
+            alert(`查詢失敗: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('錯誤:', error);
+        alert(error);
+    }
+}
+
+async function searchExercise() {
+    const text = document.getElementById('exerciseSearchInput').value.trim();
+
+    try {
+        const response = await fetch(`http://localhost:3000/exercises?text=${text}`);
+        const data = await response.json();
+        
+        console.log('Response:', response); // 检查响应对象
+        console.log('Data:', data); // 检查返回的数据
+        
+        if (response.ok) {
+            // 填充表格
+            populateTable(data, "exerciseTable");
+        } else {
+            // 在响应不成功的情况下，直接显示响应中的错误消息
+            alert(`查詢失敗: ${data.message}`);
         }
     } catch (error) {
         console.error('錯誤:', error);
@@ -664,8 +679,8 @@ async function searchFood() {
 }
 
 // 填充表格函数
-function populateFoodTable(data) {
-    const foodTable = document.getElementById("foodTable");
+function populateFoodTable(data, tableName) {
+    const foodTable = document.getElementById(tableName);
     const foodTableBody = foodTable.getElementsByTagName("tbody")[0];
     foodTableBody.innerHTML = ""; // 清空表格内容
 
@@ -677,5 +692,36 @@ function populateFoodTable(data) {
         `;
         foodTableBody.appendChild(row);
     });
+    console.log('Table populated with data:', data); // 检查填充表格的数据
 }
 
+async function addMeal() {
+    const meal = document.querySelector('input[name="meal"]:checked').value;
+    const name = document.getElementById('name').value.trim();
+    const calories = document.getElementById('calories').value.trim();
+
+    if (!meal || !name || !calories) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/addmeal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ meal, name, calories })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert('Meal added successfully');
+        } else {
+            alert(`Failed to add meal: ${result.message}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while adding the meal');
+    }
+}

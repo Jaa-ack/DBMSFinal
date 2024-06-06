@@ -326,10 +326,23 @@ app.post('/updategoal', (req, res) => {
 
 // 处理搜索食物的路由
 app.get('/foods', (req, res) => {
-    const keyword = req.query.keyword;
-    const query = `SELECT food_name, calories FROM Food WHERE food_name LIKE '%${keyword}%'`;
+    const text = req.query.text;
+    const query = `SELECT type, calories FROM Exercise WHERE type = ?`;
 
-    db.query(query, (err, results) => {
+    db.query(query, [text], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
+// 处理搜索食物的路由
+app.get('/foods', (req, res) => {
+    const text = req.query.text;
+    const query = `SELECT food_name, calories FROM Food WHERE food_name  = ?`;
+
+    db.query(query, [text], (err, results) => {
         if (err) {
             return res.status(500).json({ message: 'Database query error' });
         }
