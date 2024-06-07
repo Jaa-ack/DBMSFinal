@@ -187,7 +187,6 @@
                                 <div class="form-group">
                                     <label for="updateName">User Name</label>
                                     <input type="text" class="form-control" id="updateName" placeholder="Enter your username" required>
-                                    <div class="invalid-feedback" id="name-feedback">Please enter your name.</div>
                                 </div>
 
                                 <div class="row">
@@ -195,20 +194,18 @@
                                         <div class="form-group">
                                             <label for="updateWeight">Weight (kg)</label>
                                             <input type="number" class="form-control" id="updateWeight" placeholder="Enter weight" required>
-                                            <div class="invalid-feedback" id="weight-feedback">Please enter weight.</div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="updateHeight">Height (cm)</label>
                                             <input type="number" class="form-control" id="updateHeight" placeholder="Enter height" required>
-                                            <div class="invalid-feedback" id="height-feedback">Please enter height.</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-secondary" onclick="await updateInfo()">Submit</button>
+                                    <button type="submit" class="btn btn-secondary" onclick="updateInfo()">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -223,12 +220,12 @@
                             <form id="passwordForm">
                                 <div class="form-group">
                                     <label for="updateName">Change Password</label>
-                                    <input type="password" class="form-control form-control-user" id="updatePassword" placeholder="Enter new password" required>
+                                    <input type="password" class="form-control form-control-user" id="updatePassword" placeholder="Enter new password" autocomplete="new-password" required>
                                     <div class="invalid-feedback" id="upassword-feedback">密碼不得為空</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="updateName">Confirm Password</label>
-                                    <input type="password" class="form-control form-control-user" id="checkPassword" placeholder="Confirm your password" required>
+                                    <input type="password" class="form-control form-control-user" id="checkPassword" placeholder="Confirm your password" autocomplete="new-password" required>
                                     <div class="invalid-feedback" id="cpassword-feedback">密碼不得為空</div>
                                 </div>
 
@@ -238,8 +235,6 @@
                             </form>
                         </div>
                     </div>
-
-                    
 
                     <!--Goal Setting-->
                     <div class="card">
@@ -251,7 +246,7 @@
                         <div class="card-body">
                             <form id="goalForm">
                                 <!-- Goal Type Dropdown -->
-                                <div class="dropdown no-arrow mb-4">
+                                <div class="dropdown no-arrow mb-4" id="goalDropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Select Goal
                                     </button>
@@ -265,7 +260,7 @@
                                 <!-- Calories -->
                                 <div class="form-group">
                                     <label for="calories">Calories</label>
-                                    <input type="text" class="form-control" id="calories" placeholder="Enter Calories" />
+                                    <input type="text" class="form-control" id="updateCalories" placeholder="Enter Calories" />
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-secondary" onclick="updateGoal()">Submit</button>
@@ -278,17 +273,6 @@
             </div>
             <!-- /.container-fluid -->
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2020</span>
-                </div>
-            </div>
-            </footer>
-            <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
         </div>
@@ -359,15 +343,9 @@
             if (username) {
                 document.getElementById('user-name').innerText = username;
             }
-        });
 
-        function selectGoal(goalType) {
-            document.getElementById('goalType').value = goalType;
-            
-            // 更新显示的文本
-            const dropdownButton = document.getElementById('dropdownMenuButton');
-            dropdownButton.textContent = `Selected Goal: ${goalType}`;
-        }
+            fillProfile();
+        });
     </script>
 </body>
 </html>

@@ -262,7 +262,7 @@ app.get('/rank', (req, res) => {
         FROM 
             User u
         JOIN 
-            Goal g ON u.goal_id = g.goal_id
+            Goal g ON u.user_id = g.user_id
         LEFT JOIN 
             Meal m ON u.user_id = m.user_id AND DATE(m.date) = '${date}'
         LEFT JOIN 
@@ -272,6 +272,36 @@ app.get('/rank', (req, res) => {
     `;
 
     db.query(query, (err, results) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/fillProfile', (req, res)  => {
+    const userId = req.query.userId;
+
+    let query = `
+        SELECT 
+            u.name AS name,
+            u.weight AS weight,
+            u.height AS height,
+            u.activity AS activity,
+            u.tdee AS tdee,
+            g.goal_name AS goal_name,
+            g.quantity AS quantity,
+            g.goal_id AS goal_id
+        FROM 
+            User u
+        LEFT JOIN 
+            Goal g ON u.user_id = g.user_id
+        WHERE 
+            u.user_id = ?;
+    `;
+
+    db.query(query, [userId], (err, results) => {
         if (err) {
             console.error('Database query error:', err);
             return res.status(500).json({ message: 'Database query error' });
@@ -314,7 +344,7 @@ app.post('/updategoal', (req, res) => {
     const userId = req.body.userId;
 
     // 查询用户的目标
-    const query = 'SELECT goal_id FROM User WHERE user_id = ?';
+    const query = 'SELECT goal_id FROM Goal WHERE user_id = ?';
     db.query(query, [userId], (err, results) => {
         if (err) {
             return res.status(500).json({ message: 'Database query error' });

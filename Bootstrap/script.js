@@ -434,7 +434,6 @@ function fetchArticles() {
         .catch(error => console.error("Error fetching data:", error));
 }
 
-
 function comment(content, postId, userId) {
     fetch(`http://localhost:3000/comment?content=${content}&postId=${postId}&userId=${userId}`)
 }
@@ -570,67 +569,84 @@ function calculateProgress(rank) {
     return progress * 100; // 将进度转换为百分比形式
 }
 
-async function updateInfo() {
-    const user_name = document.getElementById('updateName').value.trim();
-    const weight = document.getElementById('updateWeight').value.trim();
-    const height = document.getElementById('updateHeight').value.trim();
+function fillProfile() {
     const userId = localStorage.getItem('userId');
 
-    // 检查输入是否为空
-    if (!user_name) {
-        document.getElementById('name-feedback').style.display = 'block';
-    } else {
-        document.getElementById('name-feedback').style.display = 'none';
-    }
+    fetch(`http://localhost:3000/fillProfile?userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // 这里是返回的数据
 
-    if (!weight) {
-        document.getElementById('weight-feedback').style.display = 'block';
-    } else {
-        document.getElementById('weight-feedback').style.display = 'none';
-    }
+            // 检查数据是否存在
+            if (data.length > 0) {
+                var profile = data[0];
 
-    if (!height) {
-        document.getElementById('height-feedback').style.display = 'block';
-    } else {
-        document.getElementById('height-feedback').style.display = 'none';
-    }
+                // 填充使用者profile資料
+                document.getElementById("updateName").value = profile.name;
+                document.getElementById("updateWeight").value = profile.weight;
+                document.getElementById("updateHeight").value = profile.height;
 
-    // 如果有任何输入为空，则停止执行并显示错误消息
-    if (!user_name || !weight || !height) {
-        return;
-    }
-
-    try {
-        const response = await fetch(`http://localhost:3000/updateinfo`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: user_name,
-                weight: weight,
-                height: height,
-                userId: userId
-            })
-        });
-        const data = await response.json();
-
-        if (response.ok) {
-            if (data.message === 'Update successful') {
-                alert('更新成功');
-                // 更新本地存储中的用户名
-                localStorage.setItem('name', user_name);
+                if (profile.goal_name === 'diet') {
+                    selectGoal('Diet');
+                    document.getElementById("updateCalories").value = profile.quantity;
+                } else if (profile.goal_id === 'exercise') {
+                    selectGoal('Exercise');
+                    document.getElementById("updateCalories").value = profile.quantity;
+                } else {
+                    // 其他情况，可以添加默认处理逻辑
+                }
             } else {
-                alert(data.message);
+                console.error("Data not found or empty");
             }
-        } else {
-            alert(`提交失敗: ${data.message}`);
-        }
-    } catch (error) {
-        console.error('錯誤:', error);
-        alert('提交時發生錯誤。');
-    }
+        })
+        .catch(error => console.error("Error fetching data:", error));
 }
+
+function selectGoal(goalType) {
+    document.getElementById('goalType').value = goalType;
+    
+    // 更新显示的文本
+    const dropdownButton = document.getElementById('dropdownMenuButton');
+    dropdownButton.textContent = `Selected Goal: ${goalType}`;
+}
+
+// function updateInfo() {
+//     const user_name = document.getElementById('updateName').value.trim();
+//     const weight = document.getElementById('updateWeight').value.trim();
+//     const height = document.getElementById('updateHeight').value.trim();
+//     const userId = localStorage.getItem('userId');
+
+//     try {
+//         const response = await fetch(`http://localhost:3000/updateinfo`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 name: user_name,
+//                 weight: weight,
+//                 height: height,
+//                 userId: userId
+//             })
+//         });
+//         const data = await response.json();
+
+//         if (response.ok) {
+//             if (data.message === 'Update successful') {
+//                 alert('更新成功');
+//                 // 更新本地存储中的用户名
+//                 localStorage.setItem('name', user_name);
+//             } else {
+//                 alert(data.message);
+//             }
+//         } else {
+//             alert(`提交失敗: ${data.message}`);
+//         }
+//     } catch (error) {
+//         console.error('錯誤:', error);
+//         alert('提交時發生錯誤。');
+//     }
+// }
 
 async function updatePassword() {
     const password = document.getElementById('updatePassword').value.trim();
