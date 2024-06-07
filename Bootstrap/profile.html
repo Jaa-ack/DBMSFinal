@@ -128,11 +128,22 @@
                                     </div>
                                     <div class="card-body">
                                         <form id="profileForm">
-                                            <div class="form-group">
-                                                <label for="updateName">User Name</label>
-                                                <input type="text" class="form-control" id="updateName" placeholder="Enter your username" required>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="updateName">User Name</label>
+                                                        <input type="text" class="form-control" id="updateName" placeholder="Enter your username" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="birthday">Birthday</label>
+                                                        <p id="displayBirthday" class="form-control-static"></p>
+                                                    </div>
+                                                </div>
                                             </div>
-
+                                            
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -147,20 +158,34 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="gender">Gender</label>
+                                                <select class="form-control" id="gender" required>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+
                                             <!-- Activity Level Dropdown -->
                                             <div class="dropdown no-arrow mb-4" id="activityDropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="activityDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Select Activity Level
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="activityDropdownButton">
-                                                    <a class="dropdown-item" onclick="selectActivityLevel('1')">Level 1 - Sedentary</a>
-                                                    <a class="dropdown-item" onclick="selectActivityLevel('2')">Level 2 - Lightly Active (1-3 exercises/week)</a>
-                                                    <a class="dropdown-item" onclick="selectActivityLevel('3')">Level 3 - Moderately Active (3-5 exercises/week)</a>
-                                                    <a class="dropdown-item" onclick="selectActivityLevel('4')">Level 4 - Very Active (6-7 exercises/week)</a>
-                                                    <a class="dropdown-item" onclick="selectActivityLevel('5')">Level 5 - Super Active (intensive exercise daily)</a>
+                                                    <a class="dropdown-item" onclick="selectActivityLevel(1.2)">Level 1 - Sedentary</a>
+                                                    <a class="dropdown-item" onclick="selectActivityLevel(1.375)">Level 2 - Lightly Active (1-3 exercises/week)</a>
+                                                    <a class="dropdown-item" onclick="selectActivityLevel(1.55)">Level 3 - Moderately Active (3-5 exercises/week)</a>
+                                                    <a class="dropdown-item" onclick="selectActivityLevel(1.72)">Level 4 - Very Active (6-7 exercises/week)</a>
+                                                    <a class="dropdown-item" onclick="selectActivityLevel(1.9)">Level 5 - Super Active (intensive exercise daily)</a>
                                                 </div>
                                             </div>
                                             <input type="hidden" id="activityLevel" name="activityLevel" />
+
+                                            <div class="form-group">
+                                                <label for="tdee">TDEE</label>
+                                                <p id="displayTDEE" class="form-control-static"></p>
+                                            </div>
 
                                             <div class="d-flex justify-content-end">
                                                 <button type="submit" class="btn btn-secondary" onclick="updateInfo()">Submit</button>
@@ -272,13 +297,16 @@
     <script src="script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // 從本地存儲中獲取用戶名稱
             var userId = localStorage.getItem('userId');
-            // 從本地存儲中獲取用戶名稱
             var username = localStorage.getItem('name');
-            // 如果用戶名稱存在，則將其設置到 span 標籤中
+            var birthday = localStorage.getItem('birthday'); // Retrieve birthday from local storage
+
             if (username) {
                 document.getElementById('user-name').innerText = username;
+            }
+
+            if (birthday) {
+                document.getElementById('displayBirthday').innerText = birthday; // Display birthday
             }
 
             fillProfile();
@@ -287,6 +315,28 @@
         function selectActivityLevel(level) {
             document.getElementById('activityLevel').value = level;
             document.getElementById('activityDropdownButton').innerText = "Level " + level;
+
+            // Calculate TDEE whenever activity level is selected
+            calculateTDEE();
+        }
+
+        function calculateTDEE() {
+            var weight = parseFloat(document.getElementById('updateWeight').value);
+            var height = parseFloat(document.getElementById('updateHeight').value);
+            var age = new Date().getFullYear() - new Date(document.getElementById('displayBirthday').innerText).getFullYear();
+            var gender = document.getElementById('gender').value;
+            var activityLevel = parseFloat(document.getElementById('activityLevel').value);
+
+            if (!weight || !height || !age || !activityLevel) {
+                document.getElementById('displayTDEE').innerText = "Please complete all fields to calculate TDEE.";
+                return;
+            }
+
+            var genderFactor = (gender === 'male') ? 1 : 0;
+            var BMR = 9.99 * weight + 6.25 * height - 4.92 * age + (166 * genderFactor - 161);
+            var TDEE = BMR * activityLevel;
+
+            document.getElementById('displayTDEE').innerText = TDEE.toFixed(2);
         }
 
         function updateInfo() {
