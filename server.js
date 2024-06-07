@@ -170,28 +170,14 @@ app.get('/workouts', (req, res) => {
 });
 
 // 定义一个路由来处理请求
-app.get('/goalProgress', (req, res) => {
+app.get('/goalType', (req, res) => {
     const userId = req.query.userId;
-    const date = req.query.date;
 
     // 构建查询语句
     let query = `
-        SELECT 
-            g.goal_name,
-            CASE 
-                WHEN g.goal_name = 'diet' THEN (g.quantity - ABS(g.quantity - SUM(m.calories))) / g.quantity
-                WHEN g.goal_name = 'exercise' THEN SUM(w.calories) / g.quantity
-            END AS progress
-        FROM 
-            Goal g
-        LEFT JOIN 
-            Meal m ON g.user_id = m.user_id AND DATE(m.date) = '${date}'
-        LEFT JOIN 
-            Workout w ON g.user_id = w.user_id AND DATE(w.date) = '${date}'
-        WHERE 
-            g.user_id = ?
-        GROUP BY 
-            g.goal_name
+        SELECT goal_name, quantity
+        FROM Goal
+        WHERE user_id = ?
     `;
 
     // 执行查询
@@ -267,27 +253,22 @@ app.get('/rank', (req, res) => {
 
     let query = `
         SELECT 
-            g.goal_id,
+            u.user_id,
             u.name AS username,
-            CASE 
-                WHEN g.goal_name = 'diet' THEN 
-                    (g.quantity - ABS(g.quantity - SUM(m.calories))) / g.quantity
-                WHEN g.goal_name = 'exercise' THEN 
-                    SUM(w.calories) / g.quantity
-                ELSE
-                    0
-            END AS progress
+            g.quantity,
+            g.goal_name AS goal_type,
+            SUM(m.calories) AS total_meal_calories,
+            SUM(w.calories) AS total_workout_calories
         FROM 
-            Goal g
-            JOIN User u ON g.goal_id = u.goal_id
-            LEFT JOIN Meal m ON u.user_id = m.user_id AND DATE(m.date) = '${date}'
-            LEFT JOIN Food f ON m.food_id = f.food_id
-            LEFT JOIN Workout w ON u.user_id = w.user_id AND DATE(w.date) = '${date}'
+            User u
+        JOIN 
+            Goal g ON u.goal_id = g.goal_id
+        LEFT JOIN 
+            Meal m ON u.user_id = m.user_id AND DATE(m.date) = '${date}'
+        LEFT JOIN 
+            Workout w ON u.user_id = w.user_id AND DATE(w.date) = '${date}'
         GROUP BY 
-            g.goal_id, u.name, g.goal_name, g.quantity
-        ORDER BY 
-            progress DESC
-        LIMIT 20;
+            u.user_id, u.name, g.quantity, g.goal_name;
     `;
 
     db.query(query, (err, results) => {

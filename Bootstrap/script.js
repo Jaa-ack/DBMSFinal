@@ -274,35 +274,58 @@ function updateGoalProgress(date) {
     const formattedDate = date.toISOString().split('T')[0];
     const userId = localStorage.getItem('userId');
 
-    fetch(`http://localhost:3000/goalProgress?date=${formattedDate}&userId=${userId}`)
+    fetch(`http://localhost:3000/goalType?userId=${userId}`)
         .then(response => response.json())
         .then(data => {
-            
-            console.log(data); // 这里是返回的数据
+            var goalNameElement = document.getElementById('goalName');
+            var progressPercentageElement = document.getElementById('progressPercentage');
+            var progressBarElement = document.getElementById('progressBar');
+            // 清空目标元素内容
+            goalNameElement.textContent = '';
+            progressPercentageElement.textContent = '';
+            progressBarElement.style.width = '0%';
+
+            // 如果没有数据，显示一条消息
+            if (data.length === 0) {
+                goalNameElement.textContent = 'No data available';
+            } else {
+                var goal = data[0];
+                var quantity = goal.quantity;
+                var progress;
+
+                if (goal.goal_name === 'diet') {
+                    // 获取 FOOD BLOCK 的值并提取数字部分
+                    var foodCaloriesString = document.getElementById("foodCalories").textContent;
+                    var foodCalories = extractNumberFromString(foodCaloriesString);
+
+                    // 计算进度
+                    progress = foodCalories / quantity;
+                    if (progress > 1) {
+                        progress = 2 - progress;
+                    }
+                } else {
+                    // 获取 FOOD BLOCK 和 EXERCISE BLOCK 的值并提取数字部分
+                    var exerciseCaloriesString = document.getElementById("exerciseCalories").textContent;
+                    var exerciseCalories = extractNumberFromString(exerciseCaloriesString);
+
+                    // 计算进度
+                    progress = exerciseCalories / quantity;
+                    if (progress > 1) {
+                        progress = 100;
+                    }
+                }
+
+                // 设置目标名称
+                goalNameElement.textContent = goal.goal_name;
+
+                // 设置进度百分比
+                progressPercentageElement.textContent = (progress * 100).toFixed(2) + '%';
+
+                // 设置进度条宽度
+                progressBarElement.style.width = (progress * 100) + '%';
+            }
         })
         .catch(error => console.error("Error fetching goal progress:", error));
-
-    // // 假设这是你的查询结果，用一个对象来模拟
-    // var queryResult = [
-    //     { goal_name: 'diet', progress: 60 },
-    //     { goal_name: 'exercise', progress: 20 }
-    // ];
-
-    // // 根据查询结果更新卡片内容
-    // queryResult.forEach(function(item) {
-    //     var goalNameElement = document.getElementById('goalName');
-    //     var progressPercentageElement = document.getElementById('progressPercentage');
-    //     var progressBarElement = document.getElementById('progressBar');
-
-    //     // 更新目标名称
-    //     goalNameElement.textContent = item.goal_name.charAt(0).toUpperCase() + item.goal_name.slice(1);
-
-    //     // 更新进度百分比
-    //     progressPercentageElement.textContent = item.progress + '%';
-
-    //     // 更新进度条宽度
-    //     progressBarElement.style.width = item.progress + '%';
-    // });
 }
 
 function extractNumberFromString(string) {
@@ -488,34 +511,63 @@ function populateTable(data) {
     const userTableBody = document.getElementById("userTableBody");
     userTableBody.innerHTML = "";
 
+    // 计算进度并排序
+    data.sort((a, b) => {
+        // 计算进度
+        const progressA = calculateProgress(a);
+        const progressB = calculateProgress(b);
+
+        // 比较进度大小
+        return progressB - progressA;
+    });
+
+    // 遍历数据，为每个条目创建表格行并添加到表格中
     data.forEach(function (rank, index) {
         const row = document.createElement("tr");
 
         // 设置不同的背景颜色
         if (index === 0) {
-            row.style.backgroundColor = "gold";
+            row.style.backgroundColor = "#FFD700";
         } else if (index === 1 || index === 2) {
-            row.style.backgroundColor = "silver";
+            row.style.backgroundColor = "#993333";
         } else {
-            row.style.backgroundColor = "lightblue";
+            row.style.backgroundColor = "#339966";
         }
 
         // 如果 goal_id 等于 userId 则更改颜色
         var userId = localStorage.getItem('userId');
-        if (rank.goal_id == userId) {
-            row.style.backgroundColor = "lightgreen";
+        if (rank.user_id == userId) {
+            row.style.backgroundColor = "#336699";
         }
 
-        // 将 progress 限制在 0 到 100 之间
-        const progress = Math.min(rank.progress * 100, 100);
+        // 计算进度
+        const progress = calculateProgress(rank);
 
         row.innerHTML = `
-            <th scope="row">${index + 1}</th>
-            <td>${rank.username}</td>
-            <td>${progress.toFixed(2)}%</td>
+            <th scope="row" style="color: #333333">${index + 1}</th>
+            <td style="color: #333333">${rank.username}</td>
+            <td style="color: #333333">${progress.toFixed(2)}%</td>
         `;
         userTableBody.appendChild(row);
     });
+}
+
+function calculateProgress(rank) {
+    var progress = 0;
+
+    if (rank.goal_type === 'diet') {
+        progress = rank.total_meal_calories / rank.quantity;
+        if (progress > 1) {
+            progress = 2 - progress;
+        }
+    } else if (rank.goal_type === 'exercise') {
+        progress = rank.total_workout_calories / rank.quantity;
+        if (progress > 1) {
+            progress = 1;
+        }
+    }
+
+    return progress * 100; // 将进度转换为百分比形式
 }
 
 async function updateInfo() {
