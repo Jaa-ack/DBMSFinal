@@ -193,6 +193,51 @@ app.get('/goalType', (req, res) => {
     });
 });
 
+app.get('/searchFood', (req, res) => {
+    const search = req.query.search;
+
+    let query = `
+        SELECT 
+            food_id,
+            food_name, 
+            calories 
+        FROM 
+            Food
+        WHERE 
+            LOWER(food_name) LIKE '%${search}%'
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+
+        res.json(results);
+    });
+});
+
+app.get('/searchExercise', (req, res) => {
+    const search = req.query.search;
+
+    let query = `
+        SELECT 
+            type, 
+            calories 
+        FROM 
+            Exercise
+        WHERE 
+            LOWER(type) LIKE '%${search}%'
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+
+        res.json(results);
+    });
+});
+
 // 文章数据路由
 app.get('/articles', (req, res) => {
     let query = 'SELECT post_id, title, content FROM Article';

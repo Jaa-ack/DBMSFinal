@@ -209,12 +209,12 @@
                                     <!-- Name Input -->
                                     <div class="form-group">
                                         <label for="portion">Name</label>
-                                        <input type="text" class="form-control" id="name" placeholder="">
+                                        <input type="text" class="form-control" id="foodName" placeholder="">
                                     </div>
                                     <!-- Calories Input -->
                                     <div class="form-group">
                                         <label for="portion">Calories</label>
-                                        <input type="text" class="form-control" id="calories" placeholder="">
+                                        <input type="text" class="form-control" id="foodCalories" placeholder="">
                                     </div>
                                     <!-- Add Button -->
                                     <div class="d-flex justify-content-end">
@@ -246,7 +246,7 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-                                        <table class="table table-bordered" id="ExerciseTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="exerciseTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>Type</th>
@@ -351,6 +351,7 @@
 
     <script src="script.js"></script>
     <script>
+        var today;
         document.addEventListener("DOMContentLoaded", function () {
             // 從本地存儲中獲取用戶名稱
             var userId = localStorage.getItem('userId');
@@ -361,24 +362,24 @@
                 document.getElementById('user-name').innerText = username;
             }
 
-            var today = new Date();
-                var displayDate = document.getElementById('current-date');
+            today = new Date();
+            var displayDate = document.getElementById('current-date');
 
-                function updateDisplay(date) {
-                    displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                }
+            function updateDisplay(date) {
+                displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            }
 
+            updateDisplay(today);
+
+            document.getElementById('prev-day').addEventListener('click', function() {
+                today.setDate(today.getDate() - 1);
                 updateDisplay(today);
+            });
 
-                document.getElementById('prev-day').addEventListener('click', function() {
-                    today.setDate(today.getDate() - 1);
-                    updateDisplay(today);
-                });
-
-                document.getElementById('next-day').addEventListener('click', function() {
-                    today.setDate(today.getDate() + 1);
-                    updateDisplay(today);
-                });
+            document.getElementById('next-day').addEventListener('click', function() {
+                today.setDate(today.getDate() + 1);
+                updateDisplay(today);
+            });
         });
     </script>
 
