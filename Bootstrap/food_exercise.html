@@ -527,5 +527,69 @@
                 updateGoalProgress(date);
             }
         </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var userId = localStorage.getItem('userId');
+                var username = localStorage.getItem('name');
+                var displayDate = document.getElementById("current-date");
+                var today = new Date();
+        
+                if (username) {
+                    document.getElementById('user-name').innerText = username;
+                }
+        
+                function updateDisplay(date) {
+                    displayDate.textContent = date.toLocaleDateString("en-US", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    });
+                }
+        
+                updateDisplay(today);
+        
+                document.getElementById("prev-day").addEventListener("click", function () {
+                    today.setDate(today.getDate() - 1);
+                    updateDisplay(today);
+                    loadMealAndExerciseData(today, userId);
+                });
+        
+                document.getElementById("next-day").addEventListener("click", function () {
+                    today.setDate(today.getDate() + 1);
+                    updateDisplay(today);
+                    loadMealAndExerciseData(today, userId);
+                });
+        
+                loadMealAndExerciseData(today, userId);
+            });
+        
+            function loadMealAndExerciseData(date, userId) {
+                fetch(`http://localhost:3000/getGoals?userId=${userId}&date=${date.toISOString().split('T')[0]}`)
+                .then(response => response.json())
+                .then(goals => {
+                    const foodBlock = document.getElementById('foodCalories');
+                    const exerciseBlock = document.getElementById('exerciseCalories');
+        
+                    let foodCalories = 0;
+                    let exerciseCalories = 0;
+        
+                    goals.forEach(goal => {
+                        if (goal.goal_name === 'Diet') {
+                            foodCalories += parseFloat(goal.quantity);
+                        } else if (goal.goal_name === 'Exercise') {
+                            exerciseCalories += parseFloat(goal.quantity);
+                        }
+                    });
+        
+                    foodBlock.innerText = foodCalories.toFixed(2);
+                    exerciseBlock.innerText = exerciseCalories.toFixed(2);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        </script>
+        
     </body>
 </html>
