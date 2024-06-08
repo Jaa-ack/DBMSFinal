@@ -381,6 +381,137 @@
                 updateDisplay(today);
             });
         });
+
+        function addMeal() {
+            const userId = localStorage.getItem('userId');
+            const foodName = document.getElementById('foodName').value.trim();
+            const calories = document.getElementById('foodCalories').value.trim();
+            const date = today.toISOString().split("T")[0];
+            const meal = getSelectedMeal();
+            let foodId = "";
+
+            // 搜索食物
+            fetch(`http://localhost:3000/searchFood?search=${foodName}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length === 0) {
+                        // 新增食物到数据库
+                        return fetch(`http://localhost:3000/addFood`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ foodName, calories })
+                        })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("Failed to insert food when insert meal");
+                            }
+                            return response.json();
+                        })
+                        .then(() => {
+                            // 再次搜索以获取新增食物的 foodId
+                            return fetch(`http://localhost:3000/searchFood?search=${foodName}`)
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data.length === 0) {
+                                        throw new Error("Failed to retrieve food after insertion");
+                                    }
+                                    foodId = data[0].food_id;
+                                });
+                        });
+                    } else {
+                        foodId = data[0].food_id;
+                        return Promise.resolve();
+                    }
+                })
+                .then(() => {
+                    // 新增meal
+                    return fetch(`http://localhost:3000/addMeal`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ userId, foodId, calories, meal, date })
+                    });
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to add meal');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Meal added successfully:', data);
+                    alert('Meal added successfully');
+                })
+                .catch((error) => {
+                    console.error("Error adding meal:", error);
+                    alert('Failed to add meal');
+                });
+        }
+
+        function addWorkout() {
+            const userId = localStorage.getItem('userId');
+            const type = document.getElementById('exerciseName').value.trim();
+            const time = document.getElementById('minutesPerformed').value.trim();
+            const date = today.toISOString().split("T")[0];
+            const calories = document.getElementById('caloriesBurned').value.trim();
+            const hourBurned = calories * 60 / time;
+            let exerciseId = "";
+
+            // 搜索运动
+            fetch(`http://localhost:3000/searchExercise?search=${type}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length === 0) {
+                        // 新增运动到数据库
+                        return fetch(`http://localhost:3000/addExercise`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ type, hourBurned })
+                        })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("Failed to insert exercise when insert Workout");
+                            }
+                            return response.json();
+                        })
+                        .then((result) => {
+                            exerciseId = result.exerciseId;
+                        });
+                    } else {
+                        exerciseId = data[0].exercise_id;
+                        return Promise.resolve();
+                    }
+                })
+                .then(() => {
+                    // 新增workout
+                    return fetch(`http://localhost:3000/addWorkout`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ exerciseId, userId, time, date, calories })
+                    });
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to add exercise data');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Exercise data added successfully:', data);
+                    alert('Exercise data added successfully');
+                })
+                .catch((error) => {
+                    console.error("Error adding exercise data:", error);
+                    alert('Failed to add exercise data');
+                });
+        }
     </script>
 
 </body>

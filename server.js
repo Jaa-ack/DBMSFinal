@@ -100,10 +100,10 @@ app.get('/meal', (req, res) => {
 });
 
 app.post('/deleteMeal', (req, res) => {
-    const { userId, food_id, mealType, calories, date } = req.body;
+    const { userId, food_id, meal_type, calories, date } = req.body;
 
     const queryDeleteMeal = 'DELETE FROM Meal WHERE user_id = ? AND food_id = ? AND meal_type = ? AND calories = ? AND DATE(date) = ?';
-    db.query(queryDeleteMeal, [userId, food_id, mealType, calories, date], (err, result) => {
+    db.query(queryDeleteMeal, [userId, food_id, meal_type, calories, date], (err, result) => {
         if (err) {
             console.error('Database query error:', err);
             return res.status(500).json({ success: false, message: 'Database query error' });
@@ -111,7 +111,7 @@ app.post('/deleteMeal', (req, res) => {
 
         // 确认是否成功删除记录
         const queryCheckDeleted = 'SELECT * FROM Meal WHERE user_id = ? AND food_id = ? AND meal_type = ? AND calories = ? AND DATE(date) = ?';
-        db.query(queryCheckDeleted, [userId, food_id, mealType, calories, date], (err, result) => {
+        db.query(queryCheckDeleted, [userId, food_id, meal_type, calories, date], (err, result) => {
             if (err) {
                 console.error('Database query error:', err);
                 return res.status(500).json({ success: false, message: 'Database query error' });
@@ -176,7 +176,7 @@ app.post('/deleteWorkout', (req, res) => {
                 console.log('Exercise data deleted successfully');
                 res.json({ success: true, message: 'Exercise data deleted successfully' });
             } else {
-                console.error('Meal deletion failed');
+                console.error('Exercise data deletion failed');
                 res.status(500).json({ success: false, message: 'Exercise data deletion failed' });
             }
         });
@@ -304,11 +304,46 @@ app.get('/searchFood', (req, res) => {
     });
 });
 
+app.get('/addFood', (req, res) => {
+    const foodName = req.query.foodName;
+    const calories = req.query.calories;
+
+    let query = `
+        INSERT INTO Food (food_name, calories)
+        VALUES (?, ?)
+    `;
+
+    db.query(query, [foodName, calories], (err, results) => {
+        if (err) {
+            console.error("Error inserting data:", err);
+            return res.status(500).json({ message: 'Error inserting data into database' });
+        }
+
+        // 插入成功
+        res.status(200).json({ message: 'Successfully inserted data into database' });
+    });
+});
+
+// Route to handle adding meals
+app.post('/addMeal', function(req, res) {
+    const { userId, foodId, calories, meal, date } = req.body;
+
+    const queryInsertMeal = "INSERT INTO Meal (user_id, meal_type, food_id, calories, date) VALUES (?, ?, ?, ?, ?)";
+    db.query(queryInsertMeal, [userId, meal, foodId, calories, date], function(err, result) {
+        if (err) {
+            console.error('Error inserting meal:', err);
+            return res.status(500).json({ success: false, message: 'Internal server error' });
+        }
+    res.json({ success: true, message: "Meal added successfully!" });
+    });
+});
+
 app.get('/searchExercise', (req, res) => {
     const search = req.query.search;
 
     let query = `
         SELECT 
+            exercise_id,
             type, 
             calories 
         FROM 
@@ -326,103 +361,38 @@ app.get('/searchExercise', (req, res) => {
     });
 });
 
-// Route to handle adding meals
-app.post('/addMeal', function(req, res) {
-    const { userId, mealType, foodName, foodCalories, date } = req.body;
+app.post('/addExercise', (req, res) => {
+    const { type, hourBurned } = req.body;
 
-    // Check if the food exists in the database
-    const queryCheck = "SELECT food_id FROM Food WHERE LOWER(food_name) = LOWER(?)";
-    
-    db.query(queryCheck, [foodName], function(err, result) {
+    const query = `
+        INSERT INTO Exercise (type, calories) 
+        VALUES (?, ?)
+    `;
+
+    db.query(query, [type, hourBurned], (err, results) => {
         if (err) {
-            return res.status(500).json({ success: false, message: 'Internal server error' });
+            console.error("Error inserting data:", err);
+            return res.status(500).json({ message: 'Error inserting data into database' });
         }
 
-        if (result.length === 0) {
-            // If food does not exist, insert it into the database
-            const queryInsertFood = "INSERT INTO Food (food_name, calories) VALUES (?, ?)";
-            db.query(queryInsertFood, [foodName, foodCalories], function(err, result) {
-                if (err) {
-                    return res.status(500).json({ success: false, message: 'Internal server error' });
-                }
-                
-                // Get the newly inserted food_id
-                const newFoodId = result.insertId;
-
-                // Insert meal into Meal table
-                const queryInsertMeal = "INSERT INTO Meal (user_id, meal_type, food_id, calories, date) VALUES (?, ?, ?, ?, ?)";
-                db.query(queryInsertMeal, [userId, mealType, newFoodId, foodCalories, date], function(err, result) {
-                    if (err) {
-                        console.error('Error inserting meal:', err);
-                        return res.status(500).json({ success: false, message: 'Internal server error' });
-                    }
-                    res.json({ success: true, message: "Meal added successfully!" });
-                });
-            });
-        } else {
-            // If food exists, get the food_id
-            const existingFoodId = result[0].food_id;
-
-            // Insert meal into Meal table
-            const queryInsertMeal = "INSERT INTO Meal (user_id, meal_type, food_id, calories, date) VALUES (?, ?, ?, ?, ?)";
-            db.query(queryInsertMeal, [userId, mealType, existingFoodId, foodCalories, date], function(err, result) {
-                if (err) {
-                    console.error('Error inserting meal:', err);
-                    return res.status(500).json({ success: false, message: 'Internal server error' });
-                }
-                res.json({ success: true, message: "Meal added successfully!" });
-            });
-        }
+        // 插入成功，返回插入的 exercise_id
+        res.status(200).json({ message: 'Successfully inserted data into database', exerciseId: results.insertId });
     });
 });
 
+
 // Route to handle adding workout
 app.post('/addWorkout', function(req, res) {
-    const { exerciseName, exerciseTime, burnCalories, userId, date } = req.body;
+    const { exerciseId, userId, time, date, calories } = req.body;
 
-    // Check if the food exists in the database
-    const queryCheck = "SELECT exercise_id FROM Exercise WHERE LOWER(type) = LOWER(?)";
-    
-    db.query(queryCheck, [exerciseName], function(err, result) {
+    // Insert workout into Workout table
+    const query = "INSERT INTO Workout (exercise_id, user_id, time, date, calories) VALUES (?, ?, ?, ?, ?)";
+    db.query(query, [exerciseId, userId, time, date, calories], function(err, result) {
         if (err) {
+            console.error('Error inserting exercise data:', err);
             return res.status(500).json({ success: false, message: 'Internal server error' });
         }
-
-        if (result.length === 0) {
-            // If food does not exist, insert it into the database
-            const queryInsertFood = "INSERT INTO Exercise (type, calories) VALUES (?, ?)";
-            db.query(queryInsertFood, [exerciseName, burnCalories/exerciseTime*60], function(err, result) {
-                if (err) {
-                    return res.status(500).json({ success: false, message: 'Internal server error' });
-                }
-                
-                // Get the newly inserted exercise_id
-                const newExerciseId = result.insertId;
-
-                // Insert exercise into workout table
-                const queryInsertMeal = "INSERT INTO Workout (exercise_id, user_id, time, date, calories) VALUES (?, ?, ?, ?, ?)";
-                db.query(queryInsertMeal, [newExerciseId, userId, exerciseTime, date, burnCalories], function(err, result) {
-                    if (err) {
-                        console.error('Error inserting meal:', err);
-                        return res.status(500).json({ success: false, message: 'Internal server error' });
-                    }
-                    res.json({ success: true, message: "Exercise data added successfully!" });
-                });
-            });
-        } else {
-            // If food exists, get the exercise_id
-            const existingExerciseId = result[0].exercise_id;
-
-            // Insert meal into Meal table
-            const queryInsertMeal = "INSERT INTO Workout (exercise_id, user_id, time, date, calories) VALUES (?, ?, ?, ?, ?)";
-            db.query(queryInsertMeal, [existingExerciseId, userId, exerciseTime, date, burnCalories], function(err, result) {
-                if (err) {
-                    console.error('Error inserting exercise data:', err);
-                    return res.status(500).json({ success: false, message: 'Internal server error' });
-                }
-                res.json({ success: true, message: "Exercise data added successfully!" });
-            });
-        }
+        res.json({ success: true, message: "Exercise data added successfully!" });
     });
 });
 
