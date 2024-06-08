@@ -20,10 +20,10 @@ const db = mysql.createConnection({
 
 db.connect(err => {
     if (err) {
-        console.error('無法連接到資料庫:', err);
+        // console.error('無法連接到資料庫:', err);
         return;
     }
-    console.log('成功連接到資料庫');
+    // console.log('成功連接到資料庫');
 });
 
 app.get('/login', (req, res) => {
@@ -380,7 +380,6 @@ app.post('/addExercise', (req, res) => {
     });
 });
 
-
 // Route to handle adding workout
 app.post('/addWorkout', function(req, res) {
     const { exerciseId, userId, time, date, calories } = req.body;
@@ -398,7 +397,7 @@ app.post('/addWorkout', function(req, res) {
 
 // 文章数据路由
 app.get('/articles', (req, res) => {
-    let query = 'SELECT post_id, title, content FROM Article';
+    let query = 'SELECT post_id, title, content FROM Article ORDER BY post_time DESC';
     db.query(query, (err, results) => {
         if (err) {
             console.error('Database query error:', err);
@@ -410,7 +409,7 @@ app.get('/articles', (req, res) => {
 
 // 评论数据路由
 app.get('/comments', (req, res) => {
-    let query = 'SELECT content, post_id FROM Comment';
+    let query = 'SELECT content, post_id FROM Comment ORDER BY comment_time ASC';
     db.query(query, (err, results) => {
         if (err) {
             console.error('Database query error:', err);
@@ -492,7 +491,6 @@ app.get('/fillProfile', (req, res)  => {
             u.weight AS weight,
             u.height AS height,
             u.activity AS activity,
-            u.tdee AS tdee,
             g.goal_name AS goal_name,
             g.quantity AS quantity,
             g.goal_id AS goal_id
@@ -550,23 +548,26 @@ app.post('/updategoal', (req, res) => {
     const query = 'SELECT goal_id FROM Goal WHERE user_id = ?';
     db.query(query, [userId], (err, results) => {
         if (err) {
+            console.error('SELECT query error:', err); // 添加日志
             return res.status(500).json({ message: 'Database query error' });
         }
 
         if (results.length === 0) {
             // 如果用户没有目标，则插入新的目标
-            const insertQuery = 'INSERT INTO Goal (goal_name, quantity, start_time, user_id) VALUES (?, ?, NOW(), ?)';
+            const insertQuery = 'INSERT INTO Goal (goal_name, quantity, user_id) VALUES (?, ?, ?)';
             db.query(insertQuery, [goalType, calories, userId], (insertErr, insertResults) => {
                 if (insertErr) {
+                    console.error('INSERT query error:', insertErr); // 添加日志
                     return res.status(500).json({ message: 'Database insert error' });
                 }
                 res.json({ message: 'Insert successful' });
             });
         } else {
             // 否则，更新用户的目标
-            const updateQuery = 'UPDATE Goal SET goal_name = ?, quantity = ?, start_time = NOW() WHERE user_id = ?';
+            const updateQuery = 'UPDATE Goal SET goal_name = ?, quantity = ? WHERE user_id = ?';
             db.query(updateQuery, [goalType, calories, userId], (updateErr, updateResults) => {
                 if (updateErr) {
+                    console.error('UPDATE query error:', updateErr); // 添加日志
                     return res.status(500).json({ message: 'Database update error' });
                 }
                 res.json({ message: 'Update successful' });
@@ -575,32 +576,7 @@ app.post('/updategoal', (req, res) => {
     });
 });
 
-// 处理搜索食物的路由
-app.get('/foods', (req, res) => {
-    const text = req.query.text;
-    const query = `SELECT type, calories FROM Exercise WHERE type = ?`;
-
-    db.query(query, [text], (err, results) => {
-        if (err) {
-            return res.status(500).json({ message: 'Database query error' });
-        }
-        res.json(results);
-    });
-});
-
-// 处理搜索食物的路由
-app.get('/foods', (req, res) => {
-    const text = req.query.text;
-    const query = `SELECT food_name, calories FROM Food WHERE food_name  = ?`;
-
-    db.query(query, [text], (err, results) => {
-        if (err) {
-            return res.status(500).json({ message: 'Database query error' });
-        }
-        res.json(results);
-    });
-});
 
 app.listen(port, () => {
-    console.log(`服务器已启动在 http://localhost:${port}`);
+    // console.log(`服务器已启动在 http://localhost:${port}`);
 });

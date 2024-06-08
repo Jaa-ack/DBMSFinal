@@ -157,6 +157,78 @@ function calculateTDEE(weight, height, age, gender, activityLevelValue) {
     return BMR * activityMultiplier;
 }
 
+// 確保註冊資料不為空
+(function () {
+    "use strict";
+
+    window.addEventListener(
+        "load",
+        function () {
+        var forms = document.getElementsByClassName("needs-validation");
+        Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener(
+            "submit",
+            function (event) {
+                var isValid = true;
+
+                // Get input elements
+                var heightInput = document.getElementById("height");
+                var weightInput = document.getElementById("weight");
+                var passwordInput = document.getElementById("InputPassword");
+                var repeatPasswordInput = document.getElementById("RepeatPassword");
+                var emailInput = document.getElementById("exampleInputEmail");
+
+                // Reset custom validity messages
+                heightInput.setCustomValidity("");
+                weightInput.setCustomValidity("");
+                passwordInput.setCustomValidity("");
+                repeatPasswordInput.setCustomValidity("");
+                emailInput.setCustomValidity("");
+
+                // Check height
+                if (isNaN(heightInput.value) || heightInput.value.trim() === "") {
+                heightInput.setCustomValidity("Invalid height");
+                isValid = false;
+                }
+
+                // Check weight
+                if (isNaN(weightInput.value) || weightInput.value.trim() === "") {
+                weightInput.setCustomValidity("Invalid weight");
+                isValid = false;
+                }
+
+                // Check repeat password
+                if (repeatPasswordInput.value !== passwordInput.value) {
+                repeatPasswordInput.setCustomValidity("Passwords do not match");
+                isValid = false;
+                }
+
+                // Check email
+                if (!emailInput.validity.valid) {
+                emailInput.setCustomValidity(
+                    "Please provide a valid email address"
+                );
+                isValid = false;
+                }
+
+                if (form.checkValidity() === false || !isValid) {
+                event.preventDefault();
+                event.stopPropagation();
+                } else {
+                event.preventDefault(); // Prevent the form from submitting normally
+                registerUser(); // Register user
+                }
+
+                form.classList.add("was-validated");
+            },
+            false
+            );
+        });
+        },
+        false
+    );
+})();
+
 // 登入成功後將用戶信息保存到 localStorage 中
 function saveUserDataToLocalStorage(userId, name) {
     localStorage.setItem("userId", userId);
@@ -170,80 +242,7 @@ function getUserDataFromLocalStorage() {
     return { userId, name };
 }
 
-// 確保註冊資料不為空
-// (function () {
-//     "use strict";
-
-//     window.addEventListener(
-//         "load",
-//         function () {
-//         var forms = document.getElementsByClassName("needs-validation");
-//         Array.prototype.filter.call(forms, function (form) {
-//             form.addEventListener(
-//             "submit",
-//             function (event) {
-//                 var isValid = true;
-
-//                 // Get input elements
-//                 var heightInput = document.getElementById("height");
-//                 var weightInput = document.getElementById("weight");
-//                 var passwordInput = document.getElementById("InputPassword");
-//                 var repeatPasswordInput = document.getElementById("RepeatPassword");
-//                 var emailInput = document.getElementById("exampleInputEmail");
-
-//                 // Reset custom validity messages
-//                 heightInput.setCustomValidity("");
-//                 weightInput.setCustomValidity("");
-//                 passwordInput.setCustomValidity("");
-//                 repeatPasswordInput.setCustomValidity("");
-//                 emailInput.setCustomValidity("");
-
-//                 // Check height
-//                 if (isNaN(heightInput.value) || heightInput.value.trim() === "") {
-//                 heightInput.setCustomValidity("Invalid height");
-//                 isValid = false;
-//                 }
-
-//                 // Check weight
-//                 if (isNaN(weightInput.value) || weightInput.value.trim() === "") {
-//                 weightInput.setCustomValidity("Invalid weight");
-//                 isValid = false;
-//                 }
-
-//                 // Check repeat password
-//                 if (repeatPasswordInput.value !== passwordInput.value) {
-//                 repeatPasswordInput.setCustomValidity("Passwords do not match");
-//                 isValid = false;
-//                 }
-
-//                 // Check email
-//                 if (!emailInput.validity.valid) {
-//                 emailInput.setCustomValidity(
-//                     "Please provide a valid email address"
-//                 );
-//                 isValid = false;
-//                 }
-
-//                 if (form.checkValidity() === false || !isValid) {
-//                 event.preventDefault();
-//                 event.stopPropagation();
-//                 } else {
-//                 event.preventDefault(); // Prevent the form from submitting normally
-//                 registerUser(); // Register user
-//                 }
-
-//                 form.classList.add("was-validated");
-//             },
-//             false
-//             );
-//         });
-//         },
-//         false
-//     );
-// })();
-
 // 加载给定日期和用户ID的餐数据
-
 function loadMealAndExerciseData(date, userId) {
     // 调用函数加载早餐数据
     loadMealData(date, 'breakfast', 'breakfastTable');
@@ -260,7 +259,7 @@ function loadMealAndExerciseData(date, userId) {
     // 計算給定日期消耗卡路里
     loadExercises(date, 'exerciseCalories');
     // 計算每日目標達成率
-    updateGoalProgress(date);
+    updateGoalProgress();
 }
 
 function loadMealData(date, mealType, tableId) {
@@ -503,21 +502,20 @@ function calculateRemainingCalories() {
     document.getElementById("remainCalories").textContent = remainingCalories + " calories";
 }
 
-function updateGoalProgress(date) {
-    const formattedDate = date.toISOString().split("T")[0];
+function updateGoalProgress() {
     const userId = localStorage.getItem("userId");
 
     fetch(`http://localhost:3000/goalType?userId=${userId}`)
         .then((response) => response.json())
         .then((data) => {
-        var goalNameElement = document.getElementById("goalName");
-        var progressPercentageElement =
-            document.getElementById("progressPercentage");
-        var progressBarElement = document.getElementById("progressBar");
-        // 清空目标元素内容
-        goalNameElement.textContent = "";
-        progressPercentageElement.textContent = "";
-        progressBarElement.style.width = "0%";
+            var goalNameElement = document.getElementById("goalName");
+            var progressPercentageElement =
+                document.getElementById("progressPercentage");
+            var progressBarElement = document.getElementById("progressBar");
+            // 清空目标元素内容
+            goalNameElement.textContent = "";
+            progressPercentageElement.textContent = "";
+            progressBarElement.style.width = "0%";
 
         // 如果没有数据，显示一条消息
         if (data.length === 0) {
@@ -528,29 +526,30 @@ function updateGoalProgress(date) {
             var progress;
 
             if (goal.goal_name === "diet") {
-            // 获取 FOOD BLOCK 的值并提取数字部分
-            var foodCaloriesString =
-                document.getElementById("foodCalories").textContent;
-            var foodCalories = extractNumberFromString(foodCaloriesString);
+                // 获取 FOOD BLOCK 的值并提取数字部分
+                var foodCaloriesString =
+                    document.getElementById("foodCalories").textContent;
+                var foodCalories = extractNumberFromString(foodCaloriesString);
 
-            // 计算进度
-            progress = foodCalories / quantity;
-            if (progress > 1) {
-                progress = 2 - progress;
-            }
+                // 计算进度
+                progress = foodCalories / quantity;
+                if (progress <= 1){
+                    progress = progress
+                }else if (progress > 1) {
+                    progress = 2.0 - progress;
+                }else {
+                    progress = 0;
+                }
             } else {
-            // 获取 FOOD BLOCK 和 EXERCISE BLOCK 的值并提取数字部分
-            var exerciseCaloriesString =
-                document.getElementById("exerciseCalories").textContent;
-            var exerciseCalories = extractNumberFromString(
-                exerciseCaloriesString
-            );
+                // 获取 EXERCISE BLOCK 的值并提取数字部分
+                var exerciseCaloriesString = document.getElementById("exerciseCalories").textContent;
+                var exerciseCalories = extractNumberFromString(exerciseCaloriesString);
 
-            // 计算进度
-            progress = exerciseCalories / quantity;
-            if (progress > 1) {
-                progress = 100;
-            }
+                // 计算进度
+                progress = exerciseCalories / quantity;
+                if (progress > 1) {
+                    progress = 1;
+                }
             }
 
             // 设置目标名称
@@ -829,37 +828,37 @@ function populateTable(data) {
 
         // 比较进度大小
         return progressB - progressA;
-});
+    });
 
-  // 遍历数据，为每个条目创建表格行并添加到表格中
-  data.forEach(function (rank, index) {
-    const row = document.createElement("tr");
+    // 遍历数据，为每个条目创建表格行并添加到表格中
+    data.forEach(function (rank, index) {
+        const row = document.createElement("tr");
 
-    // 设置不同的背景颜色
-    if (index === 0) {
-      row.style.backgroundColor = "#FFD700";
-    } else if (index === 1 || index === 2) {
-      row.style.backgroundColor = "#993333";
-    } else {
-      row.style.backgroundColor = "#339966";
-    }
+        // 设置不同的背景颜色
+        if (index === 0) {
+        row.style.backgroundColor = "#FFD700";
+        } else if (index === 1 || index === 2) {
+        row.style.backgroundColor = "#993333";
+        } else {
+        row.style.backgroundColor = "#339966";
+        }
 
-    // 如果 goal_id 等于 userId 则更改颜色
-    var userId = localStorage.getItem("userId");
-    if (rank.user_id == userId) {
-      row.style.backgroundColor = "#336699";
-    }
+        // 如果 goal_id 等于 userId 则更改颜色
+        var userId = localStorage.getItem("userId");
+        if (rank.user_id == userId) {
+        row.style.backgroundColor = "#336699";
+        }
 
-    // 计算进度
-    const progress = calculateProgress(rank);
+        // 计算进度
+        const progress = calculateProgress(rank);
 
-    row.innerHTML = `
-            <th scope="row" style="color: #333333">${index + 1}</th>
-            <td style="color: #333333">${rank.username}</td>
-            <td style="color: #333333">${progress.toFixed(2)}%</td>
-        `;
-    userTableBody.appendChild(row);
-  });
+        row.innerHTML = `
+                <th scope="row" style="color: #333333">${index + 1}</th>
+                <td style="color: #333333">${rank.username}</td>
+                <td style="color: #333333">${progress.toFixed(2)}%</td>
+            `;
+        userTableBody.appendChild(row);
+    });
 }
 
 function calculateProgress(rank) {
@@ -896,15 +895,16 @@ function fillProfile() {
             document.getElementById("updateName").value = profile.name;
             document.getElementById("updateWeight").value = profile.weight;
             document.getElementById("updateHeight").value = profile.height;
+            selectActivityLevel(profile.activity);
 
             if (profile.goal_name === "diet") {
-            selectGoal("Diet");
-            document.getElementById("updateCalories").value = profile.quantity;
+                selectGoal("Diet");
+                document.getElementById("updateCalories").value = profile.quantity;
             } else if (profile.goal_id === "exercise") {
-            selectGoal("Exercise");
-            document.getElementById("updateCalories").value = profile.quantity;
+                selectGoal("Exercise");
+                document.getElementById("updateCalories").value = profile.quantity;
             } else {
-            // 其他情况，可以添加默认处理逻辑
+                // 其他情况，可以添加默认处理逻辑
             }
         } else {
             console.error("Data not found or empty");
@@ -914,47 +914,123 @@ function fillProfile() {
 }
 
 function selectGoal(goalType) {
-  document.getElementById("goalType").value = goalType;
+    document.getElementById("goalType").value = goalType;
 
-  // 更新显示的文本
-  const dropdownButton = document.getElementById("dropdownMenuButton");
-  dropdownButton.textContent = `Selected Goal: ${goalType}`;
+    // 更新显示的文本
+    const dropdownButton = document.getElementById("dropdownMenuButton");
+    dropdownButton.textContent = `Selected Goal: ${goalType}`;
 }
 
-// function updateInfo() {
-//     const user_name = document.getElementById('updateName').value.trim();
-//     const weight = document.getElementById('updateWeight').value.trim();
-//     const height = document.getElementById('updateHeight').value.trim();
-//     const userId = localStorage.getItem('userId');
+async function updateInfo() {
+    const user_name = document.getElementById('updateName').value.trim();
+    const weight = document.getElementById('updateWeight').value.trim();
+    const height = document.getElementById('updateHeight').value.trim();
+    const activity = document.getElementById('activityLevel').value;
+    const userId = localStorage.getItem('userId');
 
-//     try {
-//         const response = await fetch(`http://localhost:3000/updateinfo`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 name: user_name,
-//                 weight: weight,
-//                 height: height,
-//                 userId: userId
-//             })
-//         });
-//         const data = await response.json();
+    try {
+        const response = await fetch(`http://localhost:3000/updateinfo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: user_name,
+                weight: weight,
+                height: height,
+                activity: activity, // Corrected typo in variable name
+                userId: userId
+            })
+        });
+        const data = await response.json();
 
-//         if (response.ok) {
-//             if (data.message === 'Update successful') {
-//                 alert('更新成功');
-//                 // 更新本地存储中的用户名
-//                 localStorage.setItem('name', user_name);
-//             } else {
-//                 alert(data.message);
-//             }
-//         } else {
-//             alert(`提交失敗: ${data.message}`);
-//         }
-//     } catch (error) {
-//         console.error('錯誤:', error);
-//         alert('提交時發生錯誤。');
-//     }
-// }
+        if (response.ok) {
+            if (data.message === 'Profile update successful') {
+                alert('個人資料更新成功');
+                // 更新本地存储中的用户名
+                localStorage.setItem('name', user_name);
+            } else {
+                alert(data.message);
+            }
+        } else {
+            alert(`提交失敗: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('錯誤:', error);
+        alert('提交時發生錯誤。');
+    }
+}
+
+async function updatePassword(event) {
+    event.preventDefault();
+    const password = document.getElementById("updatePassword").value.trim();
+    const repeatPassword = document.getElementById("checkPassword").value.trim();
+    const userId = localStorage.getItem('userId');
+
+    if (password !== repeatPassword) {
+        alert('密碼不一致');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`http://localhost:3000/updatepassword`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                password: password,
+                userId: userId
+            })
+        });
+        const data = await response.json();
+    
+        if (response.ok) {
+            if (data.message === 'Password update successful') {
+                alert('密碼更新成功');
+            } else {
+                alert(data.message);
+            }
+        } else {
+            alert(`密碼提交失敗: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('錯誤:', error);
+        alert('密碼提交時發生錯誤。');
+    }
+}
+
+async function updateGoal(event) {
+    event.preventDefault();
+    var goalType = document.getElementById("goalType").value;
+    var calories = document.getElementById("updateCalories").value.trim();
+    const userId = localStorage.getItem('userId');
+
+    try {
+        const response = await fetch(`http://localhost:3000/updategoal`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                type: goalType,
+                calories: calories,
+                userId: userId
+            })
+        });
+        const data = await response.json();
+    
+        if (response.ok) {
+            if (data.message === 'Goal update successful') {
+                alert('目標更新成功');
+            } else {
+                alert(data.message);
+            }
+        } else {
+            alert(`目標提交失敗: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('錯誤:', error);
+        alert('目標提交時發生錯誤。');
+    }
+}
