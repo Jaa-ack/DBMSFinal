@@ -188,7 +188,7 @@
                                             </div>
 
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-secondary" onclick="updateInfo()">Submit</button>
+                                                <button type="submit" class="btn btn-primary" onclick="updateInfo()">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -213,7 +213,7 @@
                                             </div>
 
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-secondary" onclick="updatePassword()">Submit</button>
+                                                <button type="submit" class="btn btn-primary" onclick="updatePassword()">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -244,7 +244,7 @@
                                                 <input type="text" class="form-control" id="updateCalories" placeholder="Enter Calories" />
                                             </div>
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-secondary" onclick="updateGoal()">Submit</button>
+                                                <button type="submit" class="btn btn-primary" onclick="updateGoal()">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -356,5 +356,84 @@
             document.getElementById('dropdownMenuButton').innerText = goal;
         }
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var userId = localStorage.getItem('userId');
+            var username = localStorage.getItem('name');
+            var birthday = localStorage.getItem('birthday'); // Retrieve birthday from local storage
+    
+            if (username) {
+                document.getElementById('user-name').innerText = username;
+            }
+    
+            if (birthday) {
+                document.getElementById('displayBirthday').innerText = birthday; // Display birthday
+            }
+    
+            fillProfile();
+        });
+    
+        function selectActivityLevel(level) {
+            document.getElementById('activityLevel').value = level;
+            document.getElementById('activityDropdownButton').innerText = "Level " + level;
+    
+            // Calculate TDEE whenever activity level is selected
+            calculateTDEE();
+        }
+    
+        function calculateTDEE() {
+            var weight = parseFloat(document.getElementById('updateWeight').value);
+            var height = parseFloat(document.getElementById('updateHeight').value);
+            var age = new Date().getFullYear() - new Date(document.getElementById('displayBirthday').innerText).getFullYear();
+            var gender = document.getElementById('gender').value;
+            var activityLevel = parseFloat(document.getElementById('activityLevel').value);
+    
+            if (!weight || !height || !age || !activityLevel) {
+                document.getElementById('displayTDEE').innerText = "Please complete all fields to calculate TDEE.";
+                return;
+            }
+    
+            var genderFactor = (gender === 'male') ? 1 : 0;
+            var BMR = 9.99 * weight + 6.25 * height - 4.92 * age + (166 * genderFactor - 161);
+            var TDEE = BMR * activityLevel;
+    
+            document.getElementById('displayTDEE').innerText = TDEE.toFixed(2);
+        }
+    
+        function updateInfo() {
+            // Implement update info functionality
+        }
+    
+        function updatePassword() {
+            // Implement update password functionality
+        }
+    
+        function updateGoal() {
+            var userId = localStorage.getItem('userId');
+            var goalType = document.getElementById('goalType').value;
+            var calories = document.getElementById('updateCalories').value;
+    
+            fetch('http://localhost:3000/saveGoal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, goalType, calories })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function selectGoal(goal) {
+            document.getElementById('goalType').value = goal;
+            document.getElementById('dropdownMenuButton').innerText = goal;
+        }
+    </script>
+    
 </body>
 </html>
