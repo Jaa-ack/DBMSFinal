@@ -215,6 +215,24 @@
                     </div>
                 </div>
 
+                <!-- TDEE BLOCK -->
+                <div class="col">
+                    <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                        TDEE
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="tdee">
+                                        <!-- 這裡將顯示使用者TDEE -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- REMAIN BLOCK -->
                 <div class="col">
                     <div class="card border-left-warning shadow h-100 py-2">
@@ -226,24 +244,6 @@
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" id="remainCalories">
                                     <!-- 這裡將顯示熱量盈餘 -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TDEE BLOCK -->
-                <div class="col">
-                    <div class="card border-left-danger shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                        TDEE
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="remainCalories">
-                                    
                                     </div>
                                 </div>
                             </div>
@@ -509,87 +509,6 @@
                 // 加载初始日期的数据
                 loadMealAndExerciseData(today, userId);
             });
-
-            function loadMealAndExerciseData(date, userId) {
-                // 调用函数加载早餐数据
-                loadMealData(date, 'breakfast', 'breakfastTable');
-                // 调用函数加载午餐数据
-                loadMealData(date, 'lunch', 'lunchTable');
-                // 调用函数加载晚餐数据
-                loadMealData(date, 'dinner', 'dinnerTable');
-                // 加载给定日期的运动数据
-                loadExerciseData(date, 'exerciseTable');
-                // 計算給定日期攝取卡路里
-                loadMeals(date, 'foodCalories');
-                // 計算給定日期消耗卡路里
-                loadExercises(date, 'exerciseCalories');
-                // 計算每日目標達成率
-                updateGoalProgress(date);
-            }
         </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var userId = localStorage.getItem('userId');
-                var username = localStorage.getItem('name');
-                var displayDate = document.getElementById("current-date");
-                var today = new Date();
-        
-                if (username) {
-                    document.getElementById('user-name').innerText = username;
-                }
-        
-                function updateDisplay(date) {
-                    displayDate.textContent = date.toLocaleDateString("en-US", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    });
-                }
-        
-                updateDisplay(today);
-        
-                document.getElementById("prev-day").addEventListener("click", function () {
-                    today.setDate(today.getDate() - 1);
-                    updateDisplay(today);
-                    loadMealAndExerciseData(today, userId);
-                });
-        
-                document.getElementById("next-day").addEventListener("click", function () {
-                    today.setDate(today.getDate() + 1);
-                    updateDisplay(today);
-                    loadMealAndExerciseData(today, userId);
-                });
-        
-                loadMealAndExerciseData(today, userId);
-            });
-        
-            function loadMealAndExerciseData(date, userId) {
-                fetch(`http://localhost:3000/getGoals?userId=${userId}&date=${date.toISOString().split('T')[0]}`)
-                .then(response => response.json())
-                .then(goals => {
-                    const foodBlock = document.getElementById('foodCalories');
-                    const exerciseBlock = document.getElementById('exerciseCalories');
-        
-                    let foodCalories = 0;
-                    let exerciseCalories = 0;
-        
-                    goals.forEach(goal => {
-                        if (goal.goal_name === 'Diet') {
-                            foodCalories += parseFloat(goal.quantity);
-                        } else if (goal.goal_name === 'Exercise') {
-                            exerciseCalories += parseFloat(goal.quantity);
-                        }
-                    });
-        
-                    foodBlock.innerText = foodCalories.toFixed(2);
-                    exerciseBlock.innerText = exerciseCalories.toFixed(2);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        </script>
-        
     </body>
 </html>
