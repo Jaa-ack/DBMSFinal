@@ -446,3 +446,35 @@ app.get('/foods', (req, res) => {
 app.listen(port, () => {
     console.log(`服务器已启动在 http://localhost:${port}`);
 });
+
+// Endpoint to save user goal
+app.post('/saveGoal', (req, res) => {
+    const { userId, goalType, calories } = req.body;
+
+    // Insert goal into the database
+    const query = 'INSERT INTO Goal (user_id, goal_name, quantity, start_time) VALUES (?, ?, ?, NOW())';
+    db.query(query, [userId, goalType, calories], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database insert error' });
+        }
+        res.status(201).json({ message: 'Goal saved successfully' });
+    });
+});
+
+// Endpoint to get user goals for a specific date
+app.get('/getGoals', (req, res) => {
+    const { userId, date } = req.query;
+    
+    const query = `
+        SELECT goal_name, quantity
+        FROM Goal
+        WHERE user_id = ? AND DATE(start_time) = ?
+    `;
+
+    db.query(query, [userId, date], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
