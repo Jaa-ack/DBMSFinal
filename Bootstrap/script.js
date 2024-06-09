@@ -46,9 +46,9 @@ async function registerUser() {
   const weight = parseFloat(document.getElementById("weight").value.trim());
   const password = document.getElementById("InputPassword").value.trim();
   const repeatPassword = document.getElementById("RepeatPassword").value.trim();
-  const gender =
-    document.querySelector('input[name="gender"]:checked')?.value.trim() ||
-    "female";
+  const gender = document
+    .querySelector('input[name="gender"]:checked')
+    ?.value.trim();
   const activityLevelValue = document.getElementById("activity-level").value;
 
   let activity;
@@ -82,6 +82,12 @@ async function registerUser() {
   if (activity === null) {
     document.getElementById("activity-feedback").innerText =
       "Please select a valid activity level";
+    return;
+  }
+
+  if (gender === null) {
+    document.getElementById("gender-feedback").innerText =
+      "Please select a gender";
     return;
   }
 
