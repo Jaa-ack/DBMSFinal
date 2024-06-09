@@ -1,210 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Community</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js" defer></script>
 
     <style>
-        .scroll-container {
-            height: 150px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
-        }
+      .scroll-container {
+        height: 150px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+      }
 
-        .box {
-            display: inline-block;
-            width: 300px;
-            height: 100%;
-            background-color: #c6c6c68e;
-            box-sizing: border-box;
-            padding: 5px;
-            margin-bottom: 20px;
-            margin-right: 15px;
-            border-radius: 10px; /* 圓角 */
-            overflow: auto; /* 顯示滾動條 */
-            white-space: pre-line;
-            color: rgb(41, 41, 42);
-        }
-
+      .box {
+        display: inline-block;
+        width: 300px;
+        height: 100%;
+        background-color: #c6c6c68e;
+        box-sizing: border-box;
+        padding: 5px;
+        margin-bottom: 20px;
+        margin-right: 15px;
+        border-radius: 10px; /* 圓角 */
+        overflow: auto; /* 顯示滾動條 */
+        white-space: pre-line;
+        color: rgb(41, 41, 42);
+      }
     </style>
-</head>
+  </head>
 
-<body id="page-top">
-
+  <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
+      <!-- Sidebar -->
+      <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        id="accordionSidebar"
+      >
+        <!-- Sidebar - Brand -->
+        <a
+          class="sidebar-brand d-flex align-items-center justify-content-center"
+          href="food_exercise.html"
+        >
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-solid fa-dumbbell"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
+        </a>
 
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="food_exercise.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-solid fa-dumbbell"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
-            </a>
-            
-            <!-- Nav Item - Custom Component -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    <i class="fas fa-duotone fa-bullseye"></i>
-                    <span>Goals</span>
-                </a>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Goal Setting:</h6>
-                        <a class="collapse-item" href="food_exercise.html">Food & Exercise</a>
-                        <a class="collapse-item" href="database.html">Database</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="community.html">
-                    <i class="fas fa-solid fa-pager"></i>
-                    <span>Community</span>
-                </a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" href="rank.html">
-                    <i class="fas fa-regular fa-hand-point-up"></i>
-                    <span>Rank</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="profile.html">
-                    <i class="fas fa-solid fa-id-card"></i>
-                    <span>Profile</span></a>
-            </li>
-            
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <!-- Nav Item - Custom Component -->
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseOne"
+            aria-expanded="true"
+            aria-controls="collapseOne"
+          >
+            <i class="fas fa-duotone fa-bullseye"></i>
+            <span>Goals</span>
+          </a>
+          <div
+            id="collapseOne"
+            class="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Goal Setting:</h6>
+              <a class="collapse-item" href="food_exercise.html"
+                >Food & Exercise</a
+              >
+              <a class="collapse-item" href="database.html">Database</a>
             </div>
-        </ul>
-        <!-- End of Sidebar -->
+          </div>
+        </li>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="community.html">
+            <i class="fas fa-solid fa-pager"></i>
+            <span>Community</span>
+          </a>
+        </li>
 
-            <!-- Main Content -->
-            <div id="content">
+        <li class="nav-item active">
+          <a class="nav-link" href="rank.html">
+            <i class="fas fa-regular fa-hand-point-up"></i>
+            <span>Rank</span></a
+          >
+        </li>
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <li class="nav-item">
+          <a class="nav-link" href="profile.html">
+            <i class="fas fa-solid fa-id-card"></i>
+            <span>Profile</span></a
+          >
+        </li>
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block" />
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user-name"></span>
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile.html">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <!-- Date -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <button class="btn btn-primary btn-circle" type="button" id="prev-day">&lt;</button>
-                    <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
-                    <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
-                </div>
-
-                <table class="table table-dark">
-                <thead class="thead-dark">
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">姓名</th>
-                    <th scope="col">今日目標達成率</th>
-                    </tr>
-                </thead>
-                <tbody id="userTableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-                </table>
-            </div>
-            <!-- /.container-fluid -->
-            </div>
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-        <!-- End of Content Wrapper -->
+      </ul>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <div class="topbar-divider d-none d-sm-block"></div>
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span
+                    class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    id="user-name"
+                  ></span>
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                  <a class="dropdown-item" href="profile.html">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <button class="border-0 bg-white" onclick="logout()">
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Logout
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Date -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <button
+                class="btn btn-primary btn-circle"
+                type="button"
+                id="prev-day"
+              >
+                &lt;
+              </button>
+              <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
+              <button
+                class="btn btn-primary btn-circle"
+                type="button"
+                id="next-day"
+              >
+                &gt;
+              </button>
+            </div>
+
+            <table class="table table-dark">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">姓名</th>
+                  <th scope="col">今日目標達成率</th>
+                </tr>
+              </thead>
+              <tbody id="userTableBody">
+                <!-- Data will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+      </div>
+      <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
+      <i class="fas fa-angle-up"></i>
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -219,53 +289,55 @@
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // 從本地存儲中獲取用戶名稱
-            var userId = localStorage.getItem('userId');
-            // 從本地存儲中獲取用戶名稱
-            var username = localStorage.getItem('name');
-            // 如果用戶名稱存在，則將其設置到 span 標籤中
-            if (username) {
-                document.getElementById('user-name').innerText = username;
-            }
+      document.addEventListener("DOMContentLoaded", function () {
+        // 從本地存儲中獲取用戶名稱
+        var userId = localStorage.getItem("userId");
+        // 從本地存儲中獲取用戶名稱
+        var username = localStorage.getItem("name");
+        // 如果用戶名稱存在，則將其設置到 span 標籤中
+        if (username) {
+          document.getElementById("user-name").innerText = username;
+        }
 
-            // 获取日期显示元素和当前日期
-            var displayDate = document.getElementById("current-date");
-            var today = new Date();
+        // 获取日期显示元素和当前日期
+        var displayDate = document.getElementById("current-date");
+        var today = new Date();
 
-            // 更新日期显示函数
-            function updateDisplay(date) {
-                displayDate.textContent = date.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                });
-            }
+        // 更新日期显示函数
+        function updateDisplay(date) {
+          displayDate.textContent = date.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
 
-            // 初始化日期显示
+        // 初始化日期显示
+        updateDisplay(today);
+
+        // 点击按钮更新日期
+        document
+          .getElementById("prev-day")
+          .addEventListener("click", function () {
+            today.setDate(today.getDate() - 1);
             updateDisplay(today);
-
-            // 点击按钮更新日期
-            document.getElementById("prev-day").addEventListener("click", function () {
-                today.setDate(today.getDate() - 1);
-                updateDisplay(today);
-                // 加载前一天的数据
-                ranking(today);
-            });
-
-            document.getElementById("next-day").addEventListener("click", function () {
-                today.setDate(today.getDate() + 1);
-                updateDisplay(today);
-                // 加载后一天的数据
-                ranking(today);
-            });
-
-            // 加载初始日期的数据
+            // 加载前一天的数据
             ranking(today);
-        });
+          });
+
+        document
+          .getElementById("next-day")
+          .addEventListener("click", function () {
+            today.setDate(today.getDate() + 1);
+            updateDisplay(today);
+            // 加载后一天的数据
+            ranking(today);
+          });
+
+        // 加载初始日期的数据
+        ranking(today);
+      });
     </script>
-
-</body>
-
+  </body>
 </html>
