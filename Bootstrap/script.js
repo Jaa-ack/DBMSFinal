@@ -263,54 +263,56 @@ function getUserDataFromLocalStorage() {
 }
 
 // 加载给定日期和用户ID的餐数据
-function loadMealAndExerciseData(date, userId) {
-  // 调用函数加载早餐数据
-  loadMealData(date, "breakfast", "breakfastTable");
-  // 调用函数加载午餐数据
-  loadMealData(date, "lunch", "lunchTable");
-  // 调用函数加载晚餐数据
-  loadMealData(date, "dinner", "dinnerTable");
-  // 加載使用者的TDEE
-  loadTDEE("tdee");
-  // 加载给定日期的运动数据
-  loadExerciseData(date, "exerciseTable");
-  // 計算給定日期攝取卡路里
-  loadMeals(date, "foodCalories");
-  // 計算給定日期消耗卡路里
-  loadExercises(date, "exerciseCalories");
-  // 計算每日目標達成率
-  updateGoalProgress();
+function loadMealAndExerciseData(date) {
+    // 调用函数加载早餐数据
+    loadMealData(date, "breakfast", "breakfastTable");
+    // 调用函数加载午餐数据
+    loadMealData(date, "lunch", "lunchTable");
+    // 调用函数加载晚餐数据
+    loadMealData(date, "dinner", "dinnerTable");
+    // 加載使用者的TDEE
+    loadTDEE("tdee");
+    // 加载给定日期的运动数据
+    loadExerciseData(date, "exerciseTable");
+    // 計算給定日期攝取卡路里
+    loadMeals(date, "foodCalories");
+    // 計算給定日期消耗卡路里
+    loadExercises(date, "exerciseCalories");
 }
 
 function loadMealData(date, mealType, tableId) {
-  const formattedDate = date.toISOString().split("T")[0];
-  const userId = localStorage.getItem("userId");
-  fetch(
-    `http://localhost:3000/meal?date=${formattedDate}&userId=${userId}&mealType=${mealType}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      var tableBody = document.getElementById(tableId).querySelector("tbody");
-      tableBody.innerHTML = "";
+    const formattedDate = date.toISOString().split("T")[0];
+    const userId = localStorage.getItem("userId");
+    fetch(
+        `http://localhost:3000/meal?date=${formattedDate}&userId=${userId}&mealType=${mealType}`
+    )
+        .then((response) => response.json())
+        .then((data) => {
+        var tableBody = document.getElementById(tableId).querySelector("tbody");
+        tableBody.innerHTML = "";
 
-      if (data.length === 0) {
-        var messageRow = `<tr><td colspan="3">No data available</td></tr>`;
-        tableBody.insertAdjacentHTML("beforeend", messageRow);
-      } else {
-        data.forEach(function (meal) {
-          var row = `
-                    <tr>
-                        <td>${meal.food_name}</td>
-                        <td>${meal.calories}</td>
-                        <td>
-                            <button class="btn btn-danger" onclick="confirmDeleteMeal(${userId}, '${meal.food_id}', '${meal.meal_type}', '${meal.calories}', '${formattedDate}')">Delete</button>
-                        </td>
-                    </tr>`;
-          tableBody.insertAdjacentHTML("beforeend", row);
-        });
-      }
-    })
-    .catch((error) => console.error("Error fetching data:", error));
+        if (data.length === 0) {
+            var messageRow = `<tr><td colspan="3">No data available</td></tr>`;
+            tableBody.insertAdjacentHTML("beforeend", messageRow);
+        } else {
+            data.forEach(function (meal) {
+            var row = `
+                        <tr>
+                            <td>${meal.food_name}</td>
+                            <td>${meal.calories}</td>
+                            <td>
+                                <button class="btn btn-danger" onclick="confirmDeleteMeal(${userId}, '${meal.food_id}', '${meal.meal_type}', '${meal.calories}', '${formattedDate}')">Delete</button>
+                            </td>
+                        </tr>`;
+            tableBody.insertAdjacentHTML("beforeend", row);
+            });
+        }
+
+        calculateRemainingCalories();
+        updateGoalProgress();
+
+        })
+        .catch((error) => console.error("Error fetching data:", error));
 }
 
 function confirmDeleteMeal(userId, food_id, meal_type, calories, date) {
@@ -353,64 +355,69 @@ function deleteMeal(userId, food_id, meal_type, calories, date) {
 }
 
 function loadTDEE(targetElementId) {
-  const userId = localStorage.getItem("userId");
-  fetch(`http://localhost:3000/tdee?userId=${userId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // 清空目标元素内容
-      var targetElement = document.getElementById(targetElementId);
-      targetElement.innerHTML = "";
+    const userId = localStorage.getItem("userId");
+    fetch(`http://localhost:3000/tdee?userId=${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+        // 清空目标元素内容
+        var targetElement = document.getElementById(targetElementId);
+        targetElement.innerHTML = "";
 
-      // 如果没有数据，显示一条消息
-      if (data.length === 0) {
-        var body = document.getElementById(targetElementId);
-        body.innerHTML = `No data available`;
-      } else {
-        var value = data[0];
-        if (value.tdee === null) {
-          targetElement.textContent = `0`;
+        // 如果没有数据，显示一条消息
+        if (data.length === 0) {
+            var body = document.getElementById(targetElementId);
+            body.innerHTML = `No data available`;
         } else {
-          targetElement.textContent = `${value.tdee}`;
+            var value = data[0];
+            if (value.tdee === null) {
+            targetElement.textContent = `0`;
+            } else {
+            targetElement.textContent = `${value.tdee}`;
+            }
         }
-      }
 
-      // 计算热量盈余
-      calculateRemainingCalories();
-    })
-    .catch((error) => console.error("Error fetching data:", error));
+        calculateRemainingCalories();
+        updateGoalProgress();
+
+        })
+        .catch((error) => console.error("Error fetching data:", error));
 }
 
 // 加载给定日期的运动数据
 function loadExerciseData(date, tableId) {
-  const formattedDate = date.toISOString().split("T")[0];
-  const userId = localStorage.getItem("userId");
-  fetch(`http://localhost:3000/workout?date=${formattedDate}&userId=${userId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // 清空表格
-      var tableBody = document.getElementById(tableId).querySelector("tbody");
-      tableBody.innerHTML = "";
+    const formattedDate = date.toISOString().split("T")[0];
+    const userId = localStorage.getItem("userId");
+    fetch(`http://localhost:3000/workout?date=${formattedDate}&userId=${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+        // 清空表格
+        var tableBody = document.getElementById(tableId).querySelector("tbody");
+        tableBody.innerHTML = "";
 
-      // 如果没有数据，显示一条消息
-      if (data.length === 0) {
-        var messageRow = `<tr><td colspan="3">No data available</td></tr>`;
-        tableBody.insertAdjacentHTML("beforeend", messageRow);
-      } else {
-        // 将数据添加到表格中
-        data.forEach(function (exercise) {
-          var row = `
-                <tr>
-                    <td>${exercise.type}</td>
-                    <td>${exercise.calories}</td>
-                    <td>
-                        <button class="btn btn-danger" onclick="confirmDeleteWorkout(${userId}, '${exercise.exercise_id}', '${exercise.time}', '${formattedDate}', '${exercise.calories}')">Delete</button>
-                    </td>
-                </tr>`;
-          tableBody.insertAdjacentHTML("beforeend", row);
-        });
-      }
-    })
-    .catch((error) => console.error("Error fetching data:", error));
+        // 如果没有数据，显示一条消息
+        if (data.length === 0) {
+            var messageRow = `<tr><td colspan="3">No data available</td></tr>`;
+            tableBody.insertAdjacentHTML("beforeend", messageRow);
+        } else {
+            // 将数据添加到表格中
+            data.forEach(function (exercise) {
+            var row = `
+                    <tr>
+                        <td>${exercise.type}</td>
+                        <td>${exercise.calories}</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="confirmDeleteWorkout(${userId}, '${exercise.exercise_id}', '${exercise.time}', '${formattedDate}', '${exercise.calories}')">Delete</button>
+                        </td>
+                    </tr>`;
+            tableBody.insertAdjacentHTML("beforeend", row);
+            });
+        }
+
+        calculateRemainingCalories();
+        updateGoalProgress();
+
+        })
+        .catch((error) => console.error("Error fetching data:", error));
 }
 
 function confirmDeleteWorkout(user_id, exercise_id, time, date, calories) {
@@ -455,144 +462,156 @@ function deleteWorkout(user_id, exercise_id, time, date, calories) {
 }
 
 function loadMeals(date, targetElementId) {
-  const formattedDate = date.toISOString().split("T")[0];
-  const userId = localStorage.getItem("userId");
-  fetch(`http://localhost:3000/meals?date=${formattedDate}&userId=${userId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // 清空目标元素内容
-      var targetElement = document.getElementById(targetElementId);
-      targetElement.innerHTML = "";
+    const formattedDate = date.toISOString().split("T")[0];
+    const userId = localStorage.getItem("userId");
+    fetch(`http://localhost:3000/meals?date=${formattedDate}&userId=${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+        // 清空目标元素内容
+        var targetElement = document.getElementById(targetElementId);
+        targetElement.innerHTML = "";
 
-      // 如果没有数据，显示一条消息
-      if (data.length === 0) {
-        var body = document.getElementById(targetElementId);
-        body.innerHTML = `No data available`;
-      } else {
-        var total = data[0];
-        if (total.totalCalories === null) {
-          targetElement.textContent = `0 calories`;
+        // 如果没有数据，显示一条消息
+        if (data.length === 0) {
+            var body = document.getElementById(targetElementId);
+            body.innerHTML = `No data available`;
         } else {
-          targetElement.textContent = `${total.totalCalories} calories`;
+            var total = data[0];
+            if (total.totalCalories === null) {
+            targetElement.textContent = `0 calories`;
+            } else {
+            targetElement.textContent = `${total.totalCalories} calories`;
+            }
         }
-      }
-    })
-    .catch((error) => console.error("Error fetching data:", error));
+
+        calculateRemainingCalories();
+        updateGoalProgress();
+
+        })
+        .catch((error) => console.error("Error fetching data:", error));
 }
 
 function loadExercises(date, targetElementId) {
-  const formattedDate = date.toISOString().split("T")[0];
-  const userId = localStorage.getItem("userId");
-  fetch(`http://localhost:3000/workouts?date=${formattedDate}&userId=${userId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // 清空目标元素内容
-      var targetElement = document.getElementById(targetElementId);
-      targetElement.innerHTML = "";
+    const formattedDate = date.toISOString().split("T")[0];
+    const userId = localStorage.getItem("userId");
+    fetch(`http://localhost:3000/workouts?date=${formattedDate}&userId=${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+        // 清空目标元素内容
+        var targetElement = document.getElementById(targetElementId);
+        targetElement.innerHTML = "";
 
-      // 如果没有数据，显示一条消息
-      if (data.length === 0) {
-        var body = document.getElementById(targetElementId);
-        body.innerHTML = `No data available`;
-      } else {
-        var total = data[0];
-        if (total.totalCalories === null) {
-          targetElement.textContent = `0 calories`;
+        // 如果没有数据，显示一条消息
+        if (data.length === 0) {
+            var body = document.getElementById(targetElementId);
+            body.innerHTML = `No data available`;
         } else {
-          targetElement.textContent = `${total.totalCalories} calories`;
+            var total = data[0];
+            if (total.totalCalories === null) {
+            targetElement.textContent = `0 calories`;
+            } else {
+            targetElement.textContent = `${total.totalCalories} calories`;
+            }
         }
-      }
 
-      // 计算热量盈余
-      calculateRemainingCalories();
-    })
-    .catch((error) => console.error("Error fetching data:", error));
+        calculateRemainingCalories();
+        updateGoalProgress();
+
+        })
+        .catch((error) => console.error("Error fetching data:", error));
 }
 
 function calculateRemainingCalories() {
-  // 获取 FOOD BLOCK 和 EXERCISE BLOCK 的值并提取数字部分
-  var foodCaloriesString = document.getElementById("foodCalories").textContent;
-  var exerciseCaloriesString =
-    document.getElementById("exerciseCalories").textContent;
-  var tdeeQuantity = document.getElementById("tdee").textContent;
+    // 获取 FOOD BLOCK 和 EXERCISE BLOCK 的值并提取数字部分
+    var foodCaloriesString = document.getElementById("foodCalories").textContent;
+    var exerciseCaloriesString =
+        document.getElementById("exerciseCalories").textContent;
+    var tdeeQuantity = document.getElementById("tdee").textContent;
 
-  var foodCalories = extractNumberFromString(foodCaloriesString);
-  var exerciseCalories = extractNumberFromString(exerciseCaloriesString);
-  var tdee = extractNumberFromString(tdeeQuantity);
+    var foodCalories = extractNumberFromString(foodCaloriesString);
+    var exerciseCalories = extractNumberFromString(exerciseCaloriesString);
+    var tdee = extractNumberFromString(tdeeQuantity);
 
-  // 计算热量盈余
-  var remainingCalories = foodCalories - exerciseCalories - tdee;
+    // 计算热量盈余
+    var remainingCalories = foodCalories - exerciseCalories - tdee;
 
-  // 将热量盈余显示在 REMAIN BLOCK 中
-  document.getElementById("remainCalories").textContent =
-    remainingCalories + " calories";
+    // 将热量盈余显示在 REMAIN BLOCK 中
+    document.getElementById("remainCalories").textContent = remainingCalories + " calories";
+    
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
 }
 
 function updateGoalProgress() {
-  const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId");
 
-  fetch(`http://localhost:3000/goalType?userId=${userId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      var goalNameElement = document.getElementById("goalName");
-      var progressPercentageElement =
-        document.getElementById("progressPercentage");
-      var progressBarElement = document.getElementById("progressBar");
-      // 清空目标元素内容
-      goalNameElement.textContent = "";
-      progressPercentageElement.textContent = "";
-      progressBarElement.style.width = "0%";
+    fetch(`http://localhost:3000/goalType?userId=${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+            var goalNameElement = document.getElementById("goalName");
+            var progressPercentageElement = document.getElementById("progressPercentage");
+            var progressBarElement = document.getElementById("progressBar");
+            // 清空目标元素内容
+            goalNameElement.textContent = "";
+            progressPercentageElement.textContent = "";
+            progressBarElement.style.width = "0%";
 
-      // 如果没有数据，显示一条消息
-      if (data.length === 0) {
-        goalNameElement.textContent = "No data available";
-      } else {
-        var goal = data[0];
-        var quantity = goal.quantity;
-        var progress;
+            // 如果没有数据，显示一条消息
+            if (data.length === 0) {
+                goalNameElement.textContent = "No data available";
+            } else {
+                var goal = data[0];
+                var quantity = goal.quantity;
+                var progress = 1.77; // 使用变量声明
 
-        if (goal.goal_name === "diet") {
-          // 获取 FOOD BLOCK 的值并提取数字部分
-          var foodCaloriesString =
-            document.getElementById("foodCalories").textContent;
-          var foodCalories = extractNumberFromString(foodCaloriesString);
+                if (goal.goal_name === "Diet") {
+                    // 获取 FOOD BLOCK 的值并提取数字部分
+                    var foodCaloriesString = document.getElementById("foodCalories").textContent;
+                    var foodCalories = extractNumberFromString(foodCaloriesString);
 
-          // 计算进度
-          progress = foodCalories / quantity;
-          if (progress <= 1) {
-            progress = progress;
-          } else if (progress > 1) {
-            progress = 2.0 - progress;
-          } else {
-            progress = 0;
-          }
-        } else {
-          // 获取 EXERCISE BLOCK 的值并提取数字部分
-          var exerciseCaloriesString =
-            document.getElementById("exerciseCalories").textContent;
-          var exerciseCalories = extractNumberFromString(
-            exerciseCaloriesString
-          );
+                    // 计算进度
+                    progress = foodCalories / quantity; // 重新赋值给变量 progress
+                    if (progress <= 1) {
+                        progress = progress;
+                    } else if (progress > 1) {
+                        progress = 2.0 - progress;
+                    } else {
+                        progress = 0;
+                    }
+                } else {
+                    // 获取 EXERCISE BLOCK 的值并提取数字部分
+                    var exerciseCaloriesString =
+                        document.getElementById("exerciseCalories").textContent;
+                    var exerciseCalories = extractNumberFromString(
+                        exerciseCaloriesString
+                    );
 
-          // 计算进度
-          progress = exerciseCalories / quantity;
-          if (progress > 1) {
-            progress = 1;
-          }
-        }
+                    // 计算进度
+                    progress = exerciseCalories / quantity;
+                    if (progress > 1) {
+                        progress = 1;
+                    }
+                }
 
-        // 设置目标名称
-        goalNameElement.textContent = goal.goal_name;
+                // 设置目标名称
+                goalNameElement.textContent = goal.goal_name;
 
-        // 设置进度百分比
-        progressPercentageElement.textContent =
-          (progress * 100).toFixed(2) + "%";
+                // 设置进度百分比
+                progressPercentageElement.textContent =
+                (progress * 100).toFixed(2) + "%";
 
-        // 设置进度条宽度
-        progressBarElement.style.width = progress * 100 + "%";
-      }
-    })
-    .catch((error) => console.error("Error fetching goal progress:", error));
+                // 设置进度条宽度
+                progressBarElement.style.width = progress * 100 + "%";
+            }
+
+            calculateRemainingCalories();
+            updateGoalProgress();
+
+        })
+        .catch((error) => console.error("Error fetching goal progress:", error));
 }
 
 function searchFood() {
@@ -647,6 +666,183 @@ function searchExercise() {
       }
     })
     .catch((error) => console.error("Error fetching data:", error));
+}
+
+function addMeal() {
+    var mealSelected = false;
+    var mealOptions = document.getElementsByName('meal');
+    for (var i = 0; i < mealOptions.length; i++) {
+        if (mealOptions[i].checked) {
+            mealSelected = true;
+            break;
+        }
+    }
+
+    // 如果没有选择餐点，则提醒用户并停止执行
+    if (!mealSelected) {
+        alert('Please select a meal.');
+        return;
+    }
+    
+    const userId = localStorage.getItem('userId');
+    const foodName = document.getElementById('foodName').value.trim();
+    const calories = document.getElementById('foodCalories').value.trim();
+    const date = today.toISOString().split("T")[0];
+    const meal = getSelectedMeal();
+
+    // 表单验证
+    if (!foodName || !calories) {
+        if (!foodName) {
+            document.getElementById('foodName').classList.add('is-invalid');
+        }
+        if (!calories) {
+            document.getElementById('foodCalories').classList.add('is-invalid');
+        }
+        return;
+    }
+
+    // 搜索食物
+    fetch(`http://localhost:3000/searchFood?search=${foodName}`)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.length === 0) {
+                // 新增食物到数据库
+                return fetch(`http://localhost:3000/addFood`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ foodName, calories })
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Failed to insert food when insert meal");
+                        }
+                        return response.json();
+                    })
+                    .then(() => {
+                        // 再次搜索以获取新增食物的 foodId
+                        return fetch(`http://localhost:3000/searchFood?search=${foodName}`)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.length === 0) {
+                                    throw new Error("Failed to retrieve food after insertion");
+                                }
+                                return data[0].food_id;
+                            });
+                    });
+            } else {
+                return data[0].food_id;
+            }
+        })
+        .then((foodId) => {
+            // 新增meal
+            return fetch(`http://localhost:3000/addMeal`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, foodId, calories, meal, date })
+            });
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to add meal');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Meal added successfully:', data);
+            alert('Meal added successfully');
+        })
+        .catch((error) => {
+            console.error("Error adding meal:", error);
+            alert('Failed to add meal');
+        });
+}
+
+function addWorkout() {
+    const userId = localStorage.getItem('userId');
+    const type = document.getElementById('exerciseName').value.trim();
+    const time = document.getElementById('minutesPerformed').value.trim();
+    const date = today.toISOString().split("T")[0];
+    const calories = document.getElementById('caloriesBurned').value.trim();
+    const hourBurned = calories * 60 / time;
+
+    // 表单验证
+    if (!type || !time || !calories) {
+        if (!type) {
+            document.getElementById('exerciseName').classList.add('is-invalid');
+        }
+        if (!time) {
+            document.getElementById('minutesPerformed').classList.add('is-invalid');
+        }
+        if (!calories) {
+            document.getElementById('caloriesBurned').classList.add('is-invalid');
+        }
+        return;
+    }
+
+    // 搜索运动
+    fetch(`http://localhost:3000/searchExercise?search=${type}`)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.length === 0) {
+                // 新增运动到数据库
+                return fetch(`http://localhost:3000/addExercise`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ type, hourBurned })
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Failed to insert exercise when insert Workout");
+                        }
+                        return response.json();
+                    })
+                    .then((result) => {
+                        return result.exerciseId;
+                    });
+            } else {
+                return data[0].exercise_id;
+            }
+        })
+        .then((exerciseId) => {
+            // 新增workout
+            return fetch(`http://localhost:3000/addWorkout`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ exerciseId, userId, time, date, calories })
+            });
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to add exercise data');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Exercise data added successfully:', data);
+            alert('Exercise data added successfully');
+        })
+        .catch((error) => {
+            console.error("Error adding exercise data:", error);
+            alert('Failed to add exercise data');
+        });
+}
+
+function getSelectedMeal() {
+    const mealOptions = document.getElementsByName('meal');
+    for (let i = 0; i < mealOptions.length; i++) {
+        if (mealOptions[i].checked) {
+            return mealOptions[i].value;
+        }
+    }
+    return '';
 }
 
 function getSelectedMeal() {
@@ -1110,45 +1306,3 @@ async function sendResetPasswordEmail(email) {
     alert('An error occurred while sending the reset password email.');
   }
 }
-document.addEventListener("DOMContentLoaded", function() {
-  const form = document.querySelector("form");
-  const mealRadios = document.getElementsByName("meal");
-
-  form.addEventListener("submit", function(event) {
-      let isMealSelected = false;
-
-      for (const radio of mealRadios) {
-          if (radio.checked) {
-              isMealSelected = true;
-              break;
-          }
-      }
-
-      if (!isMealSelected) {
-          for (const radio of mealRadios) {
-              radio.classList.add("is-invalid");
-          }
-          document.querySelector("#meal .invalid-feedback").style.display = "block";
-          event.preventDefault();
-          event.stopPropagation();
-      } else {
-          for (const radio of mealRadios) {
-              radio.classList.remove("is-invalid");
-          }
-          document.querySelector("#meal .invalid-feedback").style.display = "none";
-      }
-  });
-
-  for (const radio of mealRadios) {
-      radio.addEventListener("change", function() {
-          if (this.checked) {
-              for (const r of mealRadios) {
-                  r.classList.remove("is-invalid");
-              }
-              document.querySelector("#meal .invalid-feedback").style.display = "none";
-          }
-      });
-  }
-});
-
-
