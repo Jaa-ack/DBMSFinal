@@ -864,22 +864,24 @@ function populateTable(data) {
   });
 
   // 遍历数据，为每个条目创建表格行并添加到表格中
-  data.forEach(function (rank, index) {
+  data.forEach(function(rank, index) {
     const row = document.createElement("tr");
 
     // 设置不同的背景颜色
     if (index === 0) {
-      row.style.backgroundColor = "#FFD700";
-    } else if (index === 1 || index === 2) {
-      row.style.backgroundColor = "#993333";
+        row.style.backgroundColor = "#FFD700"; // 金色
+    } else if (index === 1) {
+        row.style.backgroundColor = "#C0C0C0"; // 银色
+    } else if (index === 2) {
+        row.style.backgroundColor = "#CD7F32"; // 古铜色
     } else {
-      row.style.backgroundColor = "#339966";
+        row.style.backgroundColor = "#E6F7FF"; // 浅蓝色
     }
 
     // 如果 goal_id 等于 userId 则更改颜色
     var userId = localStorage.getItem("userId");
     if (rank.user_id == userId) {
-      row.style.backgroundColor = "#336699";
+        row.style.backgroundColor = "#B0E0E6"; // 用户的浅蓝色
     }
 
     // 计算进度
