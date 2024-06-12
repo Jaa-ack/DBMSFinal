@@ -864,24 +864,24 @@ function populateTable(data) {
   });
 
   // 遍历数据，为每个条目创建表格行并添加到表格中
-  data.forEach(function(rank, index) {
+  data.forEach(function (rank, index) {
     const row = document.createElement("tr");
 
     // 设置不同的背景颜色
     if (index === 0) {
-        row.style.backgroundColor = "#FFD700"; // 金色
+      row.style.backgroundColor = "#FFD700"; // 金色
     } else if (index === 1) {
-        row.style.backgroundColor = "#C0C0C0"; // 银色
+      row.style.backgroundColor = "#C0C0C0"; // 银色
     } else if (index === 2) {
-        row.style.backgroundColor = "#CD7F32"; // 古铜色
+      row.style.backgroundColor = "#CD7F32"; // 古铜色
     } else {
-        row.style.backgroundColor = "#E6F7FF"; // 浅蓝色
+      row.style.backgroundColor = "#E6F7FF"; // 浅蓝色
     }
 
     // 如果 goal_id 等于 userId 则更改颜色
     var userId = localStorage.getItem("userId");
     if (rank.user_id == userId) {
-        row.style.backgroundColor = "#B0E0E6"; // 用户的浅蓝色
+      row.style.backgroundColor = "#B0E0E6"; // 用户的浅蓝色
     }
 
     // 计算进度
@@ -981,9 +981,9 @@ async function updateInfo() {
 
     if (response.ok) {
       if (data.message === "Profile update successful") {
+        localStorage.setItem("name", user_name);
         alert("個人資料更新成功");
         // 更新本地存储中的用户名
-        localStorage.setItem("name", user_name);
       } else {
         alert(data.message);
       }
@@ -997,11 +997,10 @@ async function updateInfo() {
 }
 
 async function updatePassword() {
-  
   const password = document.getElementById("updatePassword").value.trim();
   const repeatPassword = document.getElementById("checkPassword").value.trim();
   const userId = localStorage.getItem("userId");
-  console.log(password)
+  console.log(password);
 
   if (password !== repeatPassword) {
     alert("密碼不一致");
@@ -1036,8 +1035,7 @@ async function updatePassword() {
   }
 }
 
-async function updateGoal(event) {
-  event.preventDefault();
+async function updateGoal() {
   var goalType = document.getElementById("goalType").value;
   var calories = document.getElementById("updateCalories").value.trim();
   const userId = localStorage.getItem("userId");
