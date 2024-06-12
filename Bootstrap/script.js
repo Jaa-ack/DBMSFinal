@@ -303,7 +303,7 @@ function loadMealData(date, mealType, tableId) {
                         <td>${meal.food_name}</td>
                         <td>${meal.calories}</td>
                         <td>
-                            <button class="bg-danger" onclick="confirmDeleteMeal(${userId}, '${meal.food_id}', '${meal.meal_type}', '${meal.calories}', '${formattedDate}')">Delete</button>
+                            <button class="btn btn-danger" onclick="confirmDeleteMeal(${userId}, '${meal.food_id}', '${meal.meal_type}', '${meal.calories}', '${formattedDate}')">Delete</button>
                         </td>
                     </tr>`;
           tableBody.insertAdjacentHTML("beforeend", row);
@@ -403,7 +403,7 @@ function loadExerciseData(date, tableId) {
                     <td>${exercise.type}</td>
                     <td>${exercise.calories}</td>
                     <td>
-                        <button class="bg-danger" onclick="confirmDeleteWorkout(${userId}, '${exercise.exercise_id}', '${exercise.time}', '${formattedDate}', '${exercise.calories}')">Delete</button>
+                        <button class="btn btn-danger" onclick="confirmDeleteWorkout(${userId}, '${exercise.exercise_id}', '${exercise.time}', '${formattedDate}', '${exercise.calories}')">Delete</button>
                     </td>
                 </tr>`;
           tableBody.insertAdjacentHTML("beforeend", row);
@@ -1068,3 +1068,87 @@ async function updateGoal() {
     alert("目標提交時發生錯誤。");
   }
 }
+
+$(document).ready(function() {
+  // Form validation
+  $('form.needs-validation').on('submit', function(event) {
+    if (this.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.classList.add('was-validated');
+  });
+
+  // Handle forgot password form submission
+  $('#forgotPasswordForm').on('submit', function(event) {
+    event.preventDefault();
+    var email = $('#exampleInputEmail').val();
+    sendResetPasswordEmail(email);
+  });
+});
+
+async function sendResetPasswordEmail(email) {
+  try {
+    const response = await fetch(`http://localhost:3000/forgotPassword`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('If the email address is registered, a reset password link will be sent.');
+      window.location.href = "login.html";
+    } else {
+      alert(`Failed to send reset password email: ${data.message}`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while sending the reset password email.');
+  }
+}
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.querySelector("form");
+  const mealRadios = document.getElementsByName("meal");
+
+  form.addEventListener("submit", function(event) {
+      let isMealSelected = false;
+
+      for (const radio of mealRadios) {
+          if (radio.checked) {
+              isMealSelected = true;
+              break;
+          }
+      }
+
+      if (!isMealSelected) {
+          for (const radio of mealRadios) {
+              radio.classList.add("is-invalid");
+          }
+          document.querySelector("#meal .invalid-feedback").style.display = "block";
+          event.preventDefault();
+          event.stopPropagation();
+      } else {
+          for (const radio of mealRadios) {
+              radio.classList.remove("is-invalid");
+          }
+          document.querySelector("#meal .invalid-feedback").style.display = "none";
+      }
+  });
+
+  for (const radio of mealRadios) {
+      radio.addEventListener("change", function() {
+          if (this.checked) {
+              for (const r of mealRadios) {
+                  r.classList.remove("is-invalid");
+              }
+              document.querySelector("#meal .invalid-feedback").style.display = "none";
+          }
+      });
+  }
+});
+
+
