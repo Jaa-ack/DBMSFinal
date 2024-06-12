@@ -1035,13 +1035,13 @@ async function postArticle() {
 
 // 获取数据并填充表格
 function ranking(date) {
-  const formattedDate = date.toISOString().split("T")[0];
-  fetch(`http://localhost:3000/rank?date=${formattedDate}`)
-    .then((response) => response.json())
-    .then((data) => {
-      populateTable(data);
-    })
-    .catch((error) => console.error("Error fetching data:", error));
+    const formattedDate = date.toISOString().split("T")[0];
+    fetch(`http://localhost:3000/rank?date=${formattedDate}`)
+        .then((response) => response.json())
+        .then((data) => {
+        populateTable(data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
 }
 
 // 填充表格函数
@@ -1095,12 +1095,12 @@ function populateTable(data) {
 function calculateProgress(rank) {
   var progress = 0;
 
-  if (rank.goal_type === "diet") {
+  if (rank.goal_type === "Diet") {
     progress = rank.total_meal_calories / rank.quantity;
     if (progress > 1) {
       progress = 2 - progress;
     }
-  } else if (rank.goal_type === "exercise") {
+  } else if (rank.goal_type === "Exercise") {
     progress = rank.total_workout_calories / rank.quantity;
     if (progress > 1) {
       progress = 1;
