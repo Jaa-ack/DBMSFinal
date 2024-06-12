@@ -1,330 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Database</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
 
-</head>
-
-<body id="page-top">
-
+  <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
+      <!-- Sidebar -->
+      <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        id="accordionSidebar"
+      >
+        <!-- Sidebar - Brand -->
+        <a
+          class="sidebar-brand d-flex align-items-center justify-content-center"
+          href="food_exercise.html"
+        >
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-solid fa-dumbbell"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
+        </a>
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="food_exercise.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-solid fa-dumbbell"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">運動追蹤系統</div>
-            </a>
-
-            <!-- Nav Item - Custom Component -->
-            <li class="nav-item">
-                <a class="nav-link acitve" href="#" data-toggle="collapse" data-target="#collapseOne"
-                   aria-expanded="true" aria-controls="collapseOne">
-                    <i class="fas fa-duotone fa-bullseye"></i>
-                    <span>Goals</span>
-                </a>
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Goal Setting:</h6>
-                        <a class="collapse-item" href="food_exercise.html">Food & Exercise</a>
-                        <a class="collapse-item active" href="database.html">Database</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="community.html">
-                    <i class="fas fa-solid fa-pager"></i>
-                    <span>Community</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="rank.html">
-                    <i class="fas fa-regular fa-hand-point-up"></i>
-                    <span>Rank</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="profile.html">
-                    <i class="fas fa-solid fa-id-card"></i>
-                    <span>Profile</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <!-- Nav Item - Custom Component -->
+        <li class="nav-item">
+          <a
+            class="nav-link acitve"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseOne"
+            aria-expanded="true"
+            aria-controls="collapseOne"
+          >
+            <i class="fas fa-duotone fa-bullseye"></i>
+            <span>Goals</span>
+          </a>
+          <div
+            id="collapseOne"
+            class="collapse show"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Goal Setting:</h6>
+              <a class="collapse-item" href="food_exercise.html"
+                >Food & Exercise</a
+              >
+              <a class="collapse-item active" href="database.html">Database</a>
             </div>
-        </ul>
-        <!-- End of Sidebar -->
+          </div>
+        </li>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="community.html">
+            <i class="fas fa-solid fa-pager"></i>
+            <span>Community</span></a
+          >
+        </li>
 
-            <!-- Main Content -->
-            <div id="content">
+        <li class="nav-item">
+          <a class="nav-link" href="rank.html">
+            <i class="fas fa-regular fa-hand-point-up"></i>
+            <span>Rank</span></a
+          >
+        </li>
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <li class="nav-item">
+          <a class="nav-link" href="profile.html">
+            <i class="fas fa-solid fa-id-card"></i>
+            <span>Profile</span></a
+          >
+        </li>
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block" />
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user-name"></span>
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile.html">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item">
-                                    <button class="border-0 bg-white" onclick="logout()">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
-                                    </button>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Date -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <button class="btn btn-primary btn-circle" type="button" id="prev-day">&lt;</button>
-                        <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
-                        <button class="btn btn-primary btn-circle" type="button" id="next-day">&gt;</button>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <!-- Topbar Search -->
-                                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                        <div class="input-group">
-                                            <input type="text" id="foodSearchInput" class="form-control bg-light border-0 small" placeholder="Search for food!"
-                                                   aria-label="Search" aria-describedby="basic-addon2">
-                                            <button class="btn btn-primary" type="button" id="searchFoodButton" onclick="searchFood()">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="foodTable" width="100%" cellspacing="0">
-                                            <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Calories(per portion)</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="foodTableBody">
-                                            <!-- DATA FROM DATABASE WILL BE POPULATED HERE -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- ADJUST PORTION AND ADD TO MEAL -->
-                        <div class="col-xl-4 col-lg-5">
-
-                            <div class="card shadow mb-4">
-                                <!-- Card Header -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Food data</h6>
-
-                                </div>
-
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <!-- Meal Selection -->
-                                    <div class="form-group" id="meal">
-                                        <label>Meal</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="meal" id="breakfast" value="Breakfast" required>
-                                            <label class="form-check-label" for="breakfast">Breakfast</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="meal" id="lunch" value="Lunch" required>
-                                            <label class="form-check-label" for="lunch">Lunch</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="meal" id="dinner" value="Dinner" required>
-                                            <label class="form-check-label" for="dinner">Dinner</label>
-                                        </div>
-                                        <div class="invalid-feedback">Meal selection is required.</div>
-                                    </div>
-                                    <!-- Name Input -->
-                                    <div class="form-group">
-                                        <label for="foodName">Name</label>
-                                        <input type="text" class="form-control" id="foodName" placeholder="" required>
-                                        <div class="invalid-feedback">Food name cannot be empty.</div>
-                                    </div>
-                                    <!-- Calories Input -->
-                                    <div class="form-group">
-                                        <label for="foodCalories">Calories</label>
-                                        <input type="text" class="form-control" id="foodCalories" placeholder="" required>
-                                        <div class="invalid-feedback">Calories cannot be empty.</div>
-                                    </div>
-                                    <!-- Add Button -->
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-primary" onclick="addMeal()">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <!--h6 class="m-0 font-weight-bold text-primary"></h6-->
-                                    <!-- Topbar Search -->
-                                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                        <div class="input-group">
-                                            <input type="text" id="exerciseSearchInput" class="form-control bg-light border-0 small" placeholder="Search for exercise!"
-                                                   aria-label="Search" aria-describedby="basic-addon2">
-                                            <button class="btn btn-primary" type="button" id="searchExercise" onclick="searchExercise()">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <table class="table table-bordered" id="exerciseTable" width="100%" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Calories(per hour)</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!-- DATA FROM DATABASE -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ADD TO WORKOUT -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Exercise data</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="exerciseName">Exercise Name</label>
-                                        <input type="text" class="form-control" id="exerciseName" placeholder="" required>
-                                        <div class="invalid-feedback">Exercise name cannot be empty.</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="minutesPerformed">Minutes Performed</label>
-                                        <input type="text" class="form-control" id="minutesPerformed" placeholder="" required>
-                                        <div class="invalid-feedback">Minutes performed cannot be empty.</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="caloriesBurned">Calories Burned</label>
-                                        <input type="text" class="form-control" id="caloriesBurned" placeholder="" required>
-                                        <div class="invalid-feedback">Calories burned cannot be empty.</div>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-primary" onclick="addWorkout()">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- /.container-fluid -->
-
-            </div>
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-        <!-- End of Content Wrapper -->
+      </ul>
+      <!-- End of Sidebar -->
 
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <div class="topbar-divider d-none d-sm-block"></div>
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span
+                    class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    id="user-name"
+                  ></span>
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                  <a class="dropdown-item" href="profile.html">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item">
+                    <button class="border-0 bg-white" onclick="logout()">
+                      <i
+                        class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                      ></i>
+                      Logout
+                    </button>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Date -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <button
+                class="btn btn-primary btn-circle"
+                type="button"
+                id="prev-day"
+              >
+                &lt;
+              </button>
+              <h1 class="h3 mb-0 text-gray-800" id="current-date">DATE</h1>
+              <button
+                class="btn btn-primary btn-circle"
+                type="button"
+                id="next-day"
+              >
+                &gt;
+              </button>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+              <!-- Area Chart -->
+              <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                  <!-- Card Header -->
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <!-- Topbar Search -->
+                    <form
+                      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+                    >
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          id="foodSearchInput"
+                          class="form-control bg-light border-0 small"
+                          placeholder="Search for food!"
+                          aria-label="Search"
+                          aria-describedby="basic-addon2"
+                        />
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          id="searchFoodButton"
+                          onclick="searchFood()"
+                        >
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table
+                        class="table table-bordered"
+                        id="foodTable"
+                        width="100%"
+                        cellspacing="0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Calories(per portion)</th>
+                          </tr>
+                        </thead>
+                        <tbody id="foodTableBody">
+                          <!-- DATA FROM DATABASE WILL BE POPULATED HERE -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ADJUST PORTION AND ADD TO MEAL -->
+              <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                  <!-- Card Header -->
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary">Food data</h6>
+                  </div>
+
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <!-- Meal Selection -->
+                    <div class="form-group" id="meal">
+                      <label>Meal</label>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="meal"
+                          id="breakfast"
+                          value="Breakfast"
+                          required
+                        />
+                        <label class="form-check-label" for="breakfast"
+                          >Breakfast</label
+                        >
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="meal"
+                          id="lunch"
+                          value="Lunch"
+                          required
+                        />
+                        <label class="form-check-label" for="lunch"
+                          >Lunch</label
+                        >
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="meal"
+                          id="dinner"
+                          value="Dinner"
+                          required
+                        />
+                        <label class="form-check-label" for="dinner"
+                          >Dinner</label
+                        >
+                      </div>
+                      <div class="invalid-feedback">
+                        Meal selection is required.
+                      </div>
+                    </div>
+                    <!-- Name Input -->
+                    <div class="form-group">
+                      <label for="foodName">Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="foodName"
+                        placeholder=""
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Food name cannot be empty.
+                      </div>
+                    </div>
+                    <!-- Calories Input -->
+                    <div class="form-group">
+                      <label for="foodCalories">Calories</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="foodCalories"
+                        placeholder=""
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Calories cannot be empty.
+                      </div>
+                    </div>
+                    <!-- Add Button -->
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary" onclick="addMeal()">
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+              <!-- Area Chart -->
+              <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <!--h6 class="m-0 font-weight-bold text-primary"></h6-->
+                    <!-- Topbar Search -->
+                    <form
+                      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+                    >
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          id="exerciseSearchInput"
+                          class="form-control bg-light border-0 small"
+                          placeholder="Search for exercise!"
+                          aria-label="Search"
+                          aria-describedby="basic-addon2"
+                        />
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          id="searchFoodButton"
+                          onclick="searchExercise()"
+                        >
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <table
+                      class="table table-bordered"
+                      id="exerciseTable"
+                      width="100%"
+                      cellspacing="0"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Type</th>
+                          <th>Calories(per hour)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- DATA FROM DATABASE -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ADD TO WORKOUT -->
+              <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                  <!-- Card Header -->
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Exercise data
+                    </h6>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="exerciseName">Exercise Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exerciseName"
+                        placeholder=""
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Exercise name cannot be empty.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="minutesPerformed">Minutes Performed</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="minutesPerformed"
+                        placeholder=""
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Minutes performed cannot be empty.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="caloriesBurned">Calories Burned</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="caloriesBurned"
+                        placeholder=""
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Calories burned cannot be empty.
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary" onclick="addWorkout()">
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- /.container-fluid -->
+        </div>
+      </div>
+      <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
+      <i class="fas fa-angle-up"></i>
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" onclick="logout()">Logout</a>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" onclick="logout()">Logout</a>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -339,38 +526,45 @@
 
     <script src="script.js"></script>
     <script>
-        var today;
-        document.addEventListener("DOMContentLoaded", function () {
-            // 從本地存儲中獲取用戶名稱
-            var userId = localStorage.getItem('userId');
-            // 從本地存儲中獲取用戶名稱
-            var username = localStorage.getItem('name');
-            // 如果用戶名稱存在，則將其設置到 span 標籤中
-            if (username) {
-                document.getElementById('user-name').innerText = username;
-            }
+      var today;
+      document.addEventListener("DOMContentLoaded", function () {
+        // 從本地存儲中獲取用戶名稱
+        var userId = localStorage.getItem("userId");
+        // 從本地存儲中獲取用戶名稱
+        var username = localStorage.getItem("name");
+        // 如果用戶名稱存在，則將其設置到 span 標籤中
+        if (username) {
+          document.getElementById("user-name").innerText = username;
+        }
 
-            today = new Date();
-            var displayDate = document.getElementById('current-date');
+        today = new Date();
+        var displayDate = document.getElementById("current-date");
 
-            function updateDisplay(date) {
-                displayDate.textContent = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            }
+        function updateDisplay(date) {
+          displayDate.textContent = date.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
 
+        updateDisplay(today);
+
+        document
+          .getElementById("prev-day")
+          .addEventListener("click", function () {
+            today.setDate(today.getDate() - 1);
             updateDisplay(today);
+          });
 
-            document.getElementById('prev-day').addEventListener('click', function() {
-                today.setDate(today.getDate() - 1);
-                updateDisplay(today);
-            });
-
-            document.getElementById('next-day').addEventListener('click', function() {
-                today.setDate(today.getDate() + 1);
-                updateDisplay(today);
-            });
-        });
+        document
+          .getElementById("next-day")
+          .addEventListener("click", function () {
+            today.setDate(today.getDate() + 1);
+            updateDisplay(today);
+          });
+      });
     </script>
-
-</body>
-
+  </body>
 </html>
