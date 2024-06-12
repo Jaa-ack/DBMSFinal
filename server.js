@@ -20,10 +20,10 @@ const db = mysql.createConnection({
 
 db.connect(err => {
     if (err) {
-        // console.error('無法連接到資料庫:', err);
+        console.error('無法連接到資料庫:', err);
         return;
     }
-    // console.log('成功連接到資料庫');
+    console.log('成功連接到資料庫');
 });
 
 app.get('/login', (req, res) => {
@@ -578,5 +578,5 @@ app.post('/updategoal', (req, res) => {
 
 
 app.listen(port, () => {
-    // console.log(`服务器已启动在 http://localhost:${port}`);
+    console.log(`服务器已启动在 http://localhost:${port}`);
 });
