@@ -994,11 +994,12 @@ async function updateInfo() {
   }
 }
 
-async function updatePassword(event) {
-  event.preventDefault();
+async function updatePassword() {
+  
   const password = document.getElementById("updatePassword").value.trim();
   const repeatPassword = document.getElementById("checkPassword").value.trim();
   const userId = localStorage.getItem("userId");
+  console.log(password)
 
   if (password !== repeatPassword) {
     alert("密碼不一致");
