@@ -304,7 +304,7 @@
                           <button
                             type="submit"
                             class="btn btn-secondary"
-                            onclick="updateInfo()"
+                            onclick="checkUpdateInfo()"
                           >
                             Submit
                           </button>
@@ -352,10 +352,10 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <button
+                          <button
                             type="submit"
                             class="btn btn-secondary"
-                            onclick="updatePassword()"
+                            onclick="checkUpdatePassword(event)"
                           >
                             Submit
                           </button>
@@ -405,7 +405,12 @@
                             >
                           </div>
                         </div>
-                        <input type="hidden" id="goalType" name="goalType" required />
+                        <input
+                          type="hidden"
+                          id="goalType"
+                          name="goalType"
+                          required
+                        />
 
                         <!-- Calories -->
                         <div class="form-group">
@@ -425,7 +430,7 @@
                           <button
                             type="submit"
                             class="btn btn-secondary"
-                            onclick="updateGoal(event)"
+                            onclick="checkUpdateGoal(event)"
                           >
                             Submit
                           </button>
@@ -518,18 +523,18 @@
           "Level: " + level;
       }
 
-      function updateInfo() {
+      function checkUpdateInfo() {
         var form = document.getElementById("profileForm");
         if (form.checkValidity() === false) {
           form.classList.add("was-validated");
           return false;
         }
         // Submit the form data via AJAX or other methods
-        alert("Profile information submitted successfully!");
+        updateInfo();
         return true;
       }
 
-      function updatePassword(event) {
+      function checkUpdatePassword(event) {
         event.preventDefault();
         var form = document.getElementById("passwordForm");
         if (form.checkValidity() === false) {
@@ -537,11 +542,11 @@
           return false;
         }
         // Submit the form data via AJAX or other methods
-        alert("Password updated successfully!");
+        updatePassword();
         return true;
       }
 
-      function updateGoal(event) {
+      function checkUpdateGoal(event) {
         event.preventDefault();
         var form = document.getElementById("goalForm");
         if (form.checkValidity() === false) {
@@ -549,7 +554,7 @@
           return false;
         }
         // Submit the form data via AJAX or other methods
-        alert("Goal updated successfully!");
+        updateGoal();
         return true;
       }
     </script>
