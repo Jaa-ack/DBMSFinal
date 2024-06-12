@@ -200,6 +200,9 @@
                                 placeholder="Enter your username"
                                 required
                               />
+                              <div class="invalid-feedback">
+                                Please enter your username.
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -215,6 +218,9 @@
                                 placeholder="Enter weight"
                                 required
                               />
+                              <div class="invalid-feedback">
+                                Please enter your weight.
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -227,6 +233,9 @@
                                 placeholder="Enter height"
                                 required
                               />
+                              <div class="invalid-feedback">
+                                Please enter your height.
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -243,9 +252,13 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
+                            required
                           >
                             Select Activity Level
                           </button>
+                          <div class="invalid-feedback">
+                            Please select your activity level.
+                          </div>
                           <div
                             class="dropdown-menu"
                             aria-labelledby="activityDropdownButton"
@@ -283,6 +296,7 @@
                           type="hidden"
                           id="activityLevel"
                           name="activityLevel"
+                          required
                         />
 
                         <div class="d-flex justify-content-end">
@@ -317,6 +331,9 @@
                             autocomplete="new-password"
                             required
                           />
+                          <div class="invalid-feedback">
+                            Please enter a new password.
+                          </div>
                         </div>
                         <div class="form-group">
                           <label for="checkPassword">Confirm Password</label>
@@ -328,6 +345,9 @@
                             autocomplete="new-password"
                             required
                           />
+                          <div class="invalid-feedback">
+                            Please confirm your new password.
+                          </div>
                         </div>
 
                         <div class="d-flex justify-content-end">
@@ -361,9 +381,13 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
+                            required
                           >
                             Select Goal
                           </button>
+                          <div class="invalid-feedback">
+                            Please select a goal.
+                          </div>
                           <div
                             class="dropdown-menu"
                             aria-labelledby="dropdownMenuButton"
@@ -380,7 +404,7 @@
                             >
                           </div>
                         </div>
-                        <input type="hidden" id="goalType" name="goalType" />
+                        <input type="hidden" id="goalType" name="goalType" required />
 
                         <!-- Calories -->
                         <div class="form-group">
@@ -390,7 +414,11 @@
                             class="form-control"
                             id="updateCalories"
                             placeholder="Enter Calories"
+                            required
                           />
+                          <div class="invalid-feedback">
+                            Please enter the calories.
+                          </div>
                         </div>
                         <div class="d-flex justify-content-end">
                           <button
@@ -487,6 +515,41 @@
         document.getElementById("activityLevel").value = level;
         document.getElementById("activityDropdownButton").innerText =
           "Level: " + level;
+      }
+
+      function updateInfo() {
+        var form = document.getElementById("profileForm");
+        if (form.checkValidity() === false) {
+          form.classList.add("was-validated");
+          return false;
+        }
+        // Submit the form data via AJAX or other methods
+        alert("Profile information submitted successfully!");
+        return true;
+      }
+
+      function updatePassword(event) {
+        event.preventDefault();
+        var form = document.getElementById("passwordForm");
+        if (form.checkValidity() === false) {
+          form.classList.add("was-validated");
+          return false;
+        }
+        // Submit the form data via AJAX or other methods
+        alert("Password updated successfully!");
+        return true;
+      }
+
+      function updateGoal(event) {
+        event.preventDefault();
+        var form = document.getElementById("goalForm");
+        if (form.checkValidity() === false) {
+          form.classList.add("was-validated");
+          return false;
+        }
+        // Submit the form data via AJAX or other methods
+        alert("Goal updated successfully!");
+        return true;
       }
     </script>
   </body>
