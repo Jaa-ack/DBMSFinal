@@ -49,27 +49,25 @@
                     </div>
                     <form
                       class="user needs-validation"
-                      id="forgotPasswordForm"
+                      id="verified"
                       novalidate
                     >
                       <div class="form-group">
+                        <label>Question:</label>
                         <input
-                          type="email"
+                          type="text"
                           class="form-control form-control-user"
-                          id="exampleInputEmail"
-                          aria-describedby="emailHelp"
-                          placeholder="Enter Email Address..."
+                          id="verified-question"
+                          placeholder="Enter your answer"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Please provide a valid email address.
-                        </div>
+                        <div class="invalid-feedback">Wrong answer</div>
                       </div>
                       <button
                         type="submit"
                         class="btn btn-primary btn-user btn-block"
                       >
-                        next
+                        submit
                       </button>
                     </form>
                     <hr />
