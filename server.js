@@ -50,7 +50,7 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    const { name, birthday, email, height, weight, password, gender, activity, TDEE } = req.body;
+    const { name, birthday, email, height, weight, password, gender, activity, TDEE, question, answer } = req.body;
 
     console.log("Received registration data:", req.body);
 
@@ -67,7 +67,7 @@ app.post('/register', (req, res) => {
         }
 
         // Insert user into database
-        db.query('INSERT INTO User (`name`, `birthday`, `height`, `weight`, `email`, `tdee`, `password`, `activity`, `gender`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [name, birthday, height, weight, email, TDEE, password, activity, gender], (err, result) => {
+        db.query('INSERT INTO User (`name`, `birthday`, `height`, `weight`, `email`, `tdee`, `password`, `activity`, `gender`, `question`, `answer`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [name, birthday, height, weight, email, TDEE, password, activity, gender, question, answer], (err, result) => {
             if (err) {
                 console.error("Database query error:", err);
                 return res.status(500).json({ message: 'Database query error' });
@@ -516,9 +516,10 @@ app.post('/updateinfo', (req, res) => {
     const weight = req.body.weight;
     const height = req.body.height;
     const userId = req.body.userId;
+    const activity = req.body.activity;
 
-    const query = 'UPDATE User SET name = ?, weight = ?, height = ? WHERE user_id = ?';
-    db.query(query, [name, weight, height, userId], (err, results) => {
+    const query = 'UPDATE User SET name = ?, weight = ?, height = ?, activity = ? WHERE user_id = ?';
+    db.query(query, [name, weight, height, activity, userId], (err, results) => {
         if (err) {
             return res.status(500).json({ message: 'Database query error' });
         }
@@ -576,6 +577,60 @@ app.post('/updategoal', (req, res) => {
     });
 });
 
+app.get('/checkEmail', (req, res) => {
+    const email = req.query.email;
+
+    const query = `
+        SELECT 
+            email, question
+        FROM 
+            User
+        WHERE 
+            email = ?
+    `;
+
+    db.query(query, [email], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/checkAnswer', (req, res) => {
+    const email = req.query.email;
+    const question = req.query.question;
+    const answer = req.query.answer;
+
+    const query = `
+        SELECT 
+            email, question
+        FROM 
+            User
+        WHERE 
+            email = ? AND question = ? AND answer = ?
+    `;
+
+    db.query(query, [email, question, answer], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json(results);
+    });
+});
+
+app.post('/changepassword', (req, res) => {
+    const password = req.body.password; // 从请求体中获取密码
+    const email = req.body.email;
+
+    const query = 'UPDATE User SET password = ? WHERE email = ?';
+    db.query(query, [password, email], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database query error' });
+        }
+        res.json({ message: 'Update successful'});
+    });
+});
 
 app.listen(port, () => {
     console.log(`服务器已启动在 http://localhost:${port}`);

@@ -76,7 +76,7 @@ async function registerUser() {
   }
 
   if (password !== repeatPassword) {
-    document.getElementById("repeat-password-feedback").innerText = "Please ";
+    document.getElementById("repeat-password-feedback").innerText = "Password not match";
     return;
   }
   if (question === "") {
@@ -121,6 +121,8 @@ async function registerUser() {
         gender: gender,
         activity: activity,
         TDEE: TDEE,
+        question: question,
+        answer: answer,
       }),
     });
 
@@ -1164,7 +1166,7 @@ async function updateInfo() {
   const user_name = document.getElementById("updateName").value.trim();
   const weight = document.getElementById("updateWeight").value.trim();
   const height = document.getElementById("updateHeight").value.trim();
-  const activity = document.getElementById("activityLevel").value;
+  const activity = document.getElementById("activityLevel").value.trim();
   const userId = localStorage.getItem("userId");
 
   try {
@@ -1177,17 +1179,17 @@ async function updateInfo() {
         name: user_name,
         weight: weight,
         height: height,
-        activity: activity, // Corrected typo in variable name
+        activity: activity,
         userId: userId,
       }),
     });
     const data = await response.json();
 
     if (response.ok) {
-      if (data.message === "Profile update successful") {
-        localStorage.setItem("name", user_name);
-        alert("個人資料更新成功");
+      if (data.message === "Update successful") {
         // 更新本地存储中的用户名
+        saveUserDataToLocalStorage(userId, user_name);
+        alert(data.message);
       } else {
         alert(data.message);
       }
@@ -1225,13 +1227,16 @@ async function updatePassword() {
     const data = await response.json();
 
     if (response.ok) {
-      if (data.message === "Password update successful") {
-        alert("密碼更新成功");
+      if (data.message === "Update successful") {
+        alert("Update successful");
+        window.location.href = `profile.html`;
       } else {
         alert(data.message);
+        window.location.href = `profile.html`;
       }
     } else {
       alert(`密碼提交失敗: ${data.message}`);
+      window.location.href = `profile.html`;
     }
   } catch (error) {
     console.error("錯誤:", error);
@@ -1273,46 +1278,71 @@ async function updateGoal() {
   }
 }
 
-$(document).ready(function () {
-  // Form validation
-  $("form.needs-validation").on("submit", function (event) {
-    if (this.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+function checkEmail() {
+    const email = document.getElementById("inputEmail").value.trim();
+
+    fetch(`http://localhost:3000/checkEmail?email=${email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // 如果没有数据，显示一条消息
+        if (data.length === 0) {
+            alert("User not found, please register first.");
+        } else {
+            console.log(data);
+            question = data[0].question;
+            window.location.href = `verify.html?email=${encodeURIComponent(email)}&question=${encodeURIComponent(question)}`;
+        }
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+}
+
+// 函数获取 URL 中的查询参数
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+async function checkAnswer() {
+    const email = getQueryParam('email');
+    const question = getQueryParam('question');
+    const answer = document.getElementById("verified-answer").value.trim();
+
+    try {
+        const response = await fetch(`http://localhost:3000/checkAnswer?email=${encodeURIComponent(email)}&question=${encodeURIComponent(question)}&answer=${encodeURIComponent(answer)}`);
+        const data = await response.json();
+
+        if (data.length === 0) {
+            alert("Not correct answer");
+        } else {
+            alert("Your password is 1234567890, please log in immediately and change your password.");
+
+            // Change password
+            const newPassword = '1234567890'; // Assuming this is the new temporary password
+
+            const passwordResponse = await fetch(`http://localhost:3000/changepassword`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    password: newPassword,
+                    email: email,
+                }),
+            });
+
+            const passwordData = await passwordResponse.json();
+
+            if (passwordResponse.ok) {
+                if (passwordData.message === "Password update successful") {
+                    console.log("Password change successful");
+                } else {
+                    console.log(passwordData.message);
+                }
+            } else {
+                console.log(`Password change failed: ${passwordData.message}`);
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
     }
-    this.classList.add("was-validated");
-  });
-
-  // Handle forgot password form submission
-  $("#forgotPasswordForm").on("submit", function (event) {
-    event.preventDefault();
-    var email = $("#exampleInputEmail").val();
-    sendResetPasswordEmail(email);
-  });
-});
-
-async function sendResetPasswordEmail(email) {
-  try {
-    const response = await fetch(`http://localhost:3000/forgotPassword`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert(
-        "If the email address is registered, a reset password link will be sent."
-      );
-      window.location.href = "login.html";
-    } else {
-      alert(`Failed to send reset password email: ${data.message}`);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("An error occurred while sending the reset password email.");
-  }
 }

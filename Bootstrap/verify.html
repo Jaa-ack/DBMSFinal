@@ -53,18 +53,20 @@
                       novalidate
                     >
                       <div class="form-group">
-                        <label>Question:</label>
+                        <div class="text-L font-weight-bold mb-1" id="verified-question">
+                            Question:
+                        </div>
                         <input
                           type="text"
                           class="form-control form-control-user"
-                          id="verified-question"
+                          id="verified-answer"
                           placeholder="Enter your answer"
                           required
                         />
                         <div class="invalid-feedback">Wrong answer</div>
                       </div>
                       <button
-                        type="submit"
+                        type="button" onclick="checkAnswer()"
                         class="btn btn-primary btn-user btn-block"
                       >
                         submit
@@ -100,5 +102,15 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <script src="script.js"></script>
+
+    <script>
+        // 在页面加载时显示 question
+        window.onload = function() {
+            const question = getQueryParam('question');
+            if (question) {
+                document.getElementById('verified-question').innerText = 'Question: ' + question;
+            }
+        }
+    </script>
   </body>
 </html>
