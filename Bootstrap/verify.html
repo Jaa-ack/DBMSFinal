@@ -53,8 +53,11 @@
                       novalidate
                     >
                       <div class="form-group">
-                        <div class="text-L font-weight-bold mb-1" id="verified-question">
-                            Question:
+                        <div
+                          class="text-L font-weight-bold mb-1"
+                          id="verified-question"
+                        >
+                          Question:
                         </div>
                         <input
                           type="text"
@@ -63,10 +66,13 @@
                           placeholder="Enter your answer"
                           required
                         />
-                        <div class="invalid-feedback">Wrong answer</div>
+                        <div class="invalid-feedback" id="answer-feedback">
+                          Please answer the question
+                        </div>
                       </div>
                       <button
-                        type="button" onclick="checkAnswer()"
+                        type="button"
+                        onclick="checkAnswer()"
                         class="btn btn-primary btn-user btn-block"
                       >
                         submit
@@ -104,13 +110,14 @@
     <script src="script.js"></script>
 
     <script>
-        // 在页面加载时显示 question
-        window.onload = function() {
-            const question = getQueryParam('question');
-            if (question) {
-                document.getElementById('verified-question').innerText = 'Question: ' + question;
-            }
+      // 在页面加载时显示 question
+      window.onload = function () {
+        const question = getQueryParam("question");
+        if (question) {
+          document.getElementById("verified-question").innerText =
+            "Question: " + question;
         }
+      };
     </script>
   </body>
 </html>

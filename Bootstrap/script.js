@@ -76,7 +76,8 @@ async function registerUser() {
   }
 
   if (password !== repeatPassword) {
-    document.getElementById("repeat-password-feedback").innerText = "Password not match";
+    document.getElementById("repeat-password-feedback").innerText =
+      "Password not match";
     return;
   }
   if (question === "") {
@@ -1279,70 +1280,99 @@ async function updateGoal() {
 }
 
 function checkEmail() {
-    const email = document.getElementById("inputEmail").value.trim();
+  const email = document.getElementById("inputEmail").value.trim();
 
-    fetch(`http://localhost:3000/checkEmail?email=${email}`)
-      .then((response) => response.json())
-      .then((data) => {
-        // 如果没有数据，显示一条消息
-        if (data.length === 0) {
-            alert("User not found, please register first.");
-        } else {
-            console.log(data);
-            question = data[0].question;
-            window.location.href = `verify.html?email=${encodeURIComponent(email)}&question=${encodeURIComponent(question)}`;
-        }
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+  if (!email) {
+    document.getElementById("email-feedback").style.display = !email
+      ? "block"
+      : "none";
+
+    return;
+  }
+
+  fetch(`http://localhost:3000/checkEmail?email=${email}`)
+    .then((response) => response.json())
+    .then((data) => {
+      // 如果没有数据，显示一条消息
+      if (data.length === 0) {
+        alert("User not found, please register first.");
+      } else {
+        console.log(data);
+        question = data[0].question;
+        window.location.href = `verify.html?email=${encodeURIComponent(
+          email
+        )}&question=${encodeURIComponent(question)}`;
+      }
+    })
+    .catch((error) => console.error("Error fetching data:", error));
 }
 
 // 函数获取 URL 中的查询参数
 function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
 }
 
 async function checkAnswer() {
-    const email = getQueryParam('email');
-    const question = getQueryParam('question');
-    const answer = document.getElementById("verified-answer").value.trim();
+  const email = getQueryParam("email");
+  const question = getQueryParam("question");
+  const answer = document.getElementById("verified-answer").value.trim();
 
-    try {
-        const response = await fetch(`http://localhost:3000/checkAnswer?email=${encodeURIComponent(email)}&question=${encodeURIComponent(question)}&answer=${encodeURIComponent(answer)}`);
-        const data = await response.json();
+  if (!answer) {
+    document.getElementById("answer-feedback").style.display = !email
+      ? "block"
+      : "none";
 
-        if (data.length === 0) {
-            alert("Not correct answer");
-        } else {
-            alert("Your password is 1234567890, please log in immediately and change your password.");
+    return;
+  }
 
-            // Change password
-            const newPassword = '1234567890'; // Assuming this is the new temporary password
+  try {
+    const response = await fetch(
+      `http://localhost:3000/checkAnswer?email=${encodeURIComponent(
+        email
+      )}&question=${encodeURIComponent(question)}&answer=${encodeURIComponent(
+        answer
+      )}`
+    );
+    const data = await response.json();
 
-            const passwordResponse = await fetch(`http://localhost:3000/changepassword`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    password: newPassword,
-                    email: email,
-                }),
-            });
+    if (data.length === 0) {
+      alert("Not correct answer");
+    } else {
+      alert(
+        "Your password is 1234567890, please log in immediately and change your password."
+      );
 
-            const passwordData = await passwordResponse.json();
+      // Change password
+      const newPassword = "1234567890"; // Assuming this is the new temporary password
 
-            if (passwordResponse.ok) {
-                if (passwordData.message === "Password update successful") {
-                    console.log("Password change successful");
-                } else {
-                    console.log(passwordData.message);
-                }
-            } else {
-                console.log(`Password change failed: ${passwordData.message}`);
-            }
+      const passwordResponse = await fetch(
+        `http://localhost:3000/changepassword`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: newPassword,
+            email: email,
+          }),
         }
-    } catch (error) {
-        console.error("Error fetching data:", error);
+      );
+
+      const passwordData = await passwordResponse.json();
+
+      if (passwordResponse.ok) {
+        if (passwordData.message === "Password update successful") {
+          console.log("Password change successful");
+        } else {
+          console.log(passwordData.message);
+        }
+      } else {
+        console.log(`Password change failed: ${passwordData.message}`);
+      }
     }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 }
