@@ -1319,7 +1319,7 @@ async function checkAnswer() {
   const answer = document.getElementById("verified-answer").value.trim();
 
   if (!answer) {
-    document.getElementById("answer-feedback").style.display = !email
+    document.getElementById("answer-feedback").style.display = !answer
       ? "block"
       : "none";
 
