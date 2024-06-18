@@ -1342,6 +1342,7 @@ async function checkAnswer() {
       alert(
         "Your password is 1234567890, please log in immediately and change your password."
       );
+      window.location.href = "login.html";
 
       // Change password
       const newPassword = "1234567890"; // Assuming this is the new temporary password
