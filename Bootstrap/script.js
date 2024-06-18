@@ -1106,12 +1106,12 @@ function populateTable(data) {
 function calculateProgress(rank) {
   var progress = 0;
 
-  if (rank.goal_type === "Diet") {
+  if (rank.goal_type === "diet") {
     progress = rank.total_meal_calories / rank.quantity;
     if (progress > 1) {
       progress = 2 - progress;
     }
-  } else if (rank.goal_type === "Exercise") {
+  } else if (rank.goal_type === "exercise") {
     progress = rank.total_workout_calories / rank.quantity;
     if (progress > 1) {
       progress = 1;
